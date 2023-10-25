@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+
+    <parent>
+        <groupId>com.kittens</groupId>
+        <artifactId>exploding-kittens-backend</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>exploding-kittens-logic</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+
+    <!--    не работает с java выше 16. Из-за lombok, но как это исправить...-->
+    <properties>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
+    </properties>
+
+    <!--    это тоже не помогает в проблеме с lombok -->
+    <!--    <build>-->
+    <!--        <pluginManagement>-->
+    <!--            <plugins>-->
+    <!--                <plugin>-->
+    <!--                    <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                    <artifactId>maven-compiler-plugin</artifactId>-->
+    <!--                    <version>3.6.1</version>-->
+    <!--                    <configuration>-->
+    <!--                        <annotationProcessorPaths>-->
+    <!--                            <path>-->
+    <!--                                <groupId>org.projectlombok</groupId>-->
+    <!--                                <artifactId>lombok</artifactId>-->
+    <!--                                <version>1.18.30</version>-->
+    <!--                            </path>-->
+    <!--                        </annotationProcessorPaths>-->
+    <!--                    </configuration>-->
+    <!--                </plugin>-->
+    <!--            </plugins>-->
+    <!--        </pluginManagement>-->
+    <!--    </build>-->
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+</project>
