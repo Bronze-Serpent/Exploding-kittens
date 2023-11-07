@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+
 @RequiredArgsConstructor
 public class GameStateService
 {
@@ -21,7 +22,7 @@ public class GameStateService
         var receivedCard = gameState.getCardDeck().remove(0);
         movesPlayer.addCard(receivedCard);
         var gettingAction = receivedCard.getGettingAction();
-        gettingAction.doAction(receivedCard, gameState);
+        gettingAction.doAction(gameState);
     }
 
 

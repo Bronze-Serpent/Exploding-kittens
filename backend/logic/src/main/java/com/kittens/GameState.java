@@ -4,6 +4,7 @@ import com.kittens.card.Card;
 import lombok.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Data
@@ -38,8 +39,22 @@ public class GameState
            addToCardReset(card);
     }
 
-    public void removePlayer(Player player)
+
+    public void removePlayer(Long playerId)
     {
-        playersList.remove(player);
+        var mayBeUser = playersList.getSourceList().stream()
+                .filter(player -> player.getId().equals(playerId))
+                .findFirst();
+
+        mayBeUser.ifPresent(player -> playersList.remove(player));
+    }
+
+
+    public Player getPlayerById(Long playerId)
+    {
+        return playersList.getSourceList().stream()
+                .filter(player -> player.getId().equals(playerId))
+                .findFirst()
+                .orElse(null);
     }
 }

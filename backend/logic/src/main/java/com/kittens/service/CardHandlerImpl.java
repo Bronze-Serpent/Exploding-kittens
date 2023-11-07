@@ -1,9 +1,10 @@
 package com.kittens.service;
 
 import com.kittens.GameState;
-import com.kittens.card.Action;
 import com.kittens.card.Card;
-import com.kittens.card.SuddenAction;
+import com.kittens.action.Action;
+import com.kittens.action.Inaction;
+import com.kittens.action.sudden.SuddenCardAction;
 
 import java.util.List;
 
@@ -16,22 +17,22 @@ public class CardHandlerImpl implements CardHandler
     {
         var movesPlayer = oldGameState.getNowTurn();
 
-        Action cardAction = playerCard.getPlayingAction();
+        Action action = playerCard.getPlayingAction();
 
         // применение карт игроков к сыгранной карте
-        Action oldAction = Action.INACTION;
-        Action userAction = cardAction;
+        Action oldAction = new Inaction();
+        Action userAction = action;
         for (Card suddenCard : suddenCards)
         {
-            SuddenAction suddenAction = suddenCard.getSuddenPlayingAction();
-            var suddenResult = suddenAction.doSuddenAction(suddenCard, oldAction, userAction);
+            SuddenCardAction suddenCardAction = suddenCard.getSuddenPlayingAction();
+            var suddenResult = suddenCardAction.doSuddenAction(suddenCard, oldAction, userAction);
 
             oldAction = userAction;
             userAction = suddenResult;
         }
 
         // применение итогового действия
-        var newGameState = userAction.doAction(playerCard, oldGameState);
+        var newGameState = userAction.doAction(oldGameState);
 
         // добавление сыгранной карты в сброс
         movesPlayer.removeCard(playerCard.getName());

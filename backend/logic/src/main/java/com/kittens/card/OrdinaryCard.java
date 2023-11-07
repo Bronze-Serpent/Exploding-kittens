@@ -1,11 +1,15 @@
 package com.kittens.card;
 
+import com.kittens.action.Action;
+import com.kittens.action.sudden.SuddenCardAction;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 
 @Getter
 @EqualsAndHashCode(of = "name")
+@RequiredArgsConstructor
 public class OrdinaryCard implements Card
 {
 
@@ -13,32 +17,8 @@ public class OrdinaryCard implements Card
 
     private final Action gettingAction;
     private final Action playingAction;
-    private final SuddenAction suddenPlayingAction;
+    private final SuddenCardAction suddenPlayingAction;
 
-
-    public OrdinaryCard(String name)
-    {
-        this.name = name;
-        this.playingAction = Action.INACTION;
-        this.gettingAction = Action.INACTION;
-        this.suddenPlayingAction = SuddenAction.INACTION;
-    }
-
-    public OrdinaryCard(String name, Action playingAction)
-    {
-        this.name = name;
-        this.playingAction = playingAction;
-        this.gettingAction = Action.INACTION;
-        this.suddenPlayingAction = SuddenAction.INACTION;
-    }
-
-    public OrdinaryCard(String name, Action playingAction, Action gettingAction, SuddenAction suddenPlayingAction)
-    {
-        this.name = name;
-        this.playingAction = playingAction;
-        this.gettingAction = gettingAction;
-        this.suddenPlayingAction = suddenPlayingAction;
-    }
 }
 
 

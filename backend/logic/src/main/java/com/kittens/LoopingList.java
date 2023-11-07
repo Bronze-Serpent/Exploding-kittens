@@ -1,39 +1,40 @@
 package com.kittens;
 
+import lombok.Getter;
+
 import java.util.Iterator;
 import java.util.List;
 
 
 public class LoopingList<T>
 {
-    private final List<T> players;
+    @Getter
+    private final List<T> sourceList;
 
-    private Iterator<T> playingIterator;
+    private Iterator<T> listIterator;
 
 
-    public LoopingList(List<T> players)
+    public LoopingList(List<T> sourceList)
     {
-        this.players = players;
-        playingIterator = players.iterator();
+        this.sourceList = sourceList;
+        listIterator = sourceList.iterator();
     }
 
-
-    public void remove(T player)
+    public void remove(T elem)
     {
-        players.remove(player);
+        sourceList.remove(elem);
     }
-
 
     public T next()
     {
-        if (!playingIterator.hasNext())
-            playingIterator = players.iterator();
+        if (!listIterator.hasNext())
+            listIterator = sourceList.iterator();
 
-        return playingIterator.next();
+        return listIterator.next();
     }
 
     public int size()
     {
-        return players.size();
+        return sourceList.size();
     }
 }

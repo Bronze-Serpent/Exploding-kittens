@@ -15,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Player
 {
+    private final Long id;
     private final String name;
     private final List<Card> cards = new ArrayList<>();
 
@@ -47,5 +48,11 @@ public class Player
         }
 
         return null;
+    }
+
+
+    public Card removeCard(int indexToDelete)
+    {
+        return cards.remove(indexToDelete);
     }
 }

@@ -1,24 +1,17 @@
 package com.kittens.card;
 
+import com.kittens.action.Action;
+import com.kittens.action.sudden.SuddenCardAction;
+
 public interface Card
 {
 
     String getName();
 
-    default Action getGettingAction()
-    {
-        return Action.INACTION;
-    }
+    Action getGettingAction();
 
-    default Action getPlayingAction()
-    {
-        return Action.INACTION;
-    }
+    Action getPlayingAction();
 
-    default SuddenAction getSuddenPlayingAction()
-    {
-        return SuddenAction.INACTION;
-    }
-
+    SuddenCardAction getSuddenPlayingAction();
 
 }
