@@ -4,14 +4,13 @@ import com.kittens.card.Card;
 import lombok.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Data
 @AllArgsConstructor
 public class GameState
 {
-    private LoopingList<Player> playersList;
+    private LoopingList<Player> playersTurn;
     private List<Card> cardDeck;
     private List<Card> cardReset;
     private Player nowTurn;
@@ -20,7 +19,7 @@ public class GameState
 
     public GameState(GameState gameState)
     {
-        this.playersList = gameState.getPlayersList();
+        this.playersTurn = gameState.getPlayersTurn();
         this.cardDeck = gameState.getCardDeck();
         this.cardReset = gameState.getCardReset();
         this.nowTurn = gameState.getNowTurn();
@@ -42,17 +41,17 @@ public class GameState
 
     public void removePlayer(Long playerId)
     {
-        var mayBeUser = playersList.getSourceList().stream()
+        var mayBeUser = playersTurn.getSourceList().stream()
                 .filter(player -> player.getId().equals(playerId))
                 .findFirst();
 
-        mayBeUser.ifPresent(player -> playersList.remove(player));
+        mayBeUser.ifPresent(player -> playersTurn.remove(player));
     }
 
 
     public Player getPlayerById(Long playerId)
     {
-        return playersList.getSourceList().stream()
+        return playersTurn.getSourceList().stream()
                 .filter(player -> player.getId().equals(playerId))
                 .findFirst()
                 .orElse(null);

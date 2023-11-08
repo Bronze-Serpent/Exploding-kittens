@@ -7,8 +7,7 @@ public class Inaction implements Action
 {
 
     @Override
-    public GameState doAction(GameState gameState)
+    public void doAction(GameState gameState)
     {
-        return gameState;
     }
 }

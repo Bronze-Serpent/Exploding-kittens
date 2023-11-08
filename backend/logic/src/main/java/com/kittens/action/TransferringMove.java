@@ -7,12 +7,9 @@ public class TransferringMove implements Action
 {
 
     @Override
-    public GameState doAction(GameState gameState)
+    public void doAction(GameState gameState)
     {
-        return new GameState(gameState.getPlayersList(),
-                gameState.getCardDeck(),
-                gameState.getCardReset(),
-                gameState.getPlayersList().next(),
-                gameState.getStepQuantity() + 1);
+        gameState.setNowTurn(gameState.getPlayersTurn().next());
+        gameState.setStepQuantity(gameState.getStepQuantity() + 1);
     }
 }

@@ -4,6 +4,7 @@ import com.kittens.card.Card;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,13 +12,21 @@ import java.util.List;
 
 
 @Getter
-@EqualsAndHashCode(exclude = "cards")
+@EqualsAndHashCode
+@ToString
 @RequiredArgsConstructor
 public class Player
 {
     private final Long id;
     private final String name;
     private final List<Card> cards = new ArrayList<>();
+
+    public Player(Player player)
+    {
+        this.id = player.getId();
+        this.name = player.getName();
+        this.cards.addAll(player.getCards());
+    }
 
 
     public void addCard(Card card)
@@ -26,7 +35,7 @@ public class Player
     }
 
 
-    public boolean isThereCard(final String name)
+    public boolean doesHeHaveCard(String name)
     {
         return cards.stream()
                 .anyMatch(card -> card.getName().equals(name));
@@ -47,7 +56,7 @@ public class Player
             }
         }
 
-        return null;
+        throw new RuntimeException("Карты с именем '" + nameToDelete + "' нет");
     }
 
 

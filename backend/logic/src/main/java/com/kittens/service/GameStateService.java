@@ -19,7 +19,7 @@ public class GameStateService
     {
         var movesPlayer = gameState.getNowTurn();
 
-        var receivedCard = gameState.getCardDeck().remove(0);
+        var receivedCard = gameState.getCardDeck().remove(gameState.getCardDeck().size() - 1);
         movesPlayer.addCard(receivedCard);
         var gettingAction = receivedCard.getGettingAction();
         gettingAction.doAction(gameState);
@@ -29,20 +29,25 @@ public class GameStateService
     public void changeMove(GameState newGameState)
     {
         if (newGameState.getStepQuantity() == 1)
-            newGameState.setNowTurn(newGameState.getPlayersList().next());
+            newGameState.setNowTurn(newGameState.getPlayersTurn().next());
         else
             newGameState.setStepQuantity(newGameState.getStepQuantity() - 1);
     }
 
 
-    public GameState playCard(GameState oldGameState, Card playerCard, List<Card> suddenCards)
+    public void playCard(GameState gameState, Card playerCard, List<Card> suddenCards)
     {
-        return cardHandler.playCard(oldGameState, playerCard, suddenCards);
+        cardHandler.playCard(gameState, playerCard, suddenCards);
+        gameState.getNowTurn().removeCard(playerCard.getName());
     }
 
 
-    public GameState playCombination(GameState oldGameState, List<Card> combination)
+    public void playCombination(GameState gameState, List<Card> combination)
     {
-        return combinationHandler.playCombination(oldGameState, combination);
+        combinationHandler.playCombination(gameState, combination);
+
+        var nowTurn = gameState.getNowTurn();
+        for (Card combCard : combination)
+            nowTurn.removeCard(combCard.getName());
     }
 }

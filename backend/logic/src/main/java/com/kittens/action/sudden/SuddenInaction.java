@@ -3,11 +3,11 @@ package com.kittens.action.sudden;
 import com.kittens.action.Action;
 
 
-public class Cancel implements SuddenAction
+public class SuddenInaction implements SuddenAction
 {
     @Override
     public Action doSuddenAction(Action oldAction, Action newAction)
     {
-        return oldAction;
+        return newAction;
     }
 }

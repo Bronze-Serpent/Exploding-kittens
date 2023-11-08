@@ -13,19 +13,18 @@ public class StealOfPlayerChoice implements Action
 
 
     @Override
-    public GameState doAction(GameState gameState)
+    public void doAction(GameState gameState)
     {
         var playerIdWhoseCard = Long.valueOf(playerQuestioner.ask(gameState.getNowTurn().getId(), PlayerQuestioner.Question.WHICH_PLAYER));
         var playerWhoseCard = gameState.getPlayerById(playerIdWhoseCard);
         
         if (playerWhoseCard.getCards().size() < 1)
-            return gameState;
+            return;
 
         var cardName = playerQuestioner.ask(playerIdWhoseCard, PlayerQuestioner.Question.WHICH_CARD_TO_GIVE);
 
         var transmittedCard = playerWhoseCard.removeCard(cardName);
         gameState.getNowTurn().addCard(transmittedCard);
 
-        return gameState;
     }
 }

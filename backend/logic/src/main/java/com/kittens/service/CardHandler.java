@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface CardHandler
 {
-    GameState playCard(GameState oldGameState, Card playerCard, List<Card> suddenCards);
+    void playCard(GameState gameState, Card playerCard, List<Card> suddenCards);
 }

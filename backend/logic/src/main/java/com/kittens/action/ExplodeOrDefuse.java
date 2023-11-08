@@ -17,45 +17,46 @@ public class ExplodeOrDefuse implements Action
 
 
     @Override
-    public GameState doAction(GameState gameState)
+    public void doAction(GameState gameState)
     {
-        GameState newGameState = new GameState(gameState);
         Player player = gameState.getNowTurn();
         var explodingCatCard = player.getCards().stream()
                 .filter(card -> card.getName().equals("exploding cat"))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("у игрока должна быть карта котёнка в этот момент"));
 
-        if (player.isThereCard("defuse"))
+        if (player.doesHeHaveCard("defuse"))
         {
             var defusedCard = player.removeCard("defuse");
             player.removeCard("exploding cat");
-            newGameState.addToCardReset(defusedCard);
+            gameState.addToCardReset(defusedCard);
             hideTheKitten(explodingCatCard, gameState);
         }
         else
         {
             player.removeCard("exploding cat");
-            newGameState.addToCardReset(player.getCards());
+            gameState.addToCardReset(player.getCards());
             player.getCards().clear();
             hideTheKitten(explodingCatCard, gameState);
-            newGameState.removePlayer(player.getId());
+            gameState.removePlayer(player.getId());
+            gameState.setStepQuantity(1);
         }
 
-        return newGameState;
     }
 
 
     private void hideTheKitten(Card kittenCard, GameState gameState)
     {
         var placeToHide = playerQuestioner.ask(gameState.getNowTurn().getId(), PlayerQuestioner.Question.WHERE_TO_HIDE);
+        var deckSize = gameState.getCardDeck().size();
 
         if (placeToHide.equals(PlayerQuestioner.NO_RESPONSE))
+        {
+            gameState.getCardDeck().add(ThreadLocalRandom.current().nextInt(0, deckSize), kittenCard);
             return;
+        }
 
-        var hideAnswer = PlayerQuestioner.HideAnswer.valueOf(placeToHide);
-
-        var deckSize = gameState.getCardDeck().size();
+        var hideAnswer = PlayerQuestioner.HideAnswer.valueOf(placeToHide.toUpperCase());
         switch (hideAnswer) {
             case FIRST ->
                 gameState.getCardDeck().add(kittenCard);

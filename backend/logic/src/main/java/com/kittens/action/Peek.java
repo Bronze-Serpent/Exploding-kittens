@@ -5,6 +5,8 @@ import com.kittens.card.Card;
 import com.kittens.action.player.interaction.PlayerInformer;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -16,15 +18,32 @@ public class Peek implements Action
 
 
     @Override
-    public GameState doAction(GameState gameState)
+    public void doAction(GameState gameState)
     {
-        var first3Cards = gameState.getCardDeck().stream()
-                .map(Card::getName)
-                .limit(3)
-                .collect(Collectors.joining(","));
+        List<Card> cardDeck = gameState.getCardDeck();
+        int deckSize = cardDeck.size();
+        Long playerId = gameState.getNowTurn().getId();
 
-        playerInformer.inform(gameState.getNowTurn().getId(), PlayerInformer.Informing.SHOW_CARDS, first3Cards);
+        switch ((3 <= deckSize) ? 3 :
+                (deckSize == 2) ? 2 :
+                (deckSize == 1) ? 1 : 0)
+        {
+            case 3 -> informPlayer(playerId, cardDeck.subList(cardDeck.size() - 3, cardDeck.size()));
+            case 2 -> informPlayer(playerId, cardDeck.subList(0, 2));
+            case 1 -> informPlayer(playerId, cardDeck.subList(0, 1));
+            case 0 -> informPlayer(playerId, Collections.emptyList());
+        }
+    }
 
-        return gameState;
+
+    private void informPlayer(Long playerId, List<Card> cards)
+    {
+        playerInformer.inform(playerId,
+                            PlayerInformer.Informing.SHOW_CARDS,
+                            cards.stream()
+                                    .map(Card::getName)
+                                    .limit(3)
+                                    .collect(Collectors.joining(","))
+        );
     }
 }

@@ -1,7 +1,6 @@
 package com.kittens.action;
 
 import com.kittens.GameState;
-import com.kittens.card.Card;
 import com.kittens.action.player.interaction.PlayerQuestioner;
 import lombok.RequiredArgsConstructor;
 
@@ -16,8 +15,9 @@ public class StealCardFromReset implements Action
 
 
     @Override
-    public GameState doAction(GameState gameState)
+    public void doAction(GameState gameState)
     {
+        // todo через playerInformer что ли рассказать что лежит в сбросе или у игроков постоянно к нему будет доступ, хз
         // TODO: 06.11.2023 наверное, через PlayerInformer отправлять какие карты вообще есть в сбросе (сет от сброса карт)
 
         var transmittedCardName = playerQuestioner.ask(gameState.getNowTurn().getId(), WHICH_CARD_TO_TAKE);
@@ -29,7 +29,5 @@ public class StealCardFromReset implements Action
 
         gameState.getCardReset().remove(transmittedCard);
         gameState.getNowTurn().addCard(transmittedCard);
-
-        return gameState;
     }
 }

@@ -4,7 +4,7 @@ import com.kittens.GameState;
 import com.kittens.card.Card;
 import com.kittens.action.Action;
 import com.kittens.action.Inaction;
-import com.kittens.action.sudden.SuddenCardAction;
+import com.kittens.action.sudden.SuddenAction;
 
 import java.util.List;
 
@@ -13,10 +13,8 @@ public class CardHandlerImpl implements CardHandler
 {
 
     @Override
-    public GameState playCard(GameState oldGameState, Card playerCard, List<Card> suddenCards)
+    public void playCard(GameState gameState, Card playerCard, List<Card> suddenCards)
     {
-        var movesPlayer = oldGameState.getNowTurn();
-
         Action action = playerCard.getPlayingAction();
 
         // применение карт игроков к сыгранной карте
@@ -24,20 +22,18 @@ public class CardHandlerImpl implements CardHandler
         Action userAction = action;
         for (Card suddenCard : suddenCards)
         {
-            SuddenCardAction suddenCardAction = suddenCard.getSuddenPlayingAction();
-            var suddenResult = suddenCardAction.doSuddenAction(suddenCard, oldAction, userAction);
+            SuddenAction suddenAction = suddenCard.getSuddenPlayingAction();
+            var suddenResult = suddenAction.doSuddenAction(oldAction, userAction);
 
             oldAction = userAction;
             userAction = suddenResult;
         }
 
         // применение итогового действия
-        var newGameState = userAction.doAction(oldGameState);
+         userAction.doAction(gameState);
 
-        // добавление сыгранной карты в сброс
-        movesPlayer.removeCard(playerCard.getName());
-        newGameState.addToCardReset(playerCard);
-
-        return newGameState;
+        // добавление сыгранных карт в сброс
+        gameState.addToCardReset(playerCard);
+        gameState.addToCardReset(suddenCards);
     }
 }

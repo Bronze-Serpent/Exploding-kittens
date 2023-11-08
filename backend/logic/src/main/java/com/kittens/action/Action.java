@@ -6,5 +6,5 @@ import com.kittens.GameState;
 public interface Action
 {
 
-    GameState doAction(GameState gameState);
+    void doAction(GameState gameState);
 }

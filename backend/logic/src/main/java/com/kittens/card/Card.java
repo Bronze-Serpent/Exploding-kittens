@@ -1,7 +1,7 @@
 package com.kittens.card;
 
 import com.kittens.action.Action;
-import com.kittens.action.sudden.SuddenCardAction;
+import com.kittens.action.sudden.SuddenAction;
 
 public interface Card
 {
@@ -12,6 +12,6 @@ public interface Card
 
     Action getPlayingAction();
 
-    SuddenCardAction getSuddenPlayingAction();
+    SuddenAction getSuddenPlayingAction();
 
 }

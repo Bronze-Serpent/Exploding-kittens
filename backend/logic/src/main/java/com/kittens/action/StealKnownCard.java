@@ -13,19 +13,17 @@ public class StealKnownCard implements Action
 
 
     @Override
-    public GameState doAction(GameState gameState)
+    public void doAction(GameState gameState)
     {
         var playerIdWhoseCard = Long.valueOf(playerQuestioner.ask(gameState.getNowTurn().getId(), PlayerQuestioner.Question.WHICH_PLAYER));
         var playerWhoseCard = gameState.getPlayerById(playerIdWhoseCard);
 
         var nameOfCardToTake = playerQuestioner.ask(gameState.getNowTurn().getId(), PlayerQuestioner.Question.WHICH_CARD_TO_TAKE);
 
-        var transmittedCard = playerWhoseCard.removeCard(nameOfCardToTake);
-        if (transmittedCard != null)
+        if (playerWhoseCard.doesHeHaveCard(nameOfCardToTake))
         {
+            var transmittedCard = playerWhoseCard.removeCard(nameOfCardToTake);
             gameState.getNowTurn().addCard(transmittedCard);
         }
-
-        return gameState;
     }
 }

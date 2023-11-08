@@ -15,14 +15,14 @@ public class Shuffle implements Action
 
 
     @Override
-    public GameState doAction(GameState gameState)
+    public void doAction(GameState gameState)
     {
         var playerChoice = playerQuestioner.ask(gameState.getNowTurn().getId(), PlayerQuestioner.Question.HOW_TO_SHUFFLE);
 
         if (playerChoice.equals(PlayerQuestioner.NO_RESPONSE))
-            return gameState;
+            return;
 
-        var shuffleAnswer = PlayerQuestioner.ShuffleAnswer.valueOf(playerChoice);
+        var shuffleAnswer = PlayerQuestioner.ShuffleAnswer.valueOf(playerChoice.toUpperCase());
 
         var cardDeck = gameState.getCardDeck();
         switch (shuffleAnswer) {
@@ -33,7 +33,5 @@ public class Shuffle implements Action
             case FIRST_CARD_TO_LAST ->
                 Collections.swap(cardDeck, 0, cardDeck.size() - 1);
         }
-
-        return gameState;
     }
 }
