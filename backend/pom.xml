@@ -9,6 +9,7 @@
         <groupId>com.kittens</groupId>
         <artifactId>exploding-kittens</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath/>
     </parent>
 
     <artifactId>exploding-kittens-backend</artifactId>
@@ -16,4 +17,16 @@
 
     <packaging>pom</packaging>
 
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+
+    <modules>
+        <module>server</module>
+    </modules>
 </project>

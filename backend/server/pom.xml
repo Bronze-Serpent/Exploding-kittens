@@ -3,18 +3,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.5</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>com.kittens</groupId>
+        <artifactId>exploding-kittens-backend</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath/>
     </parent>
-    <groupId>com.kittens</groupId>
     <artifactId>exploding-kittens-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>exploding-kittens-server</name>
     <description>exploding-kittens-server</description>
     <properties>
-        <java.version>17</java.version>
+        <spring-boot.version>3.1.5</spring-boot.version>
 
 
         <docker.registry>kittens</docker.registry>
@@ -33,6 +32,17 @@
             </properties>
         </profile>
     </profiles>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
