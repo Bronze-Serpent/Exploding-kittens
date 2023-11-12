@@ -15,7 +15,7 @@ import lombok.ToString;
 public class OrdinaryCard implements Card
 {
 
-    private final String name;
+    private final CardName name;
 
     private final Action gettingAction;
     private final Action playingAction;

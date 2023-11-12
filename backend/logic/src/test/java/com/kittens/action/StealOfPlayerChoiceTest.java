@@ -3,6 +3,7 @@ package com.kittens.action;
 import com.kittens.Utils;
 import com.kittens.action.player.interaction.PlayerQuestioner;
 import com.kittens.action.sudden.SuddenInaction;
+import com.kittens.card.CardName;
 import com.kittens.card.OrdinaryCard;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static com.kittens.card.CardName.CATTERMELON;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 
@@ -30,12 +32,12 @@ class StealOfPlayerChoiceTest
         Utils.set2PlayersWithCards(gameState);
         var oldGameState = Utils.copy(gameState);
 
-        var stealCard = new OrdinaryCard("testCard", new Inaction(), new Inaction(), new SuddenInaction());
+        var stealCard = new OrdinaryCard(CATTERMELON, new Inaction(), new Inaction(), new SuddenInaction());
         gameState.getPlayerById(2L).addCard(stealCard);
 
         doReturn("2")
                 .when(playerQuestioner).ask(1L, PlayerQuestioner.Question.WHICH_PLAYER);
-        doReturn("testCard")
+        doReturn(CATTERMELON.getWriting())
                 .when(playerQuestioner).ask(2L, PlayerQuestioner.Question.WHICH_CARD_TO_GIVE);
 
         stealOfPlayerChoice.doAction(gameState);
@@ -48,7 +50,7 @@ class StealOfPlayerChoiceTest
         assertThat(gameState.getNowTurn()).isEqualTo(oldGameState.getNowTurn());
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
 
-        gameState.getPlayerById(1L).removeCard("testCard");
+        gameState.getPlayerById(1L).removeCard(CATTERMELON);
         assertThat(gameState.getPlayersTurn().getSourceList()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSourceList());
     }
 }

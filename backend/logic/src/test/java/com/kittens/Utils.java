@@ -6,12 +6,15 @@ import com.kittens.action.TransferringMove;
 import com.kittens.action.sudden.Cancel;
 import com.kittens.action.sudden.SuddenInaction;
 import com.kittens.card.Card;
+import com.kittens.card.CardName;
 import com.kittens.card.OrdinaryCard;
 import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.kittens.card.CardName.*;
 
 
 @UtilityClass
@@ -36,13 +39,13 @@ public class Utils
         var skippingMove = new SkippingMove();
         var transferringMove = new TransferringMove();
 
-        var get_lost = new OrdinaryCard("get lost", inaction, skippingMove, suddenInaction);
-        var attack = new OrdinaryCard("attack", inaction, transferringMove, suddenInaction);
-        var defuse = new OrdinaryCard("defuse", inaction, inaction, suddenInaction);
-        var no = new OrdinaryCard("no", inaction, inaction, cancel);
-        var hairy_catato = new OrdinaryCard("hairy catato", inaction, inaction, suddenInaction);
-        var tacocat = new OrdinaryCard("tacocat", inaction, inaction, suddenInaction);
-        var beardcat = new OrdinaryCard("beardcat", inaction, inaction, suddenInaction);
+        var get_lost = new OrdinaryCard(GET_LOST, inaction, skippingMove, suddenInaction);
+        var attack = new OrdinaryCard(ATTACK, inaction, transferringMove, suddenInaction);
+        var defuse = new OrdinaryCard(DEFUSE, inaction, inaction, suddenInaction);
+        var no = new OrdinaryCard(NO, inaction, inaction, cancel);
+        var hairy_catato = new OrdinaryCard(HAIRY_CATATO, inaction, inaction, suddenInaction);
+        var tacocat = new OrdinaryCard(TACOCAT, inaction, inaction, suddenInaction);
+        var beardcat = new OrdinaryCard(BEARDCAT, inaction, inaction, suddenInaction);
 
         List<Card> cardDeck = new ArrayList<>();
         cardDeck.add(get_lost);

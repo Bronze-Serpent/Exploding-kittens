@@ -3,6 +3,7 @@ package com.kittens.action;
 import com.kittens.GameState;
 import com.kittens.card.Card;
 import com.kittens.action.player.interaction.PlayerInformer;
+import com.kittens.card.CardName;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Collections;
@@ -35,6 +36,11 @@ public class Peek implements Action
         }
     }
 
+    @Override
+    public String getName() {
+        return "peek";
+    }
+
 
     private void informPlayer(Long playerId, List<Card> cards)
     {
@@ -42,6 +48,7 @@ public class Peek implements Action
                             PlayerInformer.Informing.SHOW_CARDS,
                             cards.stream()
                                     .map(Card::getName)
+                                    .map(CardName::getWriting)
                                     .limit(3)
                                     .collect(Collectors.joining(","))
         );

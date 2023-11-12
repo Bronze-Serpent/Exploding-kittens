@@ -6,7 +6,7 @@ import com.kittens.action.sudden.SuddenAction;
 public interface Card
 {
 
-    String getName();
+    CardName getName();
 
     Action getGettingAction();
 

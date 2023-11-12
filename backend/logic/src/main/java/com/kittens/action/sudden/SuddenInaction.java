@@ -10,4 +10,9 @@ public class SuddenInaction implements SuddenAction
     {
         return newAction;
     }
+
+    @Override
+    public String getName() {
+        return "sudden inaction";
+    }
 }

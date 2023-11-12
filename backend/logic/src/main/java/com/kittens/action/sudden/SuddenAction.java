@@ -10,4 +10,6 @@ import com.kittens.action.Action;
 public interface SuddenAction
 {
     Action doSuddenAction(Action oldAction, Action newAction);
+
+    String getName();
 }

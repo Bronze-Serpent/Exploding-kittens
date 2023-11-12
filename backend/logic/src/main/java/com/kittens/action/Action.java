@@ -7,4 +7,6 @@ public interface Action
 {
 
     void doAction(GameState gameState);
+
+    String getName();
 }

@@ -10,4 +10,9 @@ public class Inaction implements Action
     public void doAction(GameState gameState)
     {
     }
+
+    @Override
+    public String getName() {
+        return "inaction";
+    }
 }

@@ -6,12 +6,15 @@ import com.kittens.action.Inaction;
 import com.kittens.action.SkippingMove;
 import com.kittens.action.sudden.Cancel;
 import com.kittens.action.sudden.SuddenInaction;
+import com.kittens.card.CardName;
 import com.kittens.card.OrdinaryCard;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
 
+import static com.kittens.card.CardName.GET_LOST;
+import static com.kittens.card.CardName.NO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -31,7 +34,7 @@ class CardHandlerImplTest
         var inaction = new Inaction();
         var suddenInaction = new SuddenInaction();
         var getLost = new SkippingMove();
-        var card = new OrdinaryCard("get lost", inaction, getLost, suddenInaction);
+        var card = new OrdinaryCard(GET_LOST, inaction, getLost, suddenInaction);
 
         cardHandler.playCard(gameState, card, Collections.emptyList());
 
@@ -54,9 +57,9 @@ class CardHandlerImplTest
         var inaction = new Inaction();
         var suddenInaction = new SuddenInaction();
         var getLost = new SkippingMove();
-        var card = new OrdinaryCard("get lost", inaction, getLost, suddenInaction);
+        var card = new OrdinaryCard(GET_LOST, inaction, getLost, suddenInaction);
         var cancel = new Cancel();
-        var no = new OrdinaryCard("no", inaction, inaction, cancel);
+        var no = new OrdinaryCard(NO, inaction, inaction, cancel);
 
         cardHandler.playCard(gameState, card, List.of(no));
 
@@ -81,9 +84,9 @@ class CardHandlerImplTest
         var inaction = new Inaction();
         var suddenInaction = new SuddenInaction();
         var getLost = new SkippingMove();
-        var card = new OrdinaryCard("get lost", inaction, getLost, suddenInaction);
+        var card = new OrdinaryCard(GET_LOST, inaction, getLost, suddenInaction);
         var cancel = new Cancel();
-        var no = new OrdinaryCard("no", inaction, inaction, cancel);
+        var no = new OrdinaryCard(NO, inaction, inaction, cancel);
 
         cardHandler.playCard(gameState, card, List.of(no, no));
 

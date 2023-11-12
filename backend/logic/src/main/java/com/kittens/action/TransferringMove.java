@@ -12,4 +12,9 @@ public class TransferringMove implements Action
         gameState.setNowTurn(gameState.getPlayersTurn().next());
         gameState.setStepQuantity(gameState.getStepQuantity() + 1);
     }
+
+    @Override
+    public String getName() {
+        return "transferring move";
+    }
 }

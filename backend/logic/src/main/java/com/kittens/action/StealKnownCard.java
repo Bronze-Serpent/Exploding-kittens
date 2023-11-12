@@ -2,6 +2,7 @@ package com.kittens.action;
 
 import com.kittens.GameState;
 import com.kittens.action.player.interaction.PlayerQuestioner;
+import com.kittens.card.CardName;
 import lombok.RequiredArgsConstructor;
 
 
@@ -18,12 +19,17 @@ public class StealKnownCard implements Action
         var playerIdWhoseCard = Long.valueOf(playerQuestioner.ask(gameState.getNowTurn().getId(), PlayerQuestioner.Question.WHICH_PLAYER));
         var playerWhoseCard = gameState.getPlayerById(playerIdWhoseCard);
 
-        var nameOfCardToTake = playerQuestioner.ask(gameState.getNowTurn().getId(), PlayerQuestioner.Question.WHICH_CARD_TO_TAKE);
-
-        if (playerWhoseCard.doesHeHaveCard(nameOfCardToTake))
+        var stringTakenCardName = playerQuestioner.ask(gameState.getNowTurn().getId(), PlayerQuestioner.Question.WHICH_CARD_TO_TAKE);
+        var cardName = CardName.fromString(stringTakenCardName);
+        if (playerWhoseCard.doesHeHaveCard(cardName))
         {
-            var transmittedCard = playerWhoseCard.removeCard(nameOfCardToTake);
+            var transmittedCard = playerWhoseCard.removeCard(cardName);
             gameState.getNowTurn().addCard(transmittedCard);
         }
+    }
+
+    @Override
+    public String getName() {
+        return "steal known card";
     }
 }

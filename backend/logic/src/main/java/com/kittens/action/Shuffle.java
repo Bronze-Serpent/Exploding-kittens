@@ -34,4 +34,9 @@ public class Shuffle implements Action
                 Collections.swap(cardDeck, 0, cardDeck.size() - 1);
         }
     }
+
+    @Override
+    public String getName() {
+        return "shuffle";
+    }
 }

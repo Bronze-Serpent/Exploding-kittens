@@ -1,6 +1,7 @@
 package com.kittens;
 
 import com.kittens.card.Card;
+import com.kittens.card.CardName;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -35,14 +36,14 @@ public class Player
     }
 
 
-    public boolean doesHeHaveCard(String name)
+    public boolean doesHeHaveCard(CardName name)
     {
         return cards.stream()
                 .anyMatch(card -> card.getName().equals(name));
     }
 
 
-    public Card removeCard(String nameToDelete)
+    public Card removeCard(CardName nameToDelete)
     {
         Iterator<Card> cardIterator = cards.iterator();
 

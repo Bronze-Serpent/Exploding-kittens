@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static com.kittens.card.CardName.CATTERMELON;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 
@@ -32,7 +33,7 @@ class StealUnknownCardTest
         Utils.set2PlayersWithCards(gameState);
         var oldGameState = Utils.copy(gameState);
 
-        var stealCard = new OrdinaryCard("testCard", new Inaction(), new Inaction(), new SuddenInaction());
+        var stealCard = new OrdinaryCard(CATTERMELON, new Inaction(), new Inaction(), new SuddenInaction());
         gameState.getPlayerById(2L).addCard(stealCard);
 
         doReturn("2")
@@ -50,7 +51,7 @@ class StealUnknownCardTest
         assertThat(gameState.getNowTurn()).isEqualTo(oldGameState.getNowTurn());
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
 
-        gameState.getPlayerById(1L).removeCard("testCard");
+        gameState.getPlayerById(1L).removeCard(CATTERMELON);
         assertThat(gameState.getPlayersTurn().getSourceList()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSourceList());
     }
 }

@@ -16,4 +16,9 @@ public class SkippingMove implements Action
         gameState.setNowTurn(nowTurn);
         gameState.setStepQuantity(stepQuantity);
     }
+
+    @Override
+    public String getName() {
+        return "skipping move";
+    }
 }

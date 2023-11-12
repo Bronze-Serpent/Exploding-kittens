@@ -23,6 +23,10 @@ public class StealUnknownCard implements Action
         var numOfTakenCard = Integer.parseInt(playerQuestioner.ask(gameState.getNowTurn().getId(), PlayerQuestioner.Question.WHICH_NUM_OF_CARD_TAKE));
         var transmittedCard = playerWhoseCard.removeCard(numOfTakenCard);
         gameState.getNowTurn().addCard(transmittedCard);
+    }
 
+    @Override
+    public String getName() {
+        return "steal unknown card";
     }
 }

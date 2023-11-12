@@ -10,4 +10,10 @@ public class Cancel implements SuddenAction
     {
         return oldAction;
     }
+
+    @Override
+    public String getName()
+    {
+        return "cancel";
+    }
 }

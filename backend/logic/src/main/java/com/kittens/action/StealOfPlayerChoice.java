@@ -2,6 +2,7 @@ package com.kittens.action;
 
 import com.kittens.GameState;
 import com.kittens.action.player.interaction.PlayerQuestioner;
+import com.kittens.card.CardName;
 import lombok.RequiredArgsConstructor;
 
 
@@ -23,8 +24,13 @@ public class StealOfPlayerChoice implements Action
 
         var cardName = playerQuestioner.ask(playerIdWhoseCard, PlayerQuestioner.Question.WHICH_CARD_TO_GIVE);
 
-        var transmittedCard = playerWhoseCard.removeCard(cardName);
+        var transmittedCard = playerWhoseCard.removeCard(CardName.fromString(cardName));
         gameState.getNowTurn().addCard(transmittedCard);
 
+    }
+
+    @Override
+    public String getName() {
+        return "steal of player choice";
     }
 }

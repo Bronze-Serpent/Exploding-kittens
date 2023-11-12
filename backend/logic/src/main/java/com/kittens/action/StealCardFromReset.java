@@ -2,6 +2,7 @@ package com.kittens.action;
 
 import com.kittens.GameState;
 import com.kittens.action.player.interaction.PlayerQuestioner;
+import com.kittens.card.CardName;
 import lombok.RequiredArgsConstructor;
 
 import static com.kittens.action.player.interaction.PlayerQuestioner.Question.WHICH_CARD_TO_TAKE;
@@ -20,7 +21,8 @@ public class StealCardFromReset implements Action
         // todo через playerInformer что ли рассказать что лежит в сбросе или у игроков постоянно к нему будет доступ, хз
         // TODO: 06.11.2023 наверное, через PlayerInformer отправлять какие карты вообще есть в сбросе (сет от сброса карт)
 
-        var transmittedCardName = playerQuestioner.ask(gameState.getNowTurn().getId(), WHICH_CARD_TO_TAKE);
+        var transmittedStrCardName = playerQuestioner.ask(gameState.getNowTurn().getId(), WHICH_CARD_TO_TAKE);
+        var transmittedCardName = CardName.fromString(transmittedStrCardName);
 
         var transmittedCard = gameState.getCardReset().stream()
                 .filter(cardFromReset -> cardFromReset.getName().equals(transmittedCardName))
@@ -29,5 +31,10 @@ public class StealCardFromReset implements Action
 
         gameState.getCardReset().remove(transmittedCard);
         gameState.getNowTurn().addCard(transmittedCard);
+    }
+
+    @Override
+    public String getName() {
+        return "steal card from reset";
     }
 }
