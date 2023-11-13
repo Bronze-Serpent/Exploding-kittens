@@ -1,0 +1,35 @@
+version: "3.9"
+name: exploding-kittens
+services:
+  exploding-kittens-postgres:
+    image: postgres:15.0
+    container_name: exploding-kittens-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: "exploding-kittens"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    networks:
+      - exploding-kittens
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./postgresql/dev/data:/var/lib/postgresql/data
+  exploding-kittens-server:
+    image: kittens/exploding-kittens-server:develop
+    container_name: exploding-kittens-server
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://exploding-kittens-postgres:5432/exploding-kittens
+      SPRING_DATASOURCE_username: postgres
+      SPRING_DATASOURCE_password: postgres
+    networks:
+      - exploding-kittens
+    ports:
+      - 8080:8080
+
+networks:
+  exploding-kittens:
+    driver: bridge
+    name: exploding-kittens
