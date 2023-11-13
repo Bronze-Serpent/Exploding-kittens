@@ -9,6 +9,7 @@
         <groupId>com.kittens</groupId>
         <artifactId>exploding-kittens-backend</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../</relativePath>
     </parent>
 
     <artifactId>exploding-kittens-logic</artifactId>
@@ -17,9 +18,6 @@
 
     <!--    не работает с java выше 16. Из-за lombok, но как это исправить...-->
     <properties>
-        <maven.compiler.source>16</maven.compiler.source>
-        <maven.compiler.target>16</maven.compiler.target>
-
         <junit.jupiter.version>5.9.2</junit.jupiter.version>
         <junit.platform.version>1.8.1</junit.platform.version>
     </properties>
