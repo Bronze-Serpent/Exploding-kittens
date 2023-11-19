@@ -12,5 +12,7 @@ public interface UserService {
 
     Optional<User> getByLogin(String login);
 
+    Boolean existsByLogin(String login);
+
     User addDynamicPassword(User user, List<Integer> dynamicPasswords);
 }

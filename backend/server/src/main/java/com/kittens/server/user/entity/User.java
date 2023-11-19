@@ -2,10 +2,7 @@ package com.kittens.server.user.entity;
 
 import com.kittens.server.common.entity.AbstractEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
@@ -14,8 +11,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "user_account")
-@Data
 @SuperBuilder
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)

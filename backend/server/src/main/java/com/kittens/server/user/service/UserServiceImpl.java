@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.apache.tomcat.util.security.MD5Encoder;
+import org.postgresql.util.MD5Digest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserService {
     public Boolean registerUser(RegistrationUserDto dto) {
         User user = User.builder()
                 .login(dto.getLogin())
-                .passwordHash(MD5Encoder.encode(dto.getPassword().getBytes()))
+                .passwordHash(new String(MD5Digest.encode(dto.getLogin().getBytes(), dto.getPassword().getBytes(), new byte[0])))
                 .dynamicPasswords(new ArrayList<>())
                 .build();
         this.addDynamicPasswordWithoutSave(user, dto.getPasswordEnterValueTime());
@@ -46,9 +47,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    @Override
+    public Boolean existsByLogin(String login) {
+        return userRepository.existsByLogin(login);
+    }
+
     private void addDynamicPasswordWithoutSave(User user, List<Integer> dynamicPasswords) {
         user.getDynamicPasswords().add(UserDynamicPassword.builder()
-                .enterDurations(dynamicPasswords)
+                .enterDurations(dynamicPasswords.toArray(new Integer[0]))
+                .user(user)
                 .build());
     }
 }

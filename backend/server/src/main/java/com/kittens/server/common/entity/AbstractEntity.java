@@ -1,25 +1,23 @@
 package com.kittens.server.common.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 
-@Data
-@SuperBuilder
+@MappedSuperclass
+@Getter
+@Setter
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PROTECTED)
+@SuperBuilder
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@EntityListeners(AuditingEntityListener.class)
 public class AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
