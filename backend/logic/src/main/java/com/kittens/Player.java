@@ -19,13 +19,11 @@ import java.util.List;
 public class Player
 {
     private final Long id;
-    private final String name;
     private final List<Card> cards = new ArrayList<>();
 
     public Player(Player player)
     {
         this.id = player.getId();
-        this.name = player.getName();
         this.cards.addAll(player.getCards());
     }
 

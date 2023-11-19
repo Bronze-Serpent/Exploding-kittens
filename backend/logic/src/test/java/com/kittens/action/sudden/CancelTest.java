@@ -20,6 +20,6 @@ class CancelTest
 
         var resultAction = cancel.doSuddenAction(action1, action2);
 
-        assertThat(action2).isEqualTo(action2);
+        assertThat(resultAction).isEqualTo(action1);
     }
 }

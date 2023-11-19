@@ -16,59 +16,17 @@
     <version>1.0-SNAPSHOT</version>
 
 
-    <!--    не работает с java выше 16. Из-за lombok, но как это исправить...-->
-    <properties>
-        <junit.jupiter.version>5.9.2</junit.jupiter.version>
-        <junit.platform.version>1.8.1</junit.platform.version>
-    </properties>
-
-    <!--    это тоже не помогает в проблеме с lombok -->
-    <!--    <build>-->
-    <!--        <pluginManagement>-->
-    <!--            <plugins>-->
-    <!--                <plugin>-->
-    <!--                    <groupId>org.apache.maven.plugins</groupId>-->
-    <!--                    <artifactId>maven-compiler-plugin</artifactId>-->
-    <!--                    <version>3.6.1</version>-->
-    <!--                    <configuration>-->
-    <!--                        <annotationProcessorPaths>-->
-    <!--                            <path>-->
-    <!--                                <groupId>org.projectlombok</groupId>-->
-    <!--                                <artifactId>lombok</artifactId>-->
-    <!--                                <version>1.18.30</version>-->
-    <!--                            </path>-->
-    <!--                        </annotationProcessorPaths>-->
-    <!--                    </configuration>-->
-    <!--                </plugin>-->
-    <!--            </plugins>-->
-    <!--        </pluginManagement>-->
-    <!--    </build>-->
-
-
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.30</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <version>${junit.jupiter.version}</version>
+            <version>5.9.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -85,5 +43,25 @@
         </dependency>
 
     </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>15</source>
+                    <target>15</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
