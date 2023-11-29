@@ -1,9 +1,9 @@
 package com.kittens.action;
 
 import com.kittens.Utils;
+import com.kittens.action.player.interaction.PlayerInformer;
 import com.kittens.action.player.interaction.PlayerQuestioner;
 import com.kittens.action.sudden.SuddenInaction;
-import com.kittens.card.CardName;
 import com.kittens.card.OrdinaryCard;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.AssertionsForClassTypes;
@@ -30,6 +30,9 @@ class ExplodeOrDefuseTest
     @Mock
     private PlayerQuestioner playerQuestioner;
 
+    @Mock
+    private PlayerInformer playerInformer;
+
     @InjectMocks
     private ExplodeOrDefuse explodeOrDefuse;
 
@@ -40,7 +43,7 @@ class ExplodeOrDefuseTest
         var gameState = Utils.createGameState();
         Utils.set2PlayersWithCards(gameState);
 
-        AssertionsForClassTypes.assertThat(gameState.getPlayerById(1L).doesHeHaveCard(EXPLODING_KITTEN)).isFalse();
+        AssertionsForClassTypes.assertThat(gameState.getPlayerById(1L).hasACard(EXPLODING_KITTEN)).isFalse();
         assertThrows(RuntimeException.class, () -> explodeOrDefuse.doAction(gameState));
     }
 
@@ -91,7 +94,7 @@ class ExplodeOrDefuseTest
         gameState.getPlayerById(1L).addCard(exploding_cat);
         gameState.setStepQuantity(3);
 
-        Assertions.assertThat(gameState.getPlayerById(1L).doesHeHaveCard(DEFUSE)).isFalse();
+        Assertions.assertThat(gameState.getPlayerById(1L).hasACard(DEFUSE)).isFalse();
         explodeOrDefuse.doAction(gameState);
 
         Assertions.assertThat(gameState.getStepQuantity()).isEqualTo(1);

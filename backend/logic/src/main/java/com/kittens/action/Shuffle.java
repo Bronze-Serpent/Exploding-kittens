@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Collections;
 
+import static com.kittens.action.player.interaction.PlayerQuestioner.Question.HOW_TO_SHUFFLE;
+
 
 @RequiredArgsConstructor
 public class Shuffle implements Action
@@ -17,7 +19,10 @@ public class Shuffle implements Action
     @Override
     public void doAction(GameState gameState)
     {
-        var playerChoice = playerQuestioner.ask(gameState.getNowTurn().getId(), PlayerQuestioner.Question.HOW_TO_SHUFFLE);
+        if (GameStateUtils.isCardDeckEmpty(gameState))
+            return;
+
+        var playerChoice = playerQuestioner.ask(gameState.getNowTurn().getId(), HOW_TO_SHUFFLE);
 
         if (playerChoice.equals(PlayerQuestioner.NO_RESPONSE))
             return;

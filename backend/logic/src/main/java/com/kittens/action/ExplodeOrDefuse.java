@@ -2,13 +2,16 @@ package com.kittens.action;
 
 import com.kittens.GameState;
 import com.kittens.Player;
+import com.kittens.action.player.interaction.PlayerInformer;
 import com.kittens.card.Card;
 import com.kittens.action.player.interaction.PlayerQuestioner;
-import com.kittens.card.CardName;
 import lombok.RequiredArgsConstructor;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import static com.kittens.action.GameStateUtils.getExplodingKittenFrom;
+import static com.kittens.action.player.interaction.PlayerInformer.Informing.DEFUSED_KITTEN;
+import static com.kittens.action.player.interaction.PlayerInformer.Informing.EXPLODED;
 import static com.kittens.action.player.interaction.PlayerQuestioner.*;
 import static com.kittens.card.CardName.*;
 import static com.kittens.card.CardName.DEFUSE;
@@ -19,31 +22,37 @@ public class ExplodeOrDefuse implements Action
 {
 
     private final PlayerQuestioner playerQuestioner;
+    private final PlayerInformer playerInformer;
 
 
     @Override
     public void doAction(GameState gameState)
     {
         Player player = gameState.getNowTurn();
-        var explodingCatCard = player.getCards().stream()
-                .filter(card -> card.getName().equals(EXPLODING_KITTEN))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("у игрока должна быть карта котёнка в этот момент"));
+        var explodingCatCard = getExplodingKittenFrom(player);
 
-        if (player.doesHeHaveCard(DEFUSE))
+        if (player.hasACard(DEFUSE))
         {
             var defusedCard = player.removeCard(DEFUSE);
-            player.removeCard(EXPLODING_KITTEN);
+
             gameState.addToCardReset(defusedCard);
+            playerInformer.inform(player.getId(), DEFUSED_KITTEN);
+
+            player.removeCard(EXPLODING_KITTEN);
             hideTheKitten(explodingCatCard, gameState);
         }
         else
         {
+
             player.removeCard(EXPLODING_KITTEN);
+            hideTheKitten(explodingCatCard, gameState);
+
             gameState.addToCardReset(player.getCards());
             player.getCards().clear();
-            hideTheKitten(explodingCatCard, gameState);
+
             gameState.removePlayer(player.getId());
+            playerInformer.inform(player.getId(), EXPLODED);
+
             gameState.setStepQuantity(1);
         }
 

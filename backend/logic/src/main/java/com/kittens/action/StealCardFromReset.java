@@ -1,10 +1,14 @@
 package com.kittens.action;
 
 import com.kittens.GameState;
+import com.kittens.Player;
+import com.kittens.action.player.interaction.PlayerInformer;
 import com.kittens.action.player.interaction.PlayerQuestioner;
 import com.kittens.card.CardName;
 import lombok.RequiredArgsConstructor;
 
+import static com.kittens.action.GameStateUtils.isResetEmpty;
+import static com.kittens.action.player.interaction.PlayerInformer.Informing.CARD_RECEIVED;
 import static com.kittens.action.player.interaction.PlayerQuestioner.Question.WHICH_CARD_TO_TAKE;
 
 
@@ -13,24 +17,26 @@ public class StealCardFromReset implements Action
 {
 
     private final PlayerQuestioner playerQuestioner;
+    private final PlayerInformer playerInformer;
 
 
+    // todo у игроков постоянно должен быть доступ к сбросу, чтобы они могли посмотреть что в нём
     @Override
     public void doAction(GameState gameState)
     {
-        // todo через playerInformer что ли рассказать что лежит в сбросе или у игроков постоянно к нему будет доступ, хз
-        // TODO: 06.11.2023 наверное, через PlayerInformer отправлять какие карты вообще есть в сбросе (сет от сброса карт)
+        if (isResetEmpty(gameState))
+            return;
 
-        var transmittedStrCardName = playerQuestioner.ask(gameState.getNowTurn().getId(), WHICH_CARD_TO_TAKE);
+        Player nowTurn = gameState.getNowTurn();
+        var transmittedStrCardName = playerQuestioner.ask(nowTurn.getId(), WHICH_CARD_TO_TAKE);
         var transmittedCardName = CardName.fromString(transmittedStrCardName);
 
-        var transmittedCard = gameState.getCardReset().stream()
-                .filter(cardFromReset -> cardFromReset.getName().equals(transmittedCardName))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Карта с именем: " + transmittedCardName + " должна быть в сбросе."));
+        var transmittedCard = GameStateUtils.getCardFromReset(gameState, transmittedCardName);
 
         gameState.getCardReset().remove(transmittedCard);
-        gameState.getNowTurn().addCard(transmittedCard);
+        nowTurn.addCard(transmittedCard);
+
+        playerInformer.inform(nowTurn.getId(), CARD_RECEIVED, transmittedCard.getName().getWriting());
     }
 
     @Override

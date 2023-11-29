@@ -1,9 +1,9 @@
 package com.kittens.action;
 
 import com.kittens.Utils;
+import com.kittens.action.player.interaction.PlayerInformer;
 import com.kittens.action.player.interaction.PlayerQuestioner;
 import com.kittens.action.sudden.SuddenInaction;
-import com.kittens.card.CardName;
 import com.kittens.card.OrdinaryCard;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,7 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.kittens.card.CardName.BEARDCAT;
 import static com.kittens.card.CardName.TACOCAT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
@@ -22,6 +21,9 @@ class StealCardFromResetTest
 {
     @Mock
     private PlayerQuestioner playerQuestioner;
+
+    @Mock
+    private PlayerInformer playerInformer;
 
     @InjectMocks
     private StealCardFromReset stealCardFromReset;
@@ -42,7 +44,7 @@ class StealCardFromResetTest
 
         stealCardFromReset.doAction(gameState);
 
-        assertThat(gameState.getPlayerById(1L).doesHeHaveCard(stealCard.getName())).isTrue();
+        assertThat(gameState.getPlayerById(1L).hasACard(stealCard.getName())).isTrue();
 
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
         assertThat(gameState.getNowTurn()).isEqualTo(oldGameState.getNowTurn());

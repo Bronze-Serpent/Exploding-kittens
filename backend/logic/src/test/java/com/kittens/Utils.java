@@ -22,7 +22,7 @@ public class Utils
 {
     public GameState createGameState()
     {
-        var loopingList = new LoopingList<>(List.of(new Player(-1L, "test")));
+        var loopingList = new LoopingList<>(List.of(new Player(-1L)));
         return new GameState(
                 loopingList,
                 new LinkedList<>(),
@@ -59,11 +59,11 @@ public class Utils
         cardReset.add(defuse);
         cardReset.add(no);
 
-        var pl1 = new Player(1L, "pl1");
+        var pl1 = new Player(1L);
         pl1.addCard(beardcat);
         pl1.addCard(hairy_catato);
         pl1.addCard(get_lost);
-        var pl2 = new Player(2L, "pl2");
+        var pl2 = new Player(2L);
         pl2.addCard(beardcat);
         pl2.addCard(hairy_catato);
         pl2.addCard(no);
@@ -80,8 +80,7 @@ public class Utils
         List<Player> players = new ArrayList<>();
         for (Player pl :gameState.getPlayersTurn().getSourceList())
         {
-            Player player = new Player(pl.getId(), pl.getName());
-            player.getCards().addAll(pl.getCards());
+            Player player = new Player(pl);
             players.add(player);
         }
         return new GameState(

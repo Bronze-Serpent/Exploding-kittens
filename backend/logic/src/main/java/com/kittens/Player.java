@@ -34,7 +34,7 @@ public class Player
     }
 
 
-    public boolean doesHeHaveCard(CardName name)
+    public boolean hasACard(CardName name)
     {
         return cards.stream()
                 .anyMatch(card -> card.getName().equals(name));
