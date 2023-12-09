@@ -1,20 +1,22 @@
 package com.kittens;
 
-import com.kittens.action.Inaction;
-import com.kittens.action.SkippingMove;
-import com.kittens.action.TransferringMove;
-import com.kittens.action.sudden.Cancel;
-import com.kittens.action.sudden.SuddenInaction;
-import com.kittens.card.Card;
-import com.kittens.card.CardName;
-import com.kittens.card.OrdinaryCard;
+import com.kittens.logic.GameState;
+import com.kittens.logic.LoopingList;
+import com.kittens.logic.Player;
+import com.kittens.logic.action.Inaction;
+import com.kittens.logic.action.SkippingMove;
+import com.kittens.logic.action.TransferringMove;
+import com.kittens.logic.action.sudden.Cancel;
+import com.kittens.logic.action.sudden.SuddenInaction;
+import com.kittens.logic.card.Card;
+import com.kittens.logic.card.OrdinaryCard;
 import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.kittens.card.CardName.*;
+import static com.kittens.logic.card.CardName.*;
 
 
 @UtilityClass
@@ -22,7 +24,7 @@ public class Utils
 {
     public GameState createGameState()
     {
-        var loopingList = new LoopingList<>(List.of(new Player(-1L)));
+        var loopingList = new LoopingList<>(List.of(new Player(-1)));
         return new GameState(
                 loopingList,
                 new LinkedList<>(),
@@ -59,11 +61,11 @@ public class Utils
         cardReset.add(defuse);
         cardReset.add(no);
 
-        var pl1 = new Player(1L);
+        var pl1 = new Player(1);
         pl1.addCard(beardcat);
         pl1.addCard(hairy_catato);
         pl1.addCard(get_lost);
-        var pl2 = new Player(2L);
+        var pl2 = new Player(2);
         pl2.addCard(beardcat);
         pl2.addCard(hairy_catato);
         pl2.addCard(no);
