@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @Getter
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "id")
 @ToString
 @RequiredArgsConstructor
 public class Player

@@ -43,14 +43,13 @@ public class ExplodeOrDefuse implements Action
         }
         else
         {
-
             player.removeCard(EXPLODING_KITTEN);
             hideTheKitten(explodingCatCard, gameState);
 
             gameState.addToCardReset(player.getCards());
             player.getCards().clear();
 
-            gameState.removePlayer(player.getId());
+            gameState.removePlayer(player);
             playerInformer.inform(player.getId(), EXPLODED);
 
             gameState.setStepQuantity(1);

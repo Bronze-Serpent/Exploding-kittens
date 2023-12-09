@@ -3,11 +3,8 @@ package com.kittens.logic.service;
 
 import com.kittens.logic.GameState;
 import com.kittens.logic.Player;
-import com.kittens.Utils;
+import com.kittens.logic.Utils;
 import com.kittens.logic.action.Inaction;
-import com.kittens.logic.action.SkippingMove;
-import com.kittens.logic.action.TransferringMove;
-import com.kittens.logic.action.sudden.Cancel;
 import com.kittens.logic.action.sudden.SuddenInaction;
 import com.kittens.logic.card.Card;
 import com.kittens.logic.card.CardName;
@@ -22,7 +19,6 @@ import java.util.Map;
 import static com.kittens.logic.card.CardName.*;
 import static com.kittens.logic.card.CardName.HAIRY_CATATO;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -60,7 +56,7 @@ class GameStateUtilsTest
 
         GameState generatedGameState = gameStateUtils.initGame(cards, players, numOfCards, firstPlayer);
 
-        for (Player player : generatedGameState.getPlayersTurn().getSourceList())
+        for (Player player : generatedGameState.getPlayersTurn().getConsistency())
         {
             assertThat(player.getCards()).contains(defuse);
             assertThat(player.getCards()).hasSize(numOfCards);
@@ -97,7 +93,7 @@ class GameStateUtilsTest
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
 
         gameState.getPlayerById(1).removeCard(TACOCAT);
-        assertThat(gameState.getPlayersTurn().getSourceList()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSourceList());
+        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
     }
 
     @Test
@@ -114,7 +110,7 @@ class GameStateUtilsTest
         assertEquals(gameState.getNowTurn(), nextPlayer);
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
-        assertThat(gameState.getPlayersTurn().getSourceList()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSourceList());
+        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
     }
 
     @Test
@@ -131,7 +127,7 @@ class GameStateUtilsTest
         assertEquals(gameState.getNowTurn(), oldGameState.getNowTurn());
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
-        assertThat(gameState.getPlayersTurn().getSourceList()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSourceList());
+        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
     }
 
     @Test
@@ -151,7 +147,7 @@ class GameStateUtilsTest
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
         assertEquals(gameState.getNowTurn(), oldGameState.getNowTurn());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
-        assertThat(gameState.getPlayersTurn().getSourceList()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSourceList());
+        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
 
         oldGameState.addToCardReset(card);
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());

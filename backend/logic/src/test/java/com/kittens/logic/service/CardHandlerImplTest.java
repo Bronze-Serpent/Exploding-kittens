@@ -1,7 +1,7 @@
 package com.kittens.logic.service;
 
 import com.kittens.logic.Player;
-import com.kittens.Utils;
+import com.kittens.logic.Utils;
 import com.kittens.logic.action.Inaction;
 import com.kittens.logic.action.SkippingMove;
 import com.kittens.logic.action.sudden.Cancel;
@@ -39,7 +39,7 @@ class CardHandlerImplTest
 
         assertEquals(gameState.getNowTurn(), nexPlayer);
         assertThat(gameState.getStepQuantity()).isEqualTo(1);
-        assertThat(gameState.getPlayersTurn().getSourceList()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSourceList());
+        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
 
         oldGameState.addToCardReset(card);
@@ -64,7 +64,7 @@ class CardHandlerImplTest
 
         assertEquals(gameState.getNowTurn(), oldGameState.getNowTurn());
         assertThat(gameState.getStepQuantity()).isEqualTo(1);
-        assertThat(gameState.getPlayersTurn().getSourceList()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSourceList());
+        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
 
         oldGameState.addToCardReset(card);
@@ -91,7 +91,7 @@ class CardHandlerImplTest
 
         assertEquals(gameState.getNowTurn(), nexPlayer);
         assertThat(gameState.getStepQuantity()).isEqualTo(1);
-        assertThat(gameState.getPlayersTurn().getSourceList()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSourceList());
+        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
 
         oldGameState.addToCardReset(card);

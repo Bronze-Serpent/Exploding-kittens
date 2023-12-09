@@ -1,6 +1,6 @@
 package com.kittens.logic.action;
 
-import com.kittens.Utils;
+import com.kittens.logic.Utils;
 import com.kittens.logic.action.player.interaction.PlayerInformer;
 import com.kittens.logic.action.sudden.SuddenInaction;
 import com.kittens.logic.card.OrdinaryCard;
@@ -37,7 +37,7 @@ class PeekTest
         peek.doAction(gameState);
 
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
-        assertThat(gameState.getPlayersTurn().getSourceList()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSourceList());
+        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
         assertEquals(gameState.getNowTurn(), oldGameState.getNowTurn());
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
     }

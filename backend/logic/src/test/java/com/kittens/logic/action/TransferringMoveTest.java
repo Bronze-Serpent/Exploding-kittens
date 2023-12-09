@@ -1,7 +1,7 @@
 package com.kittens.logic.action;
 
 import com.kittens.logic.Player;
-import com.kittens.Utils;
+import com.kittens.logic.Utils;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,7 +27,7 @@ class TransferringMoveTest
         assertEquals(gameState.getNowTurn(), nextPlayer);
         assertThat(gameState.getStepQuantity()).isEqualTo(2);
 
-        assertThat(gameState.getPlayersTurn().getSourceList()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSourceList());
+        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
     }

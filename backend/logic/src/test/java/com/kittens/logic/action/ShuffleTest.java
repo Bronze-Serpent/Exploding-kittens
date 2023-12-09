@@ -1,6 +1,6 @@
 package com.kittens.logic.action;
 
-import com.kittens.Utils;
+import com.kittens.logic.Utils;
 import com.kittens.logic.action.player.interaction.PlayerQuestioner;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +41,7 @@ class ShuffleTest
         assertThat(gameState.getCardDeck()).isEqualTo(oldCardDeck);
 
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
-        assertThat(gameState.getPlayersTurn().getSourceList()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSourceList());
+        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
         assertEquals(gameState.getNowTurn(), oldGameState.getNowTurn());
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
     }

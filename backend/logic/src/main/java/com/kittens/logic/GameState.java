@@ -39,19 +39,15 @@ public class GameState
     }
 
 
-    public void removePlayer(int playerId)
+    public void removePlayer(Player player)
     {
-        var mayBeUser = playersTurn.getSourceList().stream()
-                .filter(player -> player.getId() == playerId)
-                .findFirst();
-
-        mayBeUser.ifPresent(player -> playersTurn.remove(player));
+        playersTurn.remove(player);
     }
 
 
     public Player getPlayerById(int playerId)
     {
-        return playersTurn.getSourceList().stream()
+        return playersTurn.getConsistency().stream()
                 .filter(player -> player.getId() == playerId)
                 .findFirst()
                 .orElse(null);

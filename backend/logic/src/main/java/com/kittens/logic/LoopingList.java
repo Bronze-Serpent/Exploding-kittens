@@ -1,17 +1,14 @@
 package com.kittens.logic;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 
 public class LoopingList<T>
 {
-    private final List<T> sourceList;
 
-    private Iterator<T> listIterator;
+    private final Map<T, T> tQueue = new HashMap<>();
 
-    private final List<T> elementsToRemove;
+    private T current;
 
 
     public LoopingList(List<T> sourceList)
@@ -19,51 +16,89 @@ public class LoopingList<T>
         if (sourceList.size() == 0)
             throw new RuntimeException("sourceList должен иметь размер больше 0");
 
-        this.sourceList = sourceList;
-        listIterator = sourceList.iterator();
-        this.elementsToRemove = new ArrayList<>();
+        T t = sourceList.get(0);
+        current = t;
+
+        if (sourceList.size() == 1)
+        {
+            tQueue.put(t, t);
+            return;
+        }
+
+        for (int i = 0; i + 1 < sourceList.size(); )
+        {
+            tQueue.put(sourceList.get(i), sourceList.get(++i));
+        }
+        tQueue.put(sourceList.get(sourceList.size() - 1), sourceList.get(0));
     }
+
 
     public void remove(T elem)
     {
-        if (sourceList.contains(elem))
-            elementsToRemove.add(elem);
+        // 1 -> 2 -> 3 чтобы после удаления 2, если current = 2 при вызове next возвращался 3
+        T pointingPlayer = getKeyForVal(elem);
+        if (elem.equals(current))
+        {
+            current = pointingPlayer;
+        }
+
+        if (tQueue.containsKey(elem))
+        {
+            tQueue.put(pointingPlayer, tQueue.remove(elem));
+        }
     }
+
 
     public T next()
     {
-        if (!listIterator.hasNext())
-        {
-            for (T elemToRemove : elementsToRemove)
-                sourceList.remove(elemToRemove);
+        T next = tQueue.get(current);
+        current = next;
 
-            listIterator = sourceList.iterator();
-        }
-        return listIterator.next();
+        return next;
     }
+
+
+    public T getCurrent()
+    {
+        return current;
+    }
+
 
     public int size()
     {
-        return sourceList.size() - elementsToRemove.size();
+        return tQueue.size();
     }
 
-    public List<T> getSourceList()
-    {
-        List<T> returnList = new ArrayList<>(sourceList);
 
-        for (T elemToRemove : elementsToRemove)
-            returnList.remove(elemToRemove);
+    public List<T> getConsistency()
+    {
+        List<T> returnList = new ArrayList<>();
+
+        for (Map.Entry<T, T> entry : tQueue.entrySet())
+        {
+            returnList.add(entry.getKey());
+        }
 
         return returnList;
     }
 
-    // TODO: 02.12.2023 А насколько это хорошая идея? Или как тогда вычислять очерёдность хода.
+
     public void assignAWalker(T pLayer)
     {
-        if (!sourceList.contains(pLayer))
+        if (!tQueue.containsKey(pLayer))
             throw new RuntimeException("Ходящий должен быть в списке игроков (sourceList)");
 
-        while (!next().equals(pLayer))
-            continue;
+        current = pLayer;
+    }
+
+
+    private T getKeyForVal(T val)
+    {
+        for (Map.Entry<T, T> entry : tQueue.entrySet())
+        {
+            if (entry.getValue().equals(val))
+                return entry.getKey();
+        }
+        return null;
     }
 }

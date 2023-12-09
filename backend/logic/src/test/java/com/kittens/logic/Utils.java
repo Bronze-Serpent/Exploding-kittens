@@ -1,8 +1,5 @@
-package com.kittens;
+package com.kittens.logic;
 
-import com.kittens.logic.GameState;
-import com.kittens.logic.LoopingList;
-import com.kittens.logic.Player;
 import com.kittens.logic.action.Inaction;
 import com.kittens.logic.action.SkippingMove;
 import com.kittens.logic.action.TransferringMove;
@@ -72,7 +69,7 @@ public class Utils
 
         var loopingList = new LoopingList<>(new ArrayList<>(List.of(pl1, pl2)));
         gameState.setPlayersTurn(loopingList);
-        gameState.setNowTurn(loopingList.next());
+        gameState.setNowTurn(loopingList.getCurrent());
         gameState.setCardDeck(cardDeck);
         gameState.setCardReset(cardReset);
     }
@@ -80,7 +77,7 @@ public class Utils
     public GameState copy(GameState gameState)
     {
         List<Player> players = new ArrayList<>();
-        for (Player pl :gameState.getPlayersTurn().getSourceList())
+        for (Player pl :gameState.getPlayersTurn().getConsistency())
         {
             Player player = new Player(pl);
             players.add(player);

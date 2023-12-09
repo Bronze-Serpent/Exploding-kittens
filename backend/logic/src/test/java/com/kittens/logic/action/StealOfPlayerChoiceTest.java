@@ -1,6 +1,6 @@
 package com.kittens.logic.action;
 
-import com.kittens.Utils;
+import com.kittens.logic.Utils;
 import com.kittens.logic.action.player.interaction.PlayerInformer;
 import com.kittens.logic.action.player.interaction.PlayerQuestioner;
 import com.kittens.logic.action.sudden.SuddenInaction;
@@ -56,6 +56,6 @@ class StealOfPlayerChoiceTest
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
 
         gameState.getPlayerById(1).removeCard(CATTERMELON);
-        assertThat(gameState.getPlayersTurn().getSourceList()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSourceList());
+        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
     }
 }
