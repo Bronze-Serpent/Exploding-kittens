@@ -47,6 +47,6 @@ public class StealUnknownCard implements Action
 
     @Override
     public String getName() {
-        return "steal unknown card";
+        return "steal_unknown_card";
     }
 }

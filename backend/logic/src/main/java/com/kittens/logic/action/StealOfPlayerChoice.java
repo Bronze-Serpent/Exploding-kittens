@@ -48,6 +48,6 @@ public class StealOfPlayerChoice implements Action
 
     @Override
     public String getName() {
-        return "steal of player choice";
+        return "steal_of_player_choice";
     }
 }

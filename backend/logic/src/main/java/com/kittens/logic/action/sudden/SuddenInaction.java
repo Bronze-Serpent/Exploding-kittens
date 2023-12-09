@@ -13,6 +13,6 @@ public class SuddenInaction implements SuddenAction
 
     @Override
     public String getName() {
-        return "sudden inaction";
+        return "sudden_inaction";
     }
 }

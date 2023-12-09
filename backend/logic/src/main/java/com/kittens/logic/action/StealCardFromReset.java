@@ -41,6 +41,6 @@ public class StealCardFromReset implements Action
 
     @Override
     public String getName() {
-        return "steal card from reset";
+        return "steal_card_from_reset";
     }
 }

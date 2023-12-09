@@ -15,6 +15,6 @@ public class TransferringMove implements Action
 
     @Override
     public String getName() {
-        return "transferring move";
+        return "transferring_move";
     }
 }

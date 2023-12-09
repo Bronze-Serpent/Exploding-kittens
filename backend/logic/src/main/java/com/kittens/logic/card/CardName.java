@@ -20,7 +20,8 @@ public enum CardName
     TACOCAT("tacocat"),
     BEARDCAT("beardcat"),
     NYAN_CAT("nyan cat"),
-    CATTERMELON("cattermelon");
+    CATTERMELON("cattermelon"),
+    SEE_THE_FUTURE("see the future");
 
 
     @Getter
@@ -33,7 +34,7 @@ public enum CardName
     }
 
 
-    public static boolean isItCategory(String line)
+    public static boolean isItCardName(String line)
     {
         return Arrays.stream(CardName.values())
                 .map(CardName::getWriting)

@@ -19,6 +19,6 @@ public class SkippingMove implements Action
 
     @Override
     public String getName() {
-        return "skipping move";
+        return "skipping_move";
     }
 }

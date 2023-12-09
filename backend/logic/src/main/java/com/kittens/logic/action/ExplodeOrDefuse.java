@@ -59,7 +59,7 @@ public class ExplodeOrDefuse implements Action
 
     @Override
     public String getName() {
-        return "explode or defuse";
+        return "explode_or_defuse";
     }
 
 
