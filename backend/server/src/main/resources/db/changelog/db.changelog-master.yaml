@@ -1,3 +1,7 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/table/example.sql
+      file: db/changelog/game/description/table/schema.creation-1.0.sql
+  - include:
+      file: db/changelog/game/description/data/game.data-1.0.sql
+  - include:
+      file: db/changelog/game/process/table/schema.creation-1.0.sql
