@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/table/example.sql
+      file: db/changelog/table/user_account.sql
+  - include:
+      file: db/changelog/table/user_dynamic_password.sql
