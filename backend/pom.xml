@@ -9,7 +9,7 @@
         <groupId>com.kittens</groupId>
         <artifactId>exploding-kittens</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath/>
+        <relativePath>../</relativePath>
     </parent>
 
     <artifactId>exploding-kittens-backend</artifactId>
