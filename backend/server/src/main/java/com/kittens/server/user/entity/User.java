@@ -1,6 +1,6 @@
 package com.kittens.server.user.entity;
 
-import com.kittens.server.common.entity.AbstractEntity;
+import com.kittens.server.common.entity.AuditableEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -18,7 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User extends AbstractEntity {
+public class User extends AuditableEntity {
+
     @Column(name = "login")
     String login;
 

@@ -1,11 +1,11 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/game/description/table/schema.creation-1.0.sql
-  - include:
-      file: db/changelog/game/description/data/game.data-1.0.sql
-  - include:
-      file: db/changelog/game/process/table/schema.creation-1.0.sql
-- include:
       file: db/changelog/table/user_account.sql
   - include:
       file: db/changelog/table/user_dynamic_password.sql
+  - include:
+      file: db/changelog/game/init/table/schema.creation-1.0.sql
+  - include:
+      file: db/changelog/game/init/data/game.data-1.0.sql
+  - include:
+      file: db/changelog/game/process/table/schema.creation-1.0.sql

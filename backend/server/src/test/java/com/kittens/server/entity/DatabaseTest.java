@@ -11,7 +11,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 
 
 @Sql({
-        "classpath:sql/data.sql"
+        "classpath:sql/GameStateTestData.sql"
 })
 @ActiveProfiles("test")
 @DataJpaTest

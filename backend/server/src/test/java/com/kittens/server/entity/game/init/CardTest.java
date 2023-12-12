@@ -1,5 +1,7 @@
-package com.kittens.server.entity;
+package com.kittens.server.entity.game.init;
 
+import com.kittens.server.entity.DatabaseTest;
+import com.kittens.server.entity.game.init.CardEntity;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
@@ -16,7 +18,7 @@ public class CardTest extends DatabaseTest
     private final TestEntityManager entityManager;
 
     @Test
-    void findById()
+    void readCardEntity()
     {
         CardEntity cardEntity = entityManager.find(CardEntity.class, 2);
 

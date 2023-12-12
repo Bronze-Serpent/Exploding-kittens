@@ -1,7 +1,7 @@
 --liquibase formatted sql
 
 
---changeset barabanov:1
+--changeset barabanov:action
 CREATE TABLE action
 (
     id              SERIAL              PRIMARY KEY,
@@ -9,7 +9,7 @@ CREATE TABLE action
 );
 
 
---changeset barabanov:2
+--changeset barabanov:sudden_action
 CREATE TABLE sudden_action
 (
     id              SERIAL              PRIMARY KEY,
@@ -17,7 +17,7 @@ CREATE TABLE sudden_action
 );
 
 
---changeset barabanov:3
+--changeset barabanov:card
 CREATE TABLE card
 (
     id                  SERIAL              PRIMARY KEY,
@@ -28,7 +28,7 @@ CREATE TABLE card
 );
 
 
---changeset barabanov:4
+--changeset barabanov:combination
 CREATE TABLE combination
 (
     id              SERIAL              PRIMARY KEY,
@@ -39,7 +39,7 @@ CREATE TABLE combination
 );
 
 
---changeset barabanov:5
+--changeset barabanov:player_start_card
 -- карты, которые раздаются каждому игроку в указанном количестве
 CREATE TABLE player_start_card
 (
@@ -49,7 +49,7 @@ CREATE TABLE player_start_card
 );
 
 
---changeset barabanov:6
+--changeset barabanov:game_card
 -- карты, которые добавляются в игру в указанном количестве
 CREATE TABLE game_card
 (

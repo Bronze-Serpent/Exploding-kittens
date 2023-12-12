@@ -1,21 +1,19 @@
 package com.kittens.server.entity;
 
+import com.kittens.server.common.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-// TODO: 09.12.2023 проблема с equals & hashcode и toString.
-//  Поверх чего их делать, если по id, как по полям с маппингом сущностей не лучшая идея
-
 @Getter
-@Entity
+@Setter
 @NoArgsConstructor
+@Entity
 @Table(name = "game_state")
-public class GameStateEntity extends BaseEntity<Integer>
+public class GameStateEntity extends BaseEntity<Long>
 {
     private int stepQuantity;
 
@@ -25,9 +23,10 @@ public class GameStateEntity extends BaseEntity<Integer>
     @OneToOne
     private CardReset cardReset;
 
-    @OneToOne
+    @OneToOne // будет работать CascadeType.ALL т.к. порядок сохранения при нём другой. А при Persist будет проблема
+    // т.к. gamestate сохранится раньше и у него поле card_deck_id будет null
     private CardDeck cardDeck;
 
-    @OneToMany(mappedBy = "gameState")
+    @OneToMany(mappedBy = "gameState", cascade = CascadeType.PERSIST)
     private List<PlayerQueuePointer> playerQueuePointers = new ArrayList<>();
 }

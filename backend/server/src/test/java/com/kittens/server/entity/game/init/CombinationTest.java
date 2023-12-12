@@ -1,5 +1,7 @@
-package com.kittens.server.entity;
+package com.kittens.server.entity.game.init;
 
+import com.kittens.server.entity.DatabaseTest;
+import com.kittens.server.entity.game.init.CombinationEntity;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
@@ -14,7 +16,7 @@ public class CombinationTest extends DatabaseTest
     private final TestEntityManager entityManager;
 
     @Test
-    void findById()
+    void readCombinationEntity()
     {
         CombinationEntity combinationEntity = entityManager.find(CombinationEntity.class, 1);
         assertThat(combinationEntity).isNotNull();

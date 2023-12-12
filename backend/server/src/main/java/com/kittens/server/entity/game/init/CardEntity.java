@@ -1,13 +1,16 @@
-package com.kittens.server.entity;
+package com.kittens.server.entity.game.init;
 
 import com.kittens.logic.card.CardName;
+import com.kittens.server.common.entity.BaseEntity;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 
 @Getter
 @Entity
 @Table(name = "card")
+@EqualsAndHashCode(of = "name", callSuper = false)
 public class CardEntity extends BaseEntity<Integer>
 {
     @Enumerated(EnumType.STRING)

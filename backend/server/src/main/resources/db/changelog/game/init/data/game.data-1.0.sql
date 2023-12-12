@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset barabanov:1
+--changeset barabanov:action
 INSERT INTO action (id, name)
 VALUES (1,  'explode_or_defuse'),
        (2,  'inaction'),
@@ -14,13 +14,13 @@ VALUES (1,  'explode_or_defuse'),
        (10, 'transferring_move');
 
 
---changeset barabanov:2
+--changeset barabanov:sudden_action
 INSERT INTO sudden_action (id, name)
 VALUES  (1, 'cancel'),
         (2, 'sudden_inaction');
 
 
---changeset barabanov:3
+--changeset barabanov:card
 INSERT INTO card (id, name, getting_action_id, playing_action_id, sudden_action_id)
 VALUES  (1,  'EXPLODING_KITTEN',     1,             2,               2),
         (2,  'DEFUSE',               2,             2,               2),
@@ -37,19 +37,19 @@ VALUES  (1,  'EXPLODING_KITTEN',     1,             2,               2),
         (13, 'CATTERMELON',          2,             2,               2);
 
 
---changeset barabanov:5
+--changeset barabanov:combination
 INSERT INTO combination (id, name,              action_id,      predicate,              is_enabled)
 VALUES                  (1, 'two_identical',       9,           'TWO_IDENTICAL',        true),
                         (2, 'three_identical',     7,           'THREE_IDENTICAL',      true),
                         (3, 'five_different',      6,           'FIVE_DIFFERENT',       true);
 
 
---changeset barabanov:6
+--changeset barabanov:player_start_card
 INSERT INTO player_start_card (card_id, quantity)
 VALUES  (2, 1);
 
 
---changeset barabanov:7
+--changeset barabanov:game_card
 INSERT INTO game_card (card_id, quantity)
 VALUES                  (1,         4),
                         (2,         6),

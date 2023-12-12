@@ -18,10 +18,7 @@ import java.time.Instant;
 @SuperBuilder
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class AbstractEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+public abstract class AuditableEntity extends BaseEntity<Long> {
 
     @Column(name = "created_date")
     @CreatedDate
