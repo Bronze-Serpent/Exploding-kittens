@@ -11,3 +11,13 @@ spring:
     open-in-view: false
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
+
+jwt:
+  secret:
+    access: VUU3bWZPNVJSS3dzZVZwdGVjVHE2QmFZT1RqaXdrbVF6YzRoelg3S2xVRTZkNTlWUTNpc1J1aUxSZzBrOW4xUHRmWmxGMnNzU09YN09hVE05Y0Z1OTAwR0RnSGladElHSlFnUHNXSVg1TG5TdmlCcUI2UE5rRHZqNzFoeGV1Rjlsam55WnBZdDlRdnk3aGJ2YjVWZVBDNGFtMVJOYzlhY0JoUXZGbkFNZm05cU16TzZuNWprM1F0ZmNhMWNGc2VObHpoTThHeU5mWHhJUGJLZmJaM05ybEZwOVFLTkwwVlFwOG5IbVliZzVjRkttSnlCVk9HRjRpRUxqZllKNkp5UA==
+    refresh: cHRiakhLb0ZHR3NXajdCUFk3c2wwbWt5UjhmRHdlMVQ3ZnZ2R0F4Wm55dnJndlBYZ2VZc1oxaFVIakRBTXhLMUdtMUhyd0JFaGladllLNUt4VkNLZkwzWVF2aklCTEtJMnlGSWFYZENDdFVlVXlkUm44RGtiODhicEVvckhmMGN2emtmR3FOVmV4RjQyQ2E1TDNPRW9IMTBWUHZZWFUwd1lDVzhnRVJlYlJvVHFKbDJDOW9hYlhHdVcyQ0JtejZLa3BSNnBRNnpNYTM2emdQWDZ2NGdiNkxvUFBlTno5MVZ5UTZPeHBUak01eDNFUkh5ZFp0eG9sSHRtQkV4UkZYUQ==
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
