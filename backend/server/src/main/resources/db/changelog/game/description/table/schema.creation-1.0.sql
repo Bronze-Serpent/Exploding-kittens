@@ -27,6 +27,7 @@ CREATE TABLE card
     sudden_action_id    INT                                         REFERENCES sudden_action (id) ON DELETE RESTRICT
 );
 
+
 --changeset barabanov:4
 CREATE TABLE combination
 (

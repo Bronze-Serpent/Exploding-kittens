@@ -22,21 +22,11 @@ public class GameStateEntity extends BaseEntity<Integer>
     @OneToOne
     private PlayerEntity nowTurn;
 
+    @OneToOne
+    private CardReset cardReset;
 
-    // TODO: 09.12.2023 ну или попробовать сделать card_deck и card_info тоже entity
-    @OneToMany
-    @JoinTable(name = "card_deck",
-            joinColumns = @JoinColumn(name = "game_state_id"),
-            inverseJoinColumns = @JoinColumn(name = "card_info_id"))
-    private List<CardInfo> cardDeck = new ArrayList<>();
-
-
-    @OneToMany
-    @JoinTable(name = "card_reset",
-            joinColumns = @JoinColumn(name = "game_state_id"),
-            inverseJoinColumns = @JoinColumn(name = "card_info_id"))
-    private List<CardInfo> cardReset = new ArrayList<>();
-
+    @OneToOne
+    private CardDeck cardDeck;
 
     @OneToMany(mappedBy = "gameState")
     private List<PlayerQueuePointer> playerQueuePointers = new ArrayList<>();

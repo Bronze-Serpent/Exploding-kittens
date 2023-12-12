@@ -1,10 +1,9 @@
 package com.kittens.server.entity;
 
+import com.vladmihalcea.hibernate.type.array.IntArrayType;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.hibernate.annotations.Type;
 
 
 @Entity
@@ -12,10 +11,8 @@ import java.util.List;
 @Table(name = "player")
 public class PlayerEntity extends BaseEntity<Integer>
 {
-    @OneToMany
-    @JoinTable(name = "player_card",
-            joinColumns = @JoinColumn(name = "player_id"),
-            inverseJoinColumns = @JoinColumn(name = "card_info_id"))
-    private List<CardInfo> cards = new ArrayList<>();
+    @Type(type = "jsonb")
+    private Integer[] cards;
 
+    // TODO: 12.12.2023 добавить связь с user
 }

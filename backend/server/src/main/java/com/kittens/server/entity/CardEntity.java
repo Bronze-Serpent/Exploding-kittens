@@ -13,7 +13,6 @@ public class CardEntity extends BaseEntity<Integer>
     @Enumerated(EnumType.STRING)
     private CardName name;
 
-    // TODO: 09.12.2023 кроме как ManyToOne никак? Просто по FK получить name из таблицы action нельзя или не стоит
     @ManyToOne
     private ActionEntity gettingAction;
 
