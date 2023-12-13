@@ -1,5 +1,7 @@
-package com.kittens.server.entity;
+package com.kittens.server.db.entity;
 
+import com.kittens.server.db.DatabaseTest;
+import com.kittens.server.entity.*;
 import com.kittens.server.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -70,13 +72,13 @@ public class GameStateEntityTest extends DatabaseTest
         String[] cardDeckVal = {"BEARDCAT", "BEARDCAT", "BEARDCAT", "NYAN_CAT"};
         String[] cardResetVal = {"TACOCAT", "TACOCAT", "BEARDCAT"};
 
-        CardDeck cardDeck = entityManager.persist(new CardDeck(cardDeckVal));
-        CardReset cardReset = entityManager.persist(new CardReset(cardResetVal));
+        CardDeck cardDeck = entityManager.persist(new CardDeck(null, cardDeckVal));
+        CardReset cardReset = entityManager.persist(new CardReset(null, cardResetVal));
 
 
         List<PlayerQueuePointer> playerQueuePointers = List.of
-                (new PlayerQueuePointer(player1, player2, gameStateEntity),
-                new PlayerQueuePointer(player2, player1, gameStateEntity)
+                (new PlayerQueuePointer(null, player1, player2),
+                new PlayerQueuePointer(null, player2, player1)
                 );
 
         gameStateEntity.setCardDeck(cardDeck);

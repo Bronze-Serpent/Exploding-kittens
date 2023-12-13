@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "game_state")
 public class GameStateEntity extends BaseEntity<Long>
@@ -27,6 +29,10 @@ public class GameStateEntity extends BaseEntity<Long>
     // т.к. gamestate сохранится раньше и у него поле card_deck_id будет null
     private CardDeck cardDeck;
 
-    @OneToMany(mappedBy = "gameState", cascade = CascadeType.PERSIST)
+    // TODO: 13.12.2023 уточнить про orphanRemoval
+    @Builder.Default
+    @JoinColumn(name = "game_state_id")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<PlayerQueuePointer> playerQueuePointers = new ArrayList<>();
+
 }

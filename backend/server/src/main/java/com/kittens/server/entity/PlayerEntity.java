@@ -22,6 +22,7 @@ public class PlayerEntity extends BaseEntity<Long>
     @Type(StringArrayType.class)
     private String[] cards;
 
+    // TODO: 13.12.2023 добавить связь в User мб
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 }

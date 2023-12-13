@@ -38,10 +38,10 @@ VALUES  (1,  'EXPLODING_KITTEN',     1,             2,               2),
 
 
 --changeset barabanov:combination
-INSERT INTO combination (id, name,              action_id,      predicate,              is_enabled)
-VALUES                  (1, 'two_identical',       9,           'TWO_IDENTICAL',        true),
-                        (2, 'three_identical',     7,           'THREE_IDENTICAL',      true),
-                        (3, 'five_different',      6,           'FIVE_DIFFERENT',       true);
+INSERT INTO combination (id, name,                  action_id,       predicate,            is_enabled)
+VALUES                  (1, 'steal_unknown_card',       9,           'TWO_IDENTICAL',        true),
+                        (2, 'steal_known_card',         7,           'THREE_IDENTICAL',      true),
+                        (3, 'steal_from_reset',         6,           'FIVE_DIFFERENT',       true);
 
 
 --changeset barabanov:player_start_card

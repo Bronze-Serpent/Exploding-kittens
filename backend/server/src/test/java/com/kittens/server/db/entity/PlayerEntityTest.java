@@ -1,5 +1,7 @@
-package com.kittens.server.entity;
+package com.kittens.server.db.entity;
 
+import com.kittens.server.db.DatabaseTest;
+import com.kittens.server.entity.PlayerEntity;
 import com.kittens.server.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;

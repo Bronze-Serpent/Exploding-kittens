@@ -2,20 +2,19 @@ package com.kittens.server.entity;
 
 import com.kittens.server.common.entity.BaseEntity;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @EqualsAndHashCode(of = "", callSuper = true)
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
+@Setter
 @Entity
-public class PlayerQueuePointer extends BaseEntity<Integer>
+public class PlayerQueuePointer extends BaseEntity<Long>
 {
     @OneToOne
     private PlayerEntity pointingPlayer;
@@ -23,8 +22,12 @@ public class PlayerQueuePointer extends BaseEntity<Integer>
     @OneToOne
     private PlayerEntity pointedAtPlayer;
 
-    @ManyToOne()
-    private GameStateEntity gameState;
+    public PlayerQueuePointer(Long id, PlayerEntity pointingPlayer, PlayerEntity pointedAtPlayer)
+    {
+        super(id);
+        this.pointingPlayer = pointingPlayer;
+        this.pointedAtPlayer = pointedAtPlayer;
+    }
 
     @Override
     public String toString()

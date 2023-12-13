@@ -14,7 +14,7 @@ import org.hibernate.annotations.Type;
 @Setter
 @NoArgsConstructor
 @Entity
-public class CardDeck extends BaseEntity<Integer>
+public class CardDeck extends BaseEntity<Long>
 {
     @OneToOne(mappedBy = "cardDeck")
     private GameStateEntity gameState;
@@ -22,8 +22,9 @@ public class CardDeck extends BaseEntity<Integer>
     @Type(StringArrayType.class)
     private String[] value;
 
-    public CardDeck(String[] value)
+    public CardDeck(Long id, String[] value)
     {
+        super(id);
         this.value = value;
     }
 }

@@ -1,4 +1,4 @@
-package com.kittens.server.entity;
+package com.kittens.server.db;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

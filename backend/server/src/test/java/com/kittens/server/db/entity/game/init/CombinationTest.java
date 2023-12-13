@@ -1,6 +1,6 @@
-package com.kittens.server.entity.game.init;
+package com.kittens.server.db.entity.game.init;
 
-import com.kittens.server.entity.DatabaseTest;
+import com.kittens.server.db.DatabaseTest;
 import com.kittens.server.entity.game.init.CombinationEntity;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
