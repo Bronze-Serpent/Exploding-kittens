@@ -1,6 +1,6 @@
-package com.kittens.server.repository.game.init;
+package com.kittens.server.game.initialization.repository;
 
-import com.kittens.server.entity.game.init.CardEntity;
+import com.kittens.server.game.initialization.entity.CardEntity;
 import org.springframework.data.repository.Repository;
 
 import java.util.List;

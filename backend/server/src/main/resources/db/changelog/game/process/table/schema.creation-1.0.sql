@@ -4,7 +4,7 @@
 --changeset barabanov:player
 CREATE TABLE player
 (
-    id              BIGSERIAL                 PRIMARY KEY, -- но есть вопрос. Так у нас не могут повторяться значения. Но на деле нам важно лишь чтобы комбинация room_id +  player_id была уникальна. А так у нас рано или поздно закончатся player_id
+    id              BIGSERIAL                 PRIMARY KEY,
     user_id         BIGINT                                  REFERENCES user_account (id),
     cards           VARCHAR []
 );

@@ -1,4 +1,4 @@
-package com.kittens.server.entity.game.init;
+package com.kittens.server.game.initialization.entity;
 
 import com.kittens.server.common.entity.BaseEntity;
 import jakarta.persistence.Entity;
@@ -9,9 +9,9 @@ import lombok.Getter;
 
 @Getter
 @Entity
-@Table(name = "sudden_action")
+@Table(name = "action")
 @EqualsAndHashCode(callSuper = false)
-public class SuddenActionEntity extends BaseEntity<Integer>
+public class ActionEntity extends BaseEntity<Integer>
 {
     private String name;
 }

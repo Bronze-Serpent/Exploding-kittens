@@ -1,7 +1,8 @@
-package com.kittens.server.mapper;
+package com.kittens.server.game.initialization.mapper;
 
 import com.kittens.logic.action.Action;
-import com.kittens.server.entity.game.init.ActionEntity;
+import com.kittens.server.game.initialization.entity.ActionEntity;
+import com.kittens.server.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

@@ -1,7 +1,7 @@
 package com.kittens.server.mapper;
 
 import com.kittens.logic.combination.Combination;
-import com.kittens.server.entity.game.init.CombinationEntity;
+import com.kittens.server.game.initialization.entity.CombinationEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

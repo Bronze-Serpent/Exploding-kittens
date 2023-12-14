@@ -1,7 +1,7 @@
 package com.kittens.server.db.entity.game.init;
 
 import com.kittens.server.db.DatabaseTest;
-import com.kittens.server.entity.game.init.CombinationEntity;
+import com.kittens.server.game.initialization.entity.CombinationEntity;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
@@ -22,7 +22,7 @@ public class CombinationTest extends DatabaseTest
         assertThat(combinationEntity).isNotNull();
         assertThat(combinationEntity.getName()).isEqualTo("two_identical");
         assertThat(combinationEntity.getAction().getName()).isEqualTo("steal_unknown_card");
-        assertThat(combinationEntity.getPredicate()).isEqualTo(TWO_IDENTICAL);
+        assertThat(combinationEntity.getCombPredicate()).isEqualTo(TWO_IDENTICAL);
         assertThat(combinationEntity.getIsEnabled()).isTrue();
     }
 }

@@ -2,7 +2,7 @@ package com.kittens.server.mapper;
 
 import com.kittens.logic.card.Card;
 import com.kittens.logic.card.CardName;
-import com.kittens.server.entity.game.init.CardEntity;
+import com.kittens.server.game.initialization.entity.CardEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

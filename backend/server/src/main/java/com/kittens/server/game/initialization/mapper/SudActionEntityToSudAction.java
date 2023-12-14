@@ -1,7 +1,8 @@
-package com.kittens.server.mapper;
+package com.kittens.server.game.initialization.mapper;
 
 import com.kittens.logic.action.sudden.SuddenAction;
-import com.kittens.server.entity.game.init.SuddenActionEntity;
+import com.kittens.server.game.initialization.entity.SuddenActionEntity;
+import com.kittens.server.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

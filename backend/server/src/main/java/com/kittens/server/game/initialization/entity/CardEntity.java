@@ -1,4 +1,4 @@
-package com.kittens.server.entity.game.init;
+package com.kittens.server.game.initialization.entity;
 
 import com.kittens.logic.card.CardName;
 import com.kittens.server.common.entity.BaseEntity;

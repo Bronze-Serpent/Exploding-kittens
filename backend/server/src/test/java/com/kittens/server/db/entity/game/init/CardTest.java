@@ -1,7 +1,7 @@
 package com.kittens.server.db.entity.game.init;
 
 import com.kittens.server.db.DatabaseTest;
-import com.kittens.server.entity.game.init.CardEntity;
+import com.kittens.server.game.initialization.entity.CardEntity;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;

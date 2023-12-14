@@ -1,4 +1,4 @@
-package com.kittens.server.entity.game.init;
+package com.kittens.server.game.initialization.entity;
 
 import com.kittens.logic.combination.CombinationPredicate;
 import com.kittens.server.common.entity.BaseEntity;
@@ -19,7 +19,8 @@ public class CombinationEntity extends BaseEntity<Integer>
     private ActionEntity action;
 
     @Enumerated(value = EnumType.STRING)
-    private CombinationPredicate predicate;
+    @Column(name = "predicate")
+    private CombinationPredicate combPredicate;
 
     private Boolean isEnabled;
 }

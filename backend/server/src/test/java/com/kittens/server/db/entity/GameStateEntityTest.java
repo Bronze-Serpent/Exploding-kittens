@@ -55,6 +55,8 @@ public class GameStateEntityTest extends DatabaseTest
             но чтобы сохранить gameState нужно сохранить player сначала (норм, не норм?)
 
             и чтобы сохранить gameState нужно сначала сохранить деку и сброс - не норм.
+
+            разве что ограничение FK убрать, но это...
          */
 
         GameStateEntity gameStateEntity = new GameStateEntity();
