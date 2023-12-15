@@ -2,16 +2,17 @@ package com.kittens.server.mapper;
 
 import com.kittens.logic.card.Card;
 import com.kittens.logic.card.CardName;
-import com.kittens.server.game.initialization.entity.CardEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Component
-public class CardNameToCard implements Mapper<CardEntity, Card>
+public class CardNameToCard implements Mapper<String[], List<Card>>
 {
     private final Map<CardName, Card> cardNameToCardMap = new HashMap<>();
 
@@ -22,10 +23,12 @@ public class CardNameToCard implements Mapper<CardEntity, Card>
 
     }
 
-
     @Override
-    public Card map(CardEntity object)
+    public List<Card> map(String[] object)
     {
-        return cardNameToCardMap.get(object.getName());
+        return Arrays.stream(object)
+                .map(CardName::fromString)
+                .map(cardNameToCardMap::get)
+                .collect(Collectors.toList());
     }
 }
