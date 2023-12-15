@@ -1,7 +1,7 @@
 package com.kittens.logic.action;
 
-import com.kittens.logic.GameState;
-import com.kittens.logic.Player;
+import com.kittens.logic.model.AbstractPlayer;
+import com.kittens.logic.model.GameState;
 import com.kittens.logic.action.player.interaction.PlayerInformer;
 import com.kittens.logic.action.player.interaction.PlayerQuestioner;
 import com.kittens.logic.card.CardName;
@@ -29,20 +29,20 @@ public class StealOfPlayerChoice implements Action
         if (!doesAnyoneHaveACard(gameState))
             return;
 
-        Player nowTurn = gameState.getNowTurn();
+        AbstractPlayer nowTurn = gameState.getNowTurn();
 
-        var playerIdWhoseCard = Integer.parseInt((playerQuestioner.ask(nowTurn.getId(), WHICH_PLAYER)));
+        var playerIdWhoseCard = Integer.parseInt((playerQuestioner.ask(nowTurn, WHICH_PLAYER)));
         var playerWhoseCard = gameState.getPlayerById(playerIdWhoseCard);
         
         if (playerWhoseCard.getCards().size() < 1)
             return;
 
-        var cardName = playerQuestioner.ask(playerIdWhoseCard, WHICH_CARD_TO_GIVE);
+        var cardName = playerQuestioner.ask(playerWhoseCard, WHICH_CARD_TO_GIVE);
 
         var transmittedCard = playerWhoseCard.removeCard(CardName.fromString(cardName));
-        playerInformer.inform(playerWhoseCard.getId(), CARD_STOLEN, transmittedCard.getName().getWriting());
+        playerInformer.inform(playerWhoseCard, CARD_STOLEN, transmittedCard.getName().getWriting());
         nowTurn.addCard(transmittedCard);
-        playerInformer.inform(nowTurn.getId(), CARD_RECEIVED, transmittedCard.getName().getWriting());
+        playerInformer.inform(nowTurn, CARD_RECEIVED, transmittedCard.getName().getWriting());
 
     }
 

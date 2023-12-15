@@ -5,6 +5,7 @@ import com.kittens.logic.action.player.interaction.PlayerInformer;
 import com.kittens.logic.action.player.interaction.PlayerQuestioner;
 import com.kittens.logic.action.sudden.SuddenInaction;
 import com.kittens.logic.card.OrdinaryCard;
+import com.kittens.logic.model.Player;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -41,9 +42,9 @@ class StealUnknownCardTest
         gameState.getPlayerById(2).addCard(stealCard);
 
         doReturn("2")
-                .when(playerQuestioner).ask(1, PlayerQuestioner.Question.WHICH_PLAYER);
+                .when(playerQuestioner).ask(new Player(1, null), PlayerQuestioner.Question.WHICH_PLAYER);
         doReturn(Integer.toString(gameState.getPlayerById(2).getCards().size() - 1))
-                .when(playerQuestioner).ask(1, PlayerQuestioner.Question.WHICH_NUM_OF_CARD_TAKE);
+                .when(playerQuestioner).ask(new Player(1, null), PlayerQuestioner.Question.WHICH_NUM_OF_CARD_TAKE);
 
         stealUnknownCard.doAction(gameState);
 
@@ -56,6 +57,6 @@ class StealUnknownCardTest
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
 
         gameState.getPlayerById(1).removeCard(CATTERMELON);
-        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
     }
 }

@@ -1,7 +1,7 @@
 package com.kittens.logic.action;
 
-import com.kittens.logic.GameState;
-import com.kittens.logic.Player;
+import com.kittens.logic.model.AbstractPlayer;
+import com.kittens.logic.model.GameState;
 import com.kittens.logic.action.player.interaction.PlayerInformer;
 import com.kittens.logic.card.Card;
 import com.kittens.logic.action.player.interaction.PlayerQuestioner;
@@ -28,7 +28,7 @@ public class ExplodeOrDefuse implements Action
     @Override
     public void doAction(GameState gameState)
     {
-        Player player = gameState.getNowTurn();
+        AbstractPlayer player = gameState.getNowTurn();
         var explodingCatCard = getExplodingKittenFrom(player);
 
         if (player.hasACard(DEFUSE))
@@ -36,7 +36,7 @@ public class ExplodeOrDefuse implements Action
             var defusedCard = player.removeCard(DEFUSE);
 
             gameState.addToCardReset(defusedCard);
-            playerInformer.inform(player.getId(), DEFUSED_KITTEN);
+            playerInformer.inform(player, DEFUSED_KITTEN);
 
             player.removeCard(EXPLODING_KITTEN);
             hideTheKitten(explodingCatCard, gameState);
@@ -50,7 +50,7 @@ public class ExplodeOrDefuse implements Action
             player.getCards().clear();
 
             gameState.removePlayer(player);
-            playerInformer.inform(player.getId(), EXPLODED);
+            playerInformer.inform(player, EXPLODED);
 
             gameState.setStepQuantity(1);
         }
@@ -65,7 +65,7 @@ public class ExplodeOrDefuse implements Action
 
     private void hideTheKitten(Card kittenCard, GameState gameState)
     {
-        var placeToHide = playerQuestioner.ask(gameState.getNowTurn().getId(), Question.WHERE_TO_HIDE);
+        var placeToHide = playerQuestioner.ask(gameState.getNowTurn(), Question.WHERE_TO_HIDE);
         var deckSize = gameState.getCardDeck().size();
 
         if (placeToHide.equals(NO_RESPONSE))

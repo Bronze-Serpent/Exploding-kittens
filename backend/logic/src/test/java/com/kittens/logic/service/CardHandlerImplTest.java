@@ -1,6 +1,6 @@
 package com.kittens.logic.service;
 
-import com.kittens.logic.Player;
+import com.kittens.logic.model.AbstractPlayer;
 import com.kittens.logic.Utils;
 import com.kittens.logic.action.Inaction;
 import com.kittens.logic.action.SkippingMove;
@@ -28,7 +28,7 @@ class CardHandlerImplTest
         var gameState = Utils.createGameState();
         Utils.set2PlayersWithCards(gameState);
         var oldGameState = Utils.copy(gameState);
-        Player nexPlayer = gameState.getPlayerById(2);
+        AbstractPlayer nexPlayer = gameState.getPlayerById(2);
 
         var inaction = new Inaction();
         var suddenInaction = new SuddenInaction();
@@ -39,7 +39,7 @@ class CardHandlerImplTest
 
         assertEquals(gameState.getNowTurn(), nexPlayer);
         assertThat(gameState.getStepQuantity()).isEqualTo(1);
-        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
 
         oldGameState.addToCardReset(card);
@@ -64,7 +64,7 @@ class CardHandlerImplTest
 
         assertEquals(gameState.getNowTurn(), oldGameState.getNowTurn());
         assertThat(gameState.getStepQuantity()).isEqualTo(1);
-        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
 
         oldGameState.addToCardReset(card);
@@ -78,7 +78,7 @@ class CardHandlerImplTest
         var gameState = Utils.createGameState();
         Utils.set2PlayersWithCards(gameState);
         var oldGameState = Utils.copy(gameState);
-        Player nexPlayer = gameState.getPlayerById(2);
+        AbstractPlayer nexPlayer = gameState.getPlayerById(2);
 
         var inaction = new Inaction();
         var suddenInaction = new SuddenInaction();
@@ -91,7 +91,7 @@ class CardHandlerImplTest
 
         assertEquals(gameState.getNowTurn(), nexPlayer);
         assertThat(gameState.getStepQuantity()).isEqualTo(1);
-        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
 
         oldGameState.addToCardReset(card);

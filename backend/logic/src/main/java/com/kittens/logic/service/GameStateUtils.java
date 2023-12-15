@@ -1,16 +1,14 @@
 package com.kittens.logic.service;
 
-import com.kittens.logic.GameState;
-import com.kittens.logic.LoopingList;
-import com.kittens.logic.Player;
+import com.kittens.logic.model.AbstractPlayer;
+import com.kittens.logic.model.GameState;
+import com.kittens.logic.model.LoopingList;
 import com.kittens.logic.card.Card;
 import com.kittens.logic.card.CardName;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.kittens.logic.card.CardName.DEFUSE;
 import static com.kittens.logic.card.CardName.EXPLODING_KITTEN;
@@ -24,10 +22,13 @@ public class GameStateUtils
     private final CombinationHandler combinationHandler;
 
 
-    // TODO: 02.12.2023 часть правил игры всё же будет прописана здесь
-    //  (Что у игроков по 1 карте обезвредь.Что карты взрывных котят искл. и добавляются после раздачи).
-    //  Это норм? Остальное - сколько и каких карт, какие действия у карт и т.д. в БД
-    public GameState initGame(Map<CardName, List<Card>> cards, List<Player> players, int numOfCards, Player firstPlayer)
+    // TODO: 15.12.2023 сделать добавление карт котят в зависимости от количества игроков
+    public void initGame(List<Card> cards,
+                         List<AbstractPlayer> players,
+                         int numOfCards,
+                         AbstractPlayer firstPlayer,
+                         GameState emptyGameState,
+                         LoopingList<AbstractPlayer> loopingList)
     {
         if (players.stream()
                 .filter(player -> player.getCards().size() > 0)
@@ -35,23 +36,24 @@ public class GameStateUtils
                 .size() > 0)
             throw new RuntimeException("У переданных игроков не должно быть карт.");
 
+        Map<CardName, List<Card>> cardNameToCard = listCardsToMap(cards);
         // раздача по 1 обезвредь
-        distributeDefuseCard(players, cards.get(DEFUSE));
+        distributeDefuseCard(players, cardNameToCard.get(DEFUSE));
 
         // раздача всем игрокам по numOfCards - 1 карт
-        List<Card> gamingCards = extractAllGamingCards(cards);
+        List<Card> gamingCards = extractAllGamingCards(cardNameToCard);
         Collections.shuffle(gamingCards);
         distributeGamingCards(players, gamingCards, numOfCards - 1);
 
-        gamingCards.addAll(cards.get(DEFUSE));
-        gamingCards.addAll(cards.get(EXPLODING_KITTEN));
+        gamingCards.addAll(cardNameToCard.get(DEFUSE));
+        gamingCards.addAll(cardNameToCard.get(EXPLODING_KITTEN));
 
-        return new GameState(
-                new LoopingList<>(players),
-                gamingCards,
-                new ArrayList<>(),
-                firstPlayer,
-                1);
+
+        emptyGameState.setNowTurn(firstPlayer);
+        emptyGameState.setStepQuantity(1);
+        emptyGameState.setCardReset(new ArrayList<>());
+        emptyGameState.setCardDeck(gamingCards);
+        emptyGameState.setPlayersTurn(loopingList);
     }
 
 
@@ -91,17 +93,17 @@ public class GameStateUtils
             nowTurn.removeCard(combCard.getName());
     }
 
-    private void distributeGamingCards(List<Player> players, List<Card> gamingCards, int numOfCards)
+    private void distributeGamingCards(List<AbstractPlayer> players, List<Card> gamingCards, int numOfCards)
     {
-        for (Player player : players)
+        for (AbstractPlayer player : players)
             for (int i = 0; i < numOfCards; i++)
                 player.addCard(gamingCards.remove(gamingCards.size() - 1));
     }
 
 
-    private void distributeDefuseCard(List<Player> players, List<Card> defuseCards)
+    private void distributeDefuseCard(List<AbstractPlayer> players, List<Card> defuseCards)
     {
-        for (Player player : players)
+        for (AbstractPlayer player : players)
             player.addCard(defuseCards.remove(defuseCards.size() - 1));
     }
 
@@ -116,5 +118,21 @@ public class GameStateUtils
                 allGamingCards.addAll(entry.getValue());
 
         return allGamingCards;
+    }
+
+
+    private Map<CardName, List<Card>> listCardsToMap(List<Card> cards)
+    {
+        Map<CardName, List<Card>> cardNameToCard = new HashMap<>();
+        for (CardName name : CardName.values())
+        {
+            List<Card> cardsWithName = cards.stream()
+                    .filter(card -> card.getName() == name)
+                    .collect(Collectors.toList());
+
+            cardNameToCard.put(name, cardsWithName);
+        }
+
+        return cardNameToCard;
     }
 }

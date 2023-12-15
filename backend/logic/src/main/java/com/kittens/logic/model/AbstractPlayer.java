@@ -1,4 +1,4 @@
-package com.kittens.logic;
+package com.kittens.logic.model;
 
 import com.kittens.logic.card.Card;
 import com.kittens.logic.card.CardName;
@@ -16,17 +16,16 @@ import java.util.List;
 @EqualsAndHashCode(of = "id")
 @ToString
 @RequiredArgsConstructor
-public class Player
+public abstract class AbstractPlayer
 {
-    private final int id;
-    private final List<Card> cards = new ArrayList<>();
+    private final long id;
+    private final List<Card> cards;
 
-    public Player(Player player)
+    public AbstractPlayer(AbstractPlayer player)
     {
         this.id = player.getId();
-        this.cards.addAll(player.getCards());
+        this.cards = new ArrayList<>(player.getCards());
     }
-
 
     public void addCard(Card card)
     {

@@ -1,7 +1,7 @@
 package com.kittens.logic.action;
 
-import com.kittens.logic.GameState;
-import com.kittens.logic.Player;
+import com.kittens.logic.model.AbstractPlayer;
+import com.kittens.logic.model.GameState;
 import com.kittens.logic.action.player.interaction.PlayerInformer;
 import com.kittens.logic.action.player.interaction.PlayerQuestioner;
 import com.kittens.logic.card.CardName;
@@ -27,8 +27,8 @@ public class StealCardFromReset implements Action
         if (isResetEmpty(gameState))
             return;
 
-        Player nowTurn = gameState.getNowTurn();
-        var transmittedStrCardName = playerQuestioner.ask(nowTurn.getId(), WHICH_CARD_TO_TAKE);
+        AbstractPlayer nowTurn = gameState.getNowTurn();
+        var transmittedStrCardName = playerQuestioner.ask(nowTurn, WHICH_CARD_TO_TAKE);
         var transmittedCardName = CardName.fromString(transmittedStrCardName);
 
         var transmittedCard = GameStateUtils.getCardFromReset(gameState, transmittedCardName);
@@ -36,7 +36,7 @@ public class StealCardFromReset implements Action
         gameState.getCardReset().remove(transmittedCard);
         nowTurn.addCard(transmittedCard);
 
-        playerInformer.inform(nowTurn.getId(), CARD_RECEIVED, transmittedCard.getName().getWriting());
+        playerInformer.inform(nowTurn, CARD_RECEIVED, transmittedCard.getName().getWriting());
     }
 
     @Override

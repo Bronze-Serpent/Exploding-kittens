@@ -5,6 +5,7 @@ import com.kittens.logic.action.player.interaction.PlayerInformer;
 import com.kittens.logic.action.player.interaction.PlayerQuestioner;
 import com.kittens.logic.action.sudden.SuddenInaction;
 import com.kittens.logic.card.OrdinaryCard;
+import com.kittens.logic.model.Player;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
@@ -51,7 +52,7 @@ class ExplodeOrDefuseTest
     public void shouldDefuseKitten()
     {
         doReturn(PlayerQuestioner.HideAnswer.FIRST.getAnswer())
-                .when(playerQuestioner).ask(1, WHERE_TO_HIDE);
+                .when(playerQuestioner).ask(new Player(1, null), WHERE_TO_HIDE);
 
         var gameState = Utils.createGameState();
         Utils.set2PlayersWithCards(gameState);
@@ -74,14 +75,14 @@ class ExplodeOrDefuseTest
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
         oldGameState.getCardReset().add(defuse);
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
-        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
     }
 
     @Test
     public void shouldExplodePlayer()
     {
         doReturn(PlayerQuestioner.HideAnswer.LAST.getAnswer())
-                .when(playerQuestioner).ask(1, WHERE_TO_HIDE);
+                .when(playerQuestioner).ask(new Player(1, null), WHERE_TO_HIDE);
 
         var gameState = Utils.createGameState();
         Utils.set2PlayersWithCards(gameState);
@@ -106,6 +107,6 @@ class ExplodeOrDefuseTest
         oldGameState.getCardReset().addAll(oldGameState.getPlayerById(1).getCards());
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
 
-        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(List.of(oldGameState.getPlayerById(2)));
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(List.of(oldGameState.getPlayerById(2)));
     }
 }

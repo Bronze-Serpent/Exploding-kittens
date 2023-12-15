@@ -1,8 +1,9 @@
 package com.kittens.logic.action;
 
-import com.kittens.logic.GameState;
 import com.kittens.logic.action.player.interaction.PlayerInformer;
 import com.kittens.logic.action.player.interaction.PlayerQuestioner;
+import com.kittens.logic.model.AbstractPlayer;
+import com.kittens.logic.model.GameState;
 import lombok.RequiredArgsConstructor;
 
 import static com.kittens.logic.action.GameStateUtils.doesAnyoneHaveACard;
@@ -26,22 +27,22 @@ public class StealUnknownCard implements Action
         if (!doesAnyoneHaveACard(gameState))
             return;
 
-        int nowTurnId = gameState.getNowTurn().getId();
+        AbstractPlayer nowTurn = gameState.getNowTurn();
 
-        var playerIdWhoseCard = Integer.parseInt(playerQuestioner.ask(nowTurnId, WHICH_PLAYER));
+        var playerIdWhoseCard = Integer.parseInt(playerQuestioner.ask(nowTurn, WHICH_PLAYER));
         var playerWhoseCard = gameState.getPlayerById(playerIdWhoseCard);
 
         int numOfPlayerCards = playerWhoseCard.getCards().size();
         if (numOfPlayerCards < 1)
             return;
 
-        playerInformer.inform(nowTurnId, NUM_OF_PLAYER_CARDS, String.valueOf(numOfPlayerCards));
-        var numOfTakenCard = Integer.parseInt(playerQuestioner.ask(nowTurnId, WHICH_NUM_OF_CARD_TAKE));
+        playerInformer.inform(nowTurn, NUM_OF_PLAYER_CARDS, String.valueOf(numOfPlayerCards));
+        var numOfTakenCard = Integer.parseInt(playerQuestioner.ask(nowTurn, WHICH_NUM_OF_CARD_TAKE));
 
         var transmittedCard = playerWhoseCard.removeCard(numOfTakenCard);
-        playerInformer.inform(playerWhoseCard.getId(), CARD_STOLEN, transmittedCard.getName().getWriting());
+        playerInformer.inform(playerWhoseCard, CARD_STOLEN, transmittedCard.getName().getWriting());
         gameState.getNowTurn().addCard(transmittedCard);
-        playerInformer.inform(nowTurnId, CARD_RECEIVED, transmittedCard.getName().getWriting());
+        playerInformer.inform(nowTurn, CARD_RECEIVED, transmittedCard.getName().getWriting());
 
     }
 

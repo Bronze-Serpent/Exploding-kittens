@@ -1,7 +1,7 @@
 package com.kittens.logic.service;
 
-import com.kittens.logic.GameState;
 import com.kittens.logic.card.Card;
+import com.kittens.logic.model.GameState;
 
 import java.util.List;
 
