@@ -7,7 +7,7 @@ import com.kittens.logic.action.sudden.Cancel;
 import com.kittens.logic.action.sudden.SuddenInaction;
 import com.kittens.logic.card.Card;
 import com.kittens.logic.card.OrdinaryCard;
-import com.kittens.logic.models.*;
+import com.kittens.logic.model.*;
 import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;

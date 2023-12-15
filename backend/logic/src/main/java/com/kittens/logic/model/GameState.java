@@ -1,4 +1,4 @@
-package com.kittens.logic.models;
+package com.kittens.logic.model;
 
 import com.kittens.logic.card.Card;
 import lombok.*;
@@ -6,9 +6,12 @@ import lombok.*;
 import java.util.List;
 
 
-@Data
+@ToString
+@EqualsAndHashCode
+@Setter
+@Getter
 @AllArgsConstructor
-public class GameStateImpl implements GameState
+public abstract class GameState
 {
     private LoopingList<AbstractPlayer> playersTurn;
     private List<Card> cardDeck;
@@ -16,36 +19,22 @@ public class GameStateImpl implements GameState
     private AbstractPlayer nowTurn;
     private int stepQuantity;
 
-
-    public GameStateImpl(GameStateImpl gameState)
-    {
-        this.playersTurn = gameState.getPlayersTurn();
-        this.cardDeck = gameState.getCardDeck();
-        this.cardReset = gameState.getCardReset();
-        this.nowTurn = gameState.getNowTurn();
-        this.stepQuantity = gameState.getStepQuantity();
-    }
-
-    @Override
     public void addToCardReset(Card card)
     {
         cardReset.add(card);
     }
 
-    @Override
     public void addToCardReset(List<Card> cards)
     {
-       for (Card card : cards)
-           addToCardReset(card);
+        for (Card card : cards)
+            addToCardReset(card);
     }
 
-    @Override
     public void removePlayer(AbstractPlayer player)
     {
         playersTurn.remove(player);
     }
 
-    @Override
     public AbstractPlayer getPlayerById(int playerId)
     {
         return playersTurn.getSequence().stream()

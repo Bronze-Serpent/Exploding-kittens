@@ -2,7 +2,7 @@ package com.kittens.logic.action;
 
 import com.kittens.logic.Utils;
 import com.kittens.logic.action.player.interaction.PlayerQuestioner;
-import com.kittens.logic.models.Player;
+import com.kittens.logic.model.Player;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

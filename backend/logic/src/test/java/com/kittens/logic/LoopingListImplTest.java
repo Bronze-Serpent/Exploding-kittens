@@ -1,6 +1,6 @@
 package com.kittens.logic;
 
-import com.kittens.logic.models.LoopingListImpl;
+import com.kittens.logic.model.LoopingListImpl;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

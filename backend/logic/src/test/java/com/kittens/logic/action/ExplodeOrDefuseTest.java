@@ -5,7 +5,7 @@ import com.kittens.logic.action.player.interaction.PlayerInformer;
 import com.kittens.logic.action.player.interaction.PlayerQuestioner;
 import com.kittens.logic.action.sudden.SuddenInaction;
 import com.kittens.logic.card.OrdinaryCard;
-import com.kittens.logic.models.Player;
+import com.kittens.logic.model.Player;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;

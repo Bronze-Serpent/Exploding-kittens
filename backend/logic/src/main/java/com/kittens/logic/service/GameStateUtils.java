@@ -1,8 +1,8 @@
 package com.kittens.logic.service;
 
-import com.kittens.logic.models.AbstractPlayer;
-import com.kittens.logic.models.GameState;
-import com.kittens.logic.models.LoopingList;
+import com.kittens.logic.model.AbstractPlayer;
+import com.kittens.logic.model.GameState;
+import com.kittens.logic.model.LoopingList;
 import com.kittens.logic.card.Card;
 import com.kittens.logic.card.CardName;
 import lombok.RequiredArgsConstructor;

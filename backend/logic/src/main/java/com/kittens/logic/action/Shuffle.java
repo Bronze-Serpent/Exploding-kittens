@@ -1,7 +1,7 @@
 package com.kittens.logic.action;
 
 import com.kittens.logic.action.player.interaction.PlayerQuestioner;
-import com.kittens.logic.models.GameState;
+import com.kittens.logic.model.GameState;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Collections;

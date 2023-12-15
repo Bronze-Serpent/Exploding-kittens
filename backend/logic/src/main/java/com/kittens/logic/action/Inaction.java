@@ -1,6 +1,6 @@
 package com.kittens.logic.action;
 
-import com.kittens.logic.models.GameState;
+import com.kittens.logic.model.GameState;
 
 
 public class Inaction implements Action

@@ -1,4 +1,4 @@
-package com.kittens.logic.models;
+package com.kittens.logic.model;
 
 import com.kittens.logic.card.Card;
 import com.kittens.logic.card.CardName;

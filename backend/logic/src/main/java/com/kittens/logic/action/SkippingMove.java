@@ -1,7 +1,7 @@
 package com.kittens.logic.action;
 
-import com.kittens.logic.models.AbstractPlayer;
-import com.kittens.logic.models.GameState;
+import com.kittens.logic.model.AbstractPlayer;
+import com.kittens.logic.model.GameState;
 
 
 public class SkippingMove implements Action

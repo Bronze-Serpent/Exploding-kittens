@@ -1,7 +1,6 @@
 package com.kittens.logic.service;
 
-import com.kittens.logic.models.AbstractPlayer;
-import com.kittens.logic.models.Player;
+import com.kittens.logic.model.AbstractPlayer;
 import com.kittens.logic.Utils;
 import com.kittens.logic.action.Inaction;
 import com.kittens.logic.action.SkippingMove;

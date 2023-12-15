@@ -2,7 +2,7 @@ package com.kittens.logic.service;
 
 import com.kittens.logic.card.Card;
 import com.kittens.logic.combination.Combination;
-import com.kittens.logic.models.GameState;
+import com.kittens.logic.model.GameState;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

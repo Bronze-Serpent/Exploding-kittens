@@ -1,6 +1,6 @@
 package com.kittens.logic.action.player.interaction;
 
-import com.kittens.logic.models.AbstractPlayer;
+import com.kittens.logic.model.AbstractPlayer;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

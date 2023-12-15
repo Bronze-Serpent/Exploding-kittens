@@ -1,4 +1,4 @@
-package com.kittens.logic.models;
+package com.kittens.logic.model;
 
 import java.util.List;
 

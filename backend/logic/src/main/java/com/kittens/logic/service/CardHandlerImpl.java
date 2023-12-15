@@ -4,7 +4,7 @@ import com.kittens.logic.card.Card;
 import com.kittens.logic.action.Action;
 import com.kittens.logic.action.Inaction;
 import com.kittens.logic.action.sudden.SuddenAction;
-import com.kittens.logic.models.GameState;
+import com.kittens.logic.model.GameState;
 
 import java.util.List;
 

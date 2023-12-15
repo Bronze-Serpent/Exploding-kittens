@@ -1,7 +1,6 @@
 package com.kittens.logic.action;
 
-import com.kittens.logic.models.AbstractPlayer;
-import com.kittens.logic.models.Player;
+import com.kittens.logic.model.AbstractPlayer;
 import com.kittens.logic.Utils;
 import org.junit.jupiter.api.Test;
 
