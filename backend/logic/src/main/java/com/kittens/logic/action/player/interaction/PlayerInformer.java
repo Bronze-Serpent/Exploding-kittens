@@ -1,5 +1,6 @@
 package com.kittens.logic.action.player.interaction;
 
+import com.kittens.logic.models.AbstractPlayer;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -7,11 +8,11 @@ import lombok.RequiredArgsConstructor;
 public interface PlayerInformer
 {
 
-    void inform(int playerId, Informing informing, String msg);
+    void inform(AbstractPlayer player, Informing informing, String msg);
 
-    default void inform(int playerId, Informing informing)
+    default void inform(AbstractPlayer player, Informing informing)
     {
-        inform(playerId, informing, "");
+        inform(player, informing, "");
     }
 
 

@@ -1,5 +1,6 @@
 package com.kittens.logic;
 
+import com.kittens.logic.models.LoopingListImpl;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -8,11 +9,11 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class LoopingListTest
+public class LoopingListImplTest
 {
     private final List<Integer> sourceList = new ArrayList<>(List.of(1, 2, 3));
 
-    private final LoopingList<Integer> loopingList = new LoopingList<>(sourceList);
+    private final LoopingListImpl<Integer> loopingList = new LoopingListImpl<>(sourceList);
 
     @Test
     public void shouldSpinTheList()

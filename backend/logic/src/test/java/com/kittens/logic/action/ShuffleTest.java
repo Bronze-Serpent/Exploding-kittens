@@ -2,6 +2,7 @@ package com.kittens.logic.action;
 
 import com.kittens.logic.Utils;
 import com.kittens.logic.action.player.interaction.PlayerQuestioner;
+import com.kittens.logic.models.Player;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,7 +30,7 @@ class ShuffleTest
     public void shouldSkipMove()
     {
         doReturn(PlayerQuestioner.ShuffleAnswer.FIRST_CARD_TO_LAST.getAnswer())
-                .when(playerQuestioner).ask(1, PlayerQuestioner.Question.HOW_TO_SHUFFLE);
+                .when(playerQuestioner).ask(new Player(1, null), PlayerQuestioner.Question.HOW_TO_SHUFFLE);
         var gameState = Utils.createGameState();
         Utils.set2PlayersWithCards(gameState);
         var oldGameState = Utils.copy(gameState);
@@ -41,7 +42,7 @@ class ShuffleTest
         assertThat(gameState.getCardDeck()).isEqualTo(oldCardDeck);
 
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
-        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
+        assertThat(gameState.getPlayersTurn().getSequence()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSequence());
         assertEquals(gameState.getNowTurn(), oldGameState.getNowTurn());
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
     }

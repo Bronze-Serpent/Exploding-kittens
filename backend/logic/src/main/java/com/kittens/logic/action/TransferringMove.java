@@ -1,7 +1,7 @@
 package com.kittens.logic.action;
 
-import com.kittens.logic.GameState;
 
+import com.kittens.logic.models.GameState;
 
 public class TransferringMove implements Action
 {

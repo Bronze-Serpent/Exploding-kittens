@@ -1,17 +1,16 @@
-package com.kittens.logic;
+package com.kittens.logic.models;
 
 import java.util.*;
 
 
-public class LoopingList<T>
+public class LoopingListImpl<T> implements LoopingList<T>
 {
-
     private final Map<T, T> tQueue = new HashMap<>();
 
     private T current;
 
 
-    public LoopingList(List<T> sourceList)
+    public LoopingListImpl(List<T> sourceList)
     {
         if (sourceList.size() == 0)
             throw new RuntimeException("sourceList должен иметь размер больше 0");
@@ -32,7 +31,7 @@ public class LoopingList<T>
         tQueue.put(sourceList.get(sourceList.size() - 1), sourceList.get(0));
     }
 
-
+    @Override
     public void remove(T elem)
     {
         // 1 -> 2 -> 3 чтобы после удаления 2, если current = 2 при вызове next возвращался 3
@@ -48,7 +47,7 @@ public class LoopingList<T>
         }
     }
 
-
+    @Override
     public T next()
     {
         T next = tQueue.get(current);
@@ -57,20 +56,20 @@ public class LoopingList<T>
         return next;
     }
 
-
+    @Override
     public T getCurrent()
     {
         return current;
     }
 
-
+    @Override
     public int size()
     {
         return tQueue.size();
     }
 
-
-    public List<T> getConsistency()
+    @Override
+    public List<T> getSequence()
     {
         List<T> returnList = new ArrayList<>();
 
@@ -82,7 +81,7 @@ public class LoopingList<T>
         return returnList;
     }
 
-
+    @Override
     public void assignAWalker(T pLayer)
     {
         if (!tQueue.containsKey(pLayer))

@@ -5,6 +5,7 @@ import com.kittens.logic.action.player.interaction.PlayerInformer;
 import com.kittens.logic.action.player.interaction.PlayerQuestioner;
 import com.kittens.logic.action.sudden.SuddenInaction;
 import com.kittens.logic.card.OrdinaryCard;
+import com.kittens.logic.models.Player;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -42,9 +43,9 @@ class StealKnownCardTest
         gameState.getPlayerById(2).addCard(stealCard);
 
         doReturn("2")
-                .when(playerQuestioner).ask(1, WHICH_PLAYER);
+                .when(playerQuestioner).ask(new Player(1, null), WHICH_PLAYER);
         doReturn(TACOCAT.getWriting())
-                .when(playerQuestioner).ask(1, WHICH_CARD_TO_TAKE);
+                .when(playerQuestioner).ask(new Player(1, null), WHICH_CARD_TO_TAKE);
 
         stealKnownCard.doAction(gameState);
 
@@ -57,7 +58,7 @@ class StealKnownCardTest
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
 
         gameState.getPlayerById(1).removeCard(TACOCAT);
-        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
+        assertThat(gameState.getPlayersTurn().getSequence()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSequence());
     }
 
     @Test
@@ -68,9 +69,9 @@ class StealKnownCardTest
         var oldGameState = Utils.copy(gameState);
 
         doReturn("2")
-                .when(playerQuestioner).ask(1, WHICH_PLAYER);
+                .when(playerQuestioner).ask(new Player(1, null), WHICH_PLAYER);
         doReturn("tacocat")
-                .when(playerQuestioner).ask(1, WHICH_CARD_TO_TAKE);
+                .when(playerQuestioner).ask(new Player(1, null), WHICH_CARD_TO_TAKE);
 
         stealKnownCard.doAction(gameState);
 
@@ -80,6 +81,6 @@ class StealKnownCardTest
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
         assertThat(gameState.getNowTurn()).isEqualTo(oldGameState.getNowTurn());
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
-        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
+        assertThat(gameState.getPlayersTurn().getSequence()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSequence());
     }
 }

@@ -1,5 +1,6 @@
 package com.kittens.logic.action.player.interaction;
 
+import com.kittens.logic.models.AbstractPlayer;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +23,7 @@ public interface PlayerQuestioner
     );
 
 
-    String ask(int playerId, Question question);
+    String ask(AbstractPlayer player, Question question);
 
 
     @RequiredArgsConstructor

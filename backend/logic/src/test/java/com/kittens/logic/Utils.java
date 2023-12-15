@@ -7,6 +7,7 @@ import com.kittens.logic.action.sudden.Cancel;
 import com.kittens.logic.action.sudden.SuddenInaction;
 import com.kittens.logic.card.Card;
 import com.kittens.logic.card.OrdinaryCard;
+import com.kittens.logic.models.*;
 import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
@@ -19,10 +20,10 @@ import static com.kittens.logic.card.CardName.*;
 @UtilityClass
 public class Utils
 {
-    public GameState createGameState()
+    public GameStateImpl createGameState()
     {
-        var loopingList = new LoopingList<>(List.of(new Player(-1)));
-        return new GameState(
+        LoopingList<AbstractPlayer> loopingList = new LoopingListImpl<>(List.of(new Player(-1, new ArrayList<>())));
+        return new GameStateImpl(
                 loopingList,
                 new LinkedList<>(),
                 new ArrayList<>(),
@@ -30,7 +31,7 @@ public class Utils
                 1);
     }
 
-    public void set2PlayersWithCards(GameState gameState)
+    public void set2PlayersWithCards(GameStateImpl gameState)
     {
         var suddenInaction = new SuddenInaction();
         var cancel = new Cancel();
@@ -58,35 +59,35 @@ public class Utils
         cardReset.add(defuse);
         cardReset.add(no);
 
-        var pl1 = new Player(1);
+        var pl1 = new Player(1, new ArrayList<>());
         pl1.addCard(beardcat);
         pl1.addCard(hairy_catato);
         pl1.addCard(get_lost);
-        var pl2 = new Player(2);
+        var pl2 = new Player(2, new ArrayList<>());
         pl2.addCard(beardcat);
         pl2.addCard(hairy_catato);
         pl2.addCard(no);
 
-        var loopingList = new LoopingList<>(new ArrayList<>(List.of(pl1, pl2)));
+        LoopingList<AbstractPlayer> loopingList = new LoopingListImpl<>(new ArrayList<>(List.of(pl1, pl2)));
         gameState.setPlayersTurn(loopingList);
         gameState.setNowTurn(loopingList.getCurrent());
         gameState.setCardDeck(cardDeck);
         gameState.setCardReset(cardReset);
     }
 
-    public GameState copy(GameState gameState)
+    public GameStateImpl copy(GameStateImpl gameState)
     {
-        List<Player> players = new ArrayList<>();
-        for (Player pl :gameState.getPlayersTurn().getConsistency())
+        List<AbstractPlayer> players = new ArrayList<>();
+        for (AbstractPlayer pl :gameState.getPlayersTurn().getSequence())
         {
-            Player player = new Player(pl);
+            AbstractPlayer player = new Player(pl.getId(), new ArrayList<>(pl.getCards()));
             players.add(player);
         }
-        return new GameState(
-                new LoopingList<>(players),
+        return new GameStateImpl(
+                new LoopingListImpl<>(players),
                 new ArrayList<>(gameState.getCardDeck()),
                 new ArrayList<>(gameState.getCardReset()),
-                gameState.getNowTurn(),
+                new Player(gameState.getNowTurn().getId(), gameState.getNowTurn().getCards()),
                 gameState.getStepQuantity()
         );
     }

@@ -1,7 +1,7 @@
 package com.kittens.logic.action;
 
-import com.kittens.logic.GameState;
-import com.kittens.logic.Player;
+import com.kittens.logic.models.AbstractPlayer;
+import com.kittens.logic.models.GameState;
 import com.kittens.logic.action.player.interaction.PlayerInformer;
 import com.kittens.logic.action.player.interaction.PlayerQuestioner;
 import com.kittens.logic.card.CardName;
@@ -15,7 +15,6 @@ import static com.kittens.logic.action.player.interaction.PlayerQuestioner.Quest
 @RequiredArgsConstructor
 public class StealKnownCard implements Action
 {
-
     private final PlayerQuestioner playerQuestioner;
     private final PlayerInformer playerInformer;
 
@@ -23,22 +22,22 @@ public class StealKnownCard implements Action
     @Override
     public void doAction(GameState gameState)
     {
-        Player nowTurn = gameState.getNowTurn();
+        AbstractPlayer nowTurn = gameState.getNowTurn();
 
-        var playerIdWhoseCard = Integer.parseInt(playerQuestioner.ask(nowTurn.getId(), WHICH_PLAYER));
+        var playerIdWhoseCard = Integer.parseInt(playerQuestioner.ask(nowTurn, WHICH_PLAYER));
         var playerWhoseCard = gameState.getPlayerById(playerIdWhoseCard);
 
-        var stringTakenCardName = playerQuestioner.ask(nowTurn.getId(), WHICH_CARD_TO_TAKE);
+        var stringTakenCardName = playerQuestioner.ask(nowTurn, WHICH_CARD_TO_TAKE);
         var cardName = CardName.fromString(stringTakenCardName);
         if (playerWhoseCard.hasACard(cardName))
         {
             var transmittedCard = playerWhoseCard.removeCard(cardName);
-            playerInformer.inform(playerWhoseCard.getId(), CARD_STOLEN, transmittedCard.getName().getWriting());
+            playerInformer.inform(playerWhoseCard, CARD_STOLEN, transmittedCard.getName().getWriting());
             nowTurn.addCard(transmittedCard);
-            playerInformer.inform(nowTurn.getId(), CARD_RECEIVED, transmittedCard.getName().getWriting());
+            playerInformer.inform(nowTurn, CARD_RECEIVED, transmittedCard.getName().getWriting());
         }
         else
-            playerInformer.inform(nowTurn.getId(), NO_SUCH_CARD);
+            playerInformer.inform(nowTurn, NO_SUCH_CARD);
     }
 
     @Override

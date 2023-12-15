@@ -4,6 +4,7 @@ import com.kittens.logic.Utils;
 import com.kittens.logic.action.player.interaction.PlayerInformer;
 import com.kittens.logic.action.sudden.SuddenInaction;
 import com.kittens.logic.card.OrdinaryCard;
+import com.kittens.logic.models.Player;
 import org.junit.jupiter.api.Test;
 
 import static com.kittens.logic.card.CardName.NO;
@@ -20,7 +21,7 @@ class PeekTest
         PlayerInformer playerInformer = (playerId, informing, msg) ->
         {
             assertEquals(informing, PlayerInformer.Informing.SHOW_CARDS);
-            assertThat(playerId).isEqualTo(1L);
+            assertThat(playerId).isEqualTo(new Player(1, null));
             assertThat(msg).isEqualTo("no,no,no");
         };
         Peek peek = new Peek(playerInformer);
@@ -37,7 +38,7 @@ class PeekTest
         peek.doAction(gameState);
 
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
-        assertThat(gameState.getPlayersTurn().getConsistency()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getConsistency());
+        assertThat(gameState.getPlayersTurn().getSequence()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSequence());
         assertEquals(gameState.getNowTurn(), oldGameState.getNowTurn());
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
     }

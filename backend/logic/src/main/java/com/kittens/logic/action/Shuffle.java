@@ -1,7 +1,7 @@
 package com.kittens.logic.action;
 
-import com.kittens.logic.GameState;
 import com.kittens.logic.action.player.interaction.PlayerQuestioner;
+import com.kittens.logic.models.GameState;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Collections;
@@ -12,7 +12,6 @@ import static com.kittens.logic.action.player.interaction.PlayerQuestioner.Quest
 @RequiredArgsConstructor
 public class Shuffle implements Action
 {
-
     private final PlayerQuestioner playerQuestioner;
 
 
@@ -22,7 +21,7 @@ public class Shuffle implements Action
         if (GameStateUtils.isCardDeckEmpty(gameState))
             return;
 
-        var playerChoice = playerQuestioner.ask(gameState.getNowTurn().getId(), HOW_TO_SHUFFLE);
+        var playerChoice = playerQuestioner.ask(gameState.getNowTurn(), HOW_TO_SHUFFLE);
 
         if (playerChoice.equals(PlayerQuestioner.NO_RESPONSE))
             return;
