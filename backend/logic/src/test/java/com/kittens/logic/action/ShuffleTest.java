@@ -42,7 +42,7 @@ class ShuffleTest
         assertThat(gameState.getCardDeck()).isEqualTo(oldCardDeck);
 
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
-        assertThat(gameState.getPlayersTurn().getSequence()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSequence());
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
         assertEquals(gameState.getNowTurn(), oldGameState.getNowTurn());
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
     }

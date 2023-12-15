@@ -92,16 +92,15 @@ public class LoopingListImpl<T> implements LoopingList<T>
     }
 
     @Override
-    public List<T> getSequence()
+    public Set<T> getElements()
     {
-        List<T> returnList = new ArrayList<>();
+        return new HashSet<>(tQueue.keySet());
+    }
 
-        for (Map.Entry<T, T> entry : tQueue.entrySet())
-        {
-            returnList.add(entry.getKey());
-        }
-
-        return returnList;
+    @Override
+    public Map<T, T> getPairs()
+    {
+        return new HashMap<>(tQueue);
     }
 
     @Override

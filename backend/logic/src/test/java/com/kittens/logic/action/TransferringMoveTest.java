@@ -27,7 +27,7 @@ class TransferringMoveTest
         assertEquals(gameState.getNowTurn(), nextPlayer);
         assertThat(gameState.getStepQuantity()).isEqualTo(2);
 
-        assertThat(gameState.getPlayersTurn().getSequence()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSequence());
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
     }

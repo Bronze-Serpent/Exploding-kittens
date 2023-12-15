@@ -75,7 +75,7 @@ class ExplodeOrDefuseTest
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
         oldGameState.getCardReset().add(defuse);
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
-        assertThat(gameState.getPlayersTurn().getSequence()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSequence());
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
     }
 
     @Test
@@ -107,6 +107,6 @@ class ExplodeOrDefuseTest
         oldGameState.getCardReset().addAll(oldGameState.getPlayerById(1).getCards());
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
 
-        assertThat(gameState.getPlayersTurn().getSequence()).containsExactlyElementsOf(List.of(oldGameState.getPlayerById(2)));
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(List.of(oldGameState.getPlayerById(2)));
     }
 }

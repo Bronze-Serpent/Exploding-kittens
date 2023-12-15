@@ -81,7 +81,7 @@ public class LoopingListImplTest
 
         LoopingListImpl<Integer> loopingList = new LoopingListImpl<>(sourceMap);
 
-        assertThat(loopingList.getSequence()).containsExactlyInAnyOrder(1, 2, 3);
+        assertThat(loopingList.getElements()).containsExactlyInAnyOrder(1, 2, 3);
     }
 
 

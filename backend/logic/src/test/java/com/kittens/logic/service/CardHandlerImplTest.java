@@ -39,7 +39,7 @@ class CardHandlerImplTest
 
         assertEquals(gameState.getNowTurn(), nexPlayer);
         assertThat(gameState.getStepQuantity()).isEqualTo(1);
-        assertThat(gameState.getPlayersTurn().getSequence()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSequence());
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
 
         oldGameState.addToCardReset(card);
@@ -64,7 +64,7 @@ class CardHandlerImplTest
 
         assertEquals(gameState.getNowTurn(), oldGameState.getNowTurn());
         assertThat(gameState.getStepQuantity()).isEqualTo(1);
-        assertThat(gameState.getPlayersTurn().getSequence()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSequence());
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
 
         oldGameState.addToCardReset(card);
@@ -91,7 +91,7 @@ class CardHandlerImplTest
 
         assertEquals(gameState.getNowTurn(), nexPlayer);
         assertThat(gameState.getStepQuantity()).isEqualTo(1);
-        assertThat(gameState.getPlayersTurn().getSequence()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSequence());
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
 
         oldGameState.addToCardReset(card);

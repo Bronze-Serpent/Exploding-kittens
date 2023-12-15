@@ -37,7 +37,7 @@ public abstract class GameState
 
     public AbstractPlayer getPlayerById(int playerId)
     {
-        return playersTurn.getSequence().stream()
+        return playersTurn.getElements().stream()
                 .filter(player -> player.getId() == playerId)
                 .findFirst()
                 .orElse(null);

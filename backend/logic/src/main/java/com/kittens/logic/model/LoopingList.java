@@ -1,13 +1,16 @@
 package com.kittens.logic.model;
 
-import java.util.List;
 
+import java.util.Map;
+import java.util.Set;
 
 public interface LoopingList<T>
 {
     int size();
 
-    List<T> getSequence();
+    Set<T> getElements();
+
+    Map<T, T> getPairs();
 
     void assignAWalker(T pLayer);
 

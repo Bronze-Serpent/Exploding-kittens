@@ -78,7 +78,7 @@ public class Utils
     public GameStateImpl copy(GameStateImpl gameState)
     {
         List<AbstractPlayer> players = new ArrayList<>();
-        for (AbstractPlayer pl :gameState.getPlayersTurn().getSequence())
+        for (AbstractPlayer pl :gameState.getPlayersTurn().getElements())
         {
             AbstractPlayer player = new Player(pl.getId(), new ArrayList<>(pl.getCards()));
             players.add(player);

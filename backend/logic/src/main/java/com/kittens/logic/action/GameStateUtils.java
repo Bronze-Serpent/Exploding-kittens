@@ -17,11 +17,7 @@ class GameStateUtils
 
     static boolean doesAnyoneHaveACard(GameState gameState)
     {
-        List<AbstractPlayer> players = gameState.getPlayersTurn().getSequence().stream()
-                .filter(player -> player.getCards().size() > 0)
-                .toList();
-
-        return gameState.getPlayersTurn().getSequence().stream()
+        return gameState.getPlayersTurn().getElements().stream()
                 .filter(player -> player.getCards().size() > 0)
                 .toList().size() > 0;
     }

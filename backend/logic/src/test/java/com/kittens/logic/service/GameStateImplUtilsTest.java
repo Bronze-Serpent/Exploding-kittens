@@ -70,7 +70,7 @@ class GameStateImplUtilsTest
                 generatedGameState,
                 new LoopingListImpl<>(players));
 
-        for (AbstractPlayer player : generatedGameState.getPlayersTurn().getSequence())
+        for (AbstractPlayer player : generatedGameState.getPlayersTurn().getElements())
         {
             assertThat(player.getCards()).contains(defuse);
             assertThat(player.getCards()).hasSize(numOfCards);
@@ -107,7 +107,7 @@ class GameStateImplUtilsTest
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
 
         gameState.getPlayerById(1).removeCard(TACOCAT);
-        assertThat(gameState.getPlayersTurn().getSequence()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSequence());
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
     }
 
     @Test
@@ -124,7 +124,7 @@ class GameStateImplUtilsTest
         assertEquals(gameState.getNowTurn(), nextPlayer);
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
-        assertThat(gameState.getPlayersTurn().getSequence()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSequence());
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
     }
 
     @Test
@@ -141,7 +141,7 @@ class GameStateImplUtilsTest
         assertEquals(gameState.getNowTurn(), oldGameState.getNowTurn());
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
-        assertThat(gameState.getPlayersTurn().getSequence()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSequence());
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
     }
 
     @Test
@@ -161,7 +161,7 @@ class GameStateImplUtilsTest
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
         assertEquals(gameState.getNowTurn(), oldGameState.getNowTurn());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
-        assertThat(gameState.getPlayersTurn().getSequence()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSequence());
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
 
         oldGameState.addToCardReset(card);
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());

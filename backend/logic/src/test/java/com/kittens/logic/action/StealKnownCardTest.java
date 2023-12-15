@@ -58,7 +58,7 @@ class StealKnownCardTest
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
 
         gameState.getPlayerById(1).removeCard(TACOCAT);
-        assertThat(gameState.getPlayersTurn().getSequence()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSequence());
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
     }
 
     @Test
@@ -81,6 +81,6 @@ class StealKnownCardTest
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
         assertThat(gameState.getNowTurn()).isEqualTo(oldGameState.getNowTurn());
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
-        assertThat(gameState.getPlayersTurn().getSequence()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSequence());
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
     }
 }

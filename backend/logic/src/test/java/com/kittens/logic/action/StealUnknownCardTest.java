@@ -57,6 +57,6 @@ class StealUnknownCardTest
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
 
         gameState.getPlayerById(1).removeCard(CATTERMELON);
-        assertThat(gameState.getPlayersTurn().getSequence()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getSequence());
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
     }
 }
