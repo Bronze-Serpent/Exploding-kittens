@@ -4,8 +4,10 @@ import com.kittens.server.entity.PlayerEntity;
 import com.kittens.server.game.model.UserRefPlayer;
 import com.kittens.server.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 
+@Component
 @RequiredArgsConstructor
 public class UserRefPlayerToPlayerEntity implements Mapper<UserRefPlayer, PlayerEntity>
 {

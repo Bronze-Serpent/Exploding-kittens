@@ -18,8 +18,9 @@ import org.springframework.context.annotation.Configuration;
 public class GameActionsConfig
 {
 
-    private final PlayerQuestioner playerQuestioner;
-    private final PlayerInformer playerInformer;
+    // TODO: 16.12.2023 Создание этих бинов
+    private final PlayerQuestioner playerQuestioner = null;
+    private final PlayerInformer playerInformer = null;
 
 
     /*

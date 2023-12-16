@@ -8,12 +8,14 @@ import com.kittens.server.game.model.DbRefGameState;
 import com.kittens.server.game.model.UserRefPlayer;
 import com.kittens.server.repository.GameStateRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-
+// TODO: 16.12.2023 вообще не здорово что этот маппер занимается ещё и тем, что по сути сливает изменения в БД, это нарушение srp
+@Component
 @RequiredArgsConstructor
 public class DbRefGsToGsEntity implements Mapper<DbRefGameState, GameStateEntity>
 {
@@ -55,7 +57,7 @@ public class DbRefGsToGsEntity implements Mapper<DbRefGameState, GameStateEntity
             if (pairs.containsKey(playerWithPointingId))
             {
                 // перезаписываем в поинтере PlayerEntity по key
-                pointer.setPointingPlayer(userRefPlayerToPlayer.map((UserRefPlayer) getKeyForVal(pairs, playerWithPointedAtId)));
+                pointer.setPointingPlayer(userRefPlayerToPlayer.map((UserRefPlayer) getKeyWithPlayerId(pairs, playerWithPointingId.getId())));
                 if (!pairs.containsValue(playerWithPointedAtId))
                 {
                     // перезаписываем в поинтере PlayerEntity по value
@@ -71,13 +73,13 @@ public class DbRefGsToGsEntity implements Mapper<DbRefGameState, GameStateEntity
     }
 
 
-    private AbstractPlayer getKeyForVal(Map<AbstractPlayer, AbstractPlayer> map, AbstractPlayer val)
+    private AbstractPlayer getKeyWithPlayerId(Map<AbstractPlayer, AbstractPlayer> map, Long id)
     {
         for (Map.Entry<AbstractPlayer, AbstractPlayer> entry : map.entrySet())
         {
-            if (entry.getValue().equals(val))
+            if (entry.getKey().getId() == id)
                 return entry.getKey();
         }
-        throw new RuntimeException("Не найдено ключа для такого val: " + val.toString());
+        throw new RuntimeException("Не найдено ключа для такого id: " + id);
     }
 }

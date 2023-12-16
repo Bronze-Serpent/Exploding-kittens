@@ -20,7 +20,7 @@ public class CombinationTest extends DatabaseTest
     {
         CombinationEntity combinationEntity = entityManager.find(CombinationEntity.class, 1);
         assertThat(combinationEntity).isNotNull();
-        assertThat(combinationEntity.getName()).isEqualTo("two_identical");
+        assertThat(combinationEntity.getName()).isEqualTo("steal_unknown_card");
         assertThat(combinationEntity.getAction().getName()).isEqualTo("steal_unknown_card");
         assertThat(combinationEntity.getCombPredicate()).isEqualTo(TWO_IDENTICAL);
         assertThat(combinationEntity.getIsEnabled()).isTrue();

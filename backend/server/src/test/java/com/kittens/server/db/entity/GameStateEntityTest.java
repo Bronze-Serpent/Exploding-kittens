@@ -52,11 +52,11 @@ public class GameStateEntityTest extends DatabaseTest
         /*
             т.е. мы должны иметь сохранённого user - логично.
 
-            но чтобы сохранить gameState нужно сохранить player сначала (норм, не норм?)
+            но чтобы сохранить gameState нужно сохранить player сначала
 
-            и чтобы сохранить gameState нужно сначала сохранить деку и сброс - не норм.
+            и чтобы сохранить gameState нужно сначала сохранить деку и сброс.
 
-            разве что ограничение FK убрать, но это...
+            Это нормально?
          */
 
         GameStateEntity gameStateEntity = new GameStateEntity();

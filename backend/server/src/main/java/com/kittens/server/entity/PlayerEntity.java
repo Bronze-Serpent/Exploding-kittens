@@ -25,4 +25,11 @@ public class PlayerEntity extends BaseEntity<Long>
     // TODO: 13.12.2023 добавить связь в User мб
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    public PlayerEntity(User user, String[] cards, Long id)
+    {
+        super(id);
+        this.user = user;
+        this.cards = cards;
+    }
 }
