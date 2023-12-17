@@ -12,12 +12,10 @@ import com.kittens.server.user.service.UserService;
 import io.jsonwebtoken.Claims;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import liquibase.util.MD5Util;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.security.MD5Encoder;
 import org.postgresql.util.MD5Digest;
 import org.springframework.stereotype.Service;
 

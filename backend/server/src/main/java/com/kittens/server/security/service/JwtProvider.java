@@ -1,7 +1,6 @@
 package com.kittens.server.security.service;
 
 import com.kittens.server.user.entity.User;
-import com.kittens.server.security.JwtAuthentication;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
