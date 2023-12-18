@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <input type="text" id="login" name="login" placeholder="Username">
+    </form>
+    <button id="sign" onclick="send()">Log In</button>
+    <script>
+        function send() {
+            console.log("I in browser!!!");
+            
+            fetch("/test", {
+                method: "POST",
+                headers:{
+                    "Accept": "application/json, text/plain, */*",
+                    "Content-type": "application/json; charset = UTF-8"
+                },
+                redirect: "follow"
+            })
+                .then(response => {
+                    if (!response.ok) {                                   
+                        throw new Error("HTTP error " + response.status); 
+                    }      
+                    if (response.redirected) {
+                        console.log("redirect buit", response.text);
+                        window.location.href = response.url; // перенаправление на другую страницу
+                    }        
+                    console.log("resp", response.text);                                  
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log("result", data);
+                    window.close();
+                    window.open(
+                        "/index.html"
+                    );
+                })
+                .catch((err) => {
+                    console.log("Error!!!");
+                    console.log(err);
+                });
+        }
+    </script>
+</body>
+</html>

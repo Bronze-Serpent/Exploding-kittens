@@ -33,6 +33,9 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/auth/login/**").permitAll()
                         .requestMatchers("/api/auth/token/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/exploding-kittens-ws").permitAll()
+                        .requestMatchers("/ws/**").permitAll()
+                        .requestMatchers("/topic/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
