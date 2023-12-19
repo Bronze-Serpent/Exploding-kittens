@@ -7,11 +7,11 @@ import com.kittens.logic.model.LoopingListImpl;
 import com.kittens.server.entity.GameStateEntity;
 import com.kittens.server.entity.PlayerEntity;
 import com.kittens.server.entity.PlayerQueuePointer;
-import com.kittens.server.game.model.DbRefGameState;
+import com.kittens.server.game.model.RoomGameState;
 import com.kittens.server.game.model.UserRefPlayer;
 import com.kittens.server.integration.IntegrationTest;
-import com.kittens.server.mapper.DbRefGsToGsEntity;
-import com.kittens.server.mapper.GsEntityToDbRefGs;
+import com.kittens.server.mapper.RoomGsToGsEntity;
+import com.kittens.server.mapper.GsEntityToRoomGs;
 import com.kittens.server.mapper.UserRefPlayerToPlayerEntity;
 import com.kittens.server.repository.GameStateRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +27,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @RequiredArgsConstructor
 public class GameStateMappersTest extends IntegrationTest
 {
-    private final GsEntityToDbRefGs entityToGameState;
-    private final DbRefGsToGsEntity gameStateToEntity;
+    private final GsEntityToRoomGs entityToGameState;
+    private final RoomGsToGsEntity gameStateToEntity;
     private final UserRefPlayerToPlayerEntity playerToPlayerEntity;
 
     private final GameStateRepository gameStateRepository;
@@ -39,7 +39,7 @@ public class GameStateMappersTest extends IntegrationTest
     {
         GameStateEntity gameStateEntity = gameStateRepository.findById(1L).get();
 
-        DbRefGameState gameState = entityToGameState.map(gameStateEntity);
+        RoomGameState gameState = entityToGameState.map(gameStateEntity);
 
         assertThat(gameState.getId()).isEqualTo(gameStateEntity.getId());
         assertThat(gameState.getCardDeck().stream()
@@ -76,7 +76,7 @@ public class GameStateMappersTest extends IntegrationTest
         LoopingListImpl<AbstractPlayer> loopingList = new LoopingListImpl<>(CreationUtils.createPlayers());
         loopingList.remove(new UserRefPlayer(2L, null, null));
 
-        DbRefGameState gameState = new DbRefGameState(
+        RoomGameState modifiedGameState = new RoomGameState(
                 loopingList,
                 CreationUtils.createCards(),
                 Collections.emptyList(),
@@ -85,9 +85,9 @@ public class GameStateMappersTest extends IntegrationTest
                 1L
         );
 
-        GameStateEntity dbGameState = gameStateRepository.findById(1L).get();
+        GameStateEntity gameState = gameStateRepository.findById(1L).get();
 
-        List<PlayerQueuePointer> oldPointers = dbGameState.getPlayerQueuePointers().stream()
+        List<PlayerQueuePointer> oldPointers = gameState.getPlayerQueuePointers().stream()
                 .map(pointer -> new PlayerQueuePointer(pointer.getId(),
                         new PlayerEntity(pointer.getPointingPlayer().getUser(), pointer.getPointingPlayer().getCards(), pointer.getPointingPlayer().getId()),
                         new PlayerEntity(pointer.getPointedAtPlayer().getUser(), pointer.getPointedAtPlayer().getCards(), pointer.getPointedAtPlayer().getId()))
@@ -97,21 +97,21 @@ public class GameStateMappersTest extends IntegrationTest
                 .map(PlayerQueuePointer::getId)
                 .collect(Collectors.toSet());
 
-        Long oldId = dbGameState.getId();
+        Long oldId = gameState.getId();
 
-        GameStateEntity gameStateEntity = gameStateToEntity.map(gameState);
+         gameStateToEntity.copy(modifiedGameState, gameState);
 
-        assertThat(Arrays.stream(gameStateEntity.getCardDeck().getValue())).containsExactlyInAnyOrder(
+        assertThat(Arrays.stream(gameState.getCardDeck().getValue())).containsExactlyInAnyOrder(
                 CreationUtils.createCards().stream()
                         .map(Card::getName)
                         .toArray(CardName[]::new)
         );
-        assertThat(gameStateEntity.getCardReset().getValue()).isEmpty();
-        assertThat(gameStateEntity.getId()).isEqualTo(oldId);
-        assertThat(gameStateEntity.getNowTurn().getId()).isEqualTo(loopingList.getCurrent().getId());
+        assertThat(gameState.getCardReset().getValue()).isEmpty();
+        assertThat(gameState.getId()).isEqualTo(oldId);
+        assertThat(gameState.getNowTurn().getId()).isEqualTo(loopingList.getCurrent().getId());
 
 
-        for (PlayerQueuePointer pointer : gameStateEntity.getPlayerQueuePointers())
+        for (PlayerQueuePointer pointer : gameState.getPlayerQueuePointers())
         {
             assertTrue(oldPointersId.contains(pointer.getId()));
         }

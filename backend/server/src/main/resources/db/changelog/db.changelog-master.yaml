@@ -4,8 +4,10 @@ databaseChangeLog:
   - include:
       file: db/changelog/table/user_dynamic_password.sql
   - include:
-      file: db/changelog/game/init/table/schema.creation-1.0.sql
+      file: db/changelog/game/init/schema.creation-1.0.sql
   - include:
-      file: db/changelog/game/init/data/game.data-1.0.sql
+      file: db/changelog/game/init/game.data-1.0.sql
   - include:
-      file: db/changelog/game/process/table/schema.creation-1.0.sql
+      file: db/changelog/game/process/table/room.schema.creation-1.0.sql
+  - include:
+      file: db/changelog/game/process/table/game.schema.creation-1.0.sql

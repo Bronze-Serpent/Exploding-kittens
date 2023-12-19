@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -50,12 +51,14 @@ public class PlayerMappersTest extends IntegrationTest
    public void shouldMapPlayerToEntity()
    {
       List<Card> cards = CreationUtils.createCards();
-      UserRefPlayer userRefPlayer = new UserRefPlayer(1L, cards, 1L);
+      UserRefPlayer modifiedPlayer = new UserRefPlayer(1L, cards, null);
 
-      PlayerEntity playerEntity = playerToPlayerEntity.map(userRefPlayer);
-      assertThat(playerEntity.getId()).isEqualTo(userRefPlayer.getId());
-      assertThat(playerEntity.getUser().getId()).isEqualTo(userRefPlayer.getId());
-      assertThat(playerEntity.getCards()).containsExactlyElementsOf(cards.stream()
+      PlayerEntity player = playerRepository.findById(1L).get();
+      playerToPlayerEntity.copy(modifiedPlayer, player);
+
+      assertThat(player.getId()).isEqualTo(modifiedPlayer.getId());
+      assertThat(player.getUser().getId()).isEqualTo(modifiedPlayer.getId());
+      assertThat(player.getCards()).containsExactlyElementsOf(cards.stream()
               .map(Card::getName)
               .toList());
    }

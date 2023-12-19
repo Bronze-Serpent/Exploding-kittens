@@ -5,7 +5,7 @@ import com.kittens.logic.model.LoopingList;
 import com.kittens.logic.model.LoopingListImpl;
 import com.kittens.server.entity.GameStateEntity;
 import com.kittens.server.entity.PlayerQueuePointer;
-import com.kittens.server.game.model.DbRefGameState;
+import com.kittens.server.game.model.RoomGameState;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-public class GsEntityToDbRefGs implements Mapper<GameStateEntity, DbRefGameState>
+public class GsEntityToRoomGs implements Mapper<GameStateEntity, RoomGameState>
 {
     private final CardNameToCard cardNameMapper;
 
@@ -24,9 +24,9 @@ public class GsEntityToDbRefGs implements Mapper<GameStateEntity, DbRefGameState
 
 
     @Override
-    public DbRefGameState map(GameStateEntity object)
+    public RoomGameState map(GameStateEntity object)
     {
-        return new DbRefGameState(
+        return new RoomGameState(
                 playerPointersToLoopingList(object.getPlayerQueuePointers()),
                 cardNameMapper.map(object.getCardDeck().getValue()),
                 cardNameMapper.map(object.getCardReset().getValue()),

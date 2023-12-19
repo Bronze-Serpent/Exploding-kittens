@@ -17,4 +17,9 @@ public class CardToCardName implements Mapper<List<Card>, CardName[]>
                 .map(Card::getName)
                 .toArray(CardName[]::new);
     }
+
+    public CardName map(Card object)
+    {
+        return object.getName();
+    }
 }

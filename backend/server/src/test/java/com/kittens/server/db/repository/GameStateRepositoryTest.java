@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -42,5 +43,14 @@ public class GameStateRepositoryTest extends DatabaseTest
         GameStateEntity newGameState = gameStateRepository.save(gameState);
 
         assertThat(newGameState.getPlayerQueuePointers()).containsExactlyElementsOf(List.of(playerQueuePointer));
+    }
+
+    @Test
+    public void shouldFindGameStateByRoomId()
+    {
+        Optional<GameStateEntity> gameStateByRoomId = gameStateRepository.findGameStateByRoomId(1L);
+
+        assertThat(gameStateByRoomId).isNotEmpty();
+        assertThat(gameStateByRoomId.get().getId()).isEqualTo(1L);
     }
 }

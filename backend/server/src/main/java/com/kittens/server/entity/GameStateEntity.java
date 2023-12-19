@@ -35,4 +35,6 @@ public class GameStateEntity extends BaseEntity<Long>
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<PlayerQueuePointer> playerQueuePointers = new ArrayList<>();
 
+    @OneToOne
+    private Room room;
 }

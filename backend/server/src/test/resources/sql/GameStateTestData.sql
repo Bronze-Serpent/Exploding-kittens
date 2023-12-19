@@ -21,8 +21,13 @@ VALUES (1, '{}');
 SELECT SETVAL('card_reset_id_seq', (SELECT MAX(id) FROM card_reset));
 
 
-INSERT INTO game_state (id, step_quantity, now_turn_id, card_deck_id, card_reset_id)
-VALUES (1, 1, 1, 1, 1);
+INSERT INTO room(id)
+VALUES (1);
+SELECT SETVAL('room_id_seq', (SELECT MAX(id) FROM room));
+
+
+INSERT INTO game_state (id, step_quantity, now_turn_id, card_deck_id, card_reset_id, room_id)
+VALUES (1, 1, 1, 1, 1, 1);
 SELECT SETVAL('game_state_id_seq', (SELECT MAX(id) FROM game_state));
 
 

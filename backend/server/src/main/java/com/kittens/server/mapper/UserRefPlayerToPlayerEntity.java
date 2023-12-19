@@ -2,7 +2,6 @@ package com.kittens.server.mapper;
 
 import com.kittens.server.entity.PlayerEntity;
 import com.kittens.server.game.model.UserRefPlayer;
-import com.kittens.server.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +12,6 @@ public class UserRefPlayerToPlayerEntity implements Mapper<UserRefPlayer, Player
 {
     private final CardToCardName cardToCardName;
 
-    private final UserRepository userRepository;
-
 
     @Override
     public PlayerEntity map(UserRefPlayer object)
@@ -22,13 +19,15 @@ public class UserRefPlayerToPlayerEntity implements Mapper<UserRefPlayer, Player
 
         PlayerEntity playerEntity = new PlayerEntity();
 
-        playerEntity.setId(object.getId());
-        playerEntity.setCards(cardToCardName.map(object.getCards()));
-        playerEntity.setUser(userRepository
-                .findById(object.getUserId())
-                .orElseThrow(() -> (new RuntimeException("Player ссылается на id несуществующего User")))
-        );
+        copy(object, playerEntity);
 
         return playerEntity;
+    }
+
+
+    public void copy(UserRefPlayer object, PlayerEntity entity)
+    {
+        entity.setId(object.getId());
+        entity.setCards(cardToCardName.map(object.getCards()));
     }
 }

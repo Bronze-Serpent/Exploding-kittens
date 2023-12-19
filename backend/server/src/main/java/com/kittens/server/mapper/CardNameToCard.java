@@ -30,4 +30,9 @@ public class CardNameToCard implements Mapper<CardName[], List<Card>>
                 .map(cardNameToCardMap::get)
                 .collect(Collectors.toList());
     }
+
+    public Card map(CardName object)
+    {
+        return cardNameToCardMap.get(object);
+    }
 }

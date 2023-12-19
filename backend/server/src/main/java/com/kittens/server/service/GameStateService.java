@@ -1,8 +1,13 @@
 package com.kittens.server.service;
 
-import com.kittens.server.game.model.DbRefGameState;
+import com.kittens.server.game.model.RoomGameState;
 
-public interface GameStateService {
+import java.util.Optional;
 
-    DbRefGameState getGameStateByRoomId(Long roomId);
+
+public interface GameStateService
+{
+    Optional<RoomGameState> getGameStateByRoomId(Long roomId);
+
+    void updateGameState(RoomGameState gameState);
 }

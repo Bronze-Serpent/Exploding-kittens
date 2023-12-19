@@ -1,13 +1,14 @@
 package com.kittens.server.service;
 
-import com.kittens.server.dto.PlaySuddenCardDto;
+import com.kittens.server.dto.PlayCardDto;
 
 import java.util.Optional;
 
+
 public interface UserQuestioner {
 
-    Optional<PlaySuddenCardDto> askPlayersToPlaySuddenCards(Long roomId, Object message);
+    Optional<PlayCardDto> askPlayersToPlaySuddenCards(Long roomId, Object message);
 
-    void responseToPlaySuddenCards(Long roomId, PlaySuddenCardDto dto);
+    void responseToPlaySuddenCards(Long roomId, PlayCardDto dto);
 
 }
