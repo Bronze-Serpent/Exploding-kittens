@@ -57,7 +57,6 @@ public class PlayerMappersTest extends IntegrationTest
       assertThat(playerEntity.getUser().getId()).isEqualTo(userRefPlayer.getId());
       assertThat(playerEntity.getCards()).containsExactlyElementsOf(cards.stream()
               .map(Card::getName)
-              .map(CardName::toString)
               .toList());
    }
 

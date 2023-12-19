@@ -8,14 +8,13 @@ import java.util.List;
 
 
 @Component
-public class CardToCardName implements Mapper<List<Card>, String[]>
+public class CardToCardName implements Mapper<List<Card>, CardName[]>
 {
     @Override
-    public String[] map(List<Card> object)
+    public CardName[] map(List<Card> object)
     {
         return object.stream()
                 .map(Card::getName)
-                .map(CardName::toString)
-                .toArray(String[]::new);
+                .toArray(CardName[]::new);
     }
 }

@@ -44,11 +44,9 @@ public class GameStateMappersTest extends IntegrationTest
         assertThat(gameState.getId()).isEqualTo(gameStateEntity.getId());
         assertThat(gameState.getCardDeck().stream()
                 .map(Card::getName)
-                .map(CardName::toString)
                 .toList()).containsExactlyInAnyOrder(gameStateEntity.getCardDeck().getValue());
         assertThat(gameState.getCardReset().stream()
                 .map(Card::getName)
-                .map(CardName::toString)
                 .toList()).containsExactlyInAnyOrder(gameStateEntity.getCardReset().getValue());
         assertThat(gameState.getStepQuantity()).isEqualTo(gameStateEntity.getStepQuantity());
 
@@ -106,8 +104,7 @@ public class GameStateMappersTest extends IntegrationTest
         assertThat(Arrays.stream(gameStateEntity.getCardDeck().getValue())).containsExactlyInAnyOrder(
                 CreationUtils.createCards().stream()
                         .map(Card::getName)
-                        .map(CardName::toString)
-                        .toArray(String[]::new)
+                        .toArray(CardName[]::new)
         );
         assertThat(gameStateEntity.getCardReset().getValue()).isEmpty();
         assertThat(gameStateEntity.getId()).isEqualTo(oldId);

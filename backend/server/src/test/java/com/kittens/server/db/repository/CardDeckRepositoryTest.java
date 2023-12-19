@@ -1,5 +1,6 @@
 package com.kittens.server.db.repository;
 
+import com.kittens.logic.card.CardName;
 import com.kittens.server.db.DatabaseTest;
 import com.kittens.server.entity.CardDeck;
 import com.kittens.server.repository.CardDeckRepository;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static com.kittens.logic.card.CardName.NYAN_CAT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -22,7 +24,7 @@ public class CardDeckRepositoryTest extends DatabaseTest
     {
         CardDeck oldCardDeck = cardDeckRepository.findById(1L).get();
 
-        String[] cards = {"a", "b", "c"};
+        CardName[] cards = {NYAN_CAT, NYAN_CAT, NYAN_CAT};
         CardDeck cardDeck = new CardDeck(oldCardDeck.getId(), cards);
 
         // TODO: 13.12.2023 ??? забыл, почему при flush сессии такое происходит с сущностями oldCardDeck value обновился, в gameState стал null

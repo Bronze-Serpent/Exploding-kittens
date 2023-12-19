@@ -6,7 +6,7 @@ CREATE TABLE player
 (
     id              BIGSERIAL                 PRIMARY KEY,
     user_id         BIGINT                                  REFERENCES user_account (id),
-    cards           VARCHAR []
+    cards           card_name_type []
 );
 
 
@@ -14,7 +14,7 @@ CREATE TABLE player
 CREATE TABLE card_deck
 (
     id              BIGSERIAL        PRIMARY KEY,
-    value           VARCHAR []
+    value           card_name_type []
 );
 
 
@@ -22,7 +22,7 @@ CREATE TABLE card_deck
 CREATE TABLE card_reset
 (
     id              BIGSERIAL        PRIMARY KEY,
-    value           VARCHAR []
+    value           card_name_type []
 );
 
 

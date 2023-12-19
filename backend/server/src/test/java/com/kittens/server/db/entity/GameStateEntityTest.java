@@ -1,5 +1,6 @@
 package com.kittens.server.db.entity;
 
+import com.kittens.logic.card.CardName;
 import com.kittens.server.db.DatabaseTest;
 import com.kittens.server.entity.*;
 import com.kittens.server.user.entity.User;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.kittens.logic.card.CardName.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -29,7 +31,7 @@ public class GameStateEntityTest extends DatabaseTest
         assertThat(gameStateEntity.getStepQuantity()).isEqualTo(1);
 
         CardDeck cardDeck = gameStateEntity.getCardDeck();
-        assertThat(cardDeck.getValue()).containsExactlyElementsOf(List.of("TACOCAT", "BEARDCAT", "NYAN_CAT", "DEFUSE"));
+        assertThat(cardDeck.getValue()).containsExactlyElementsOf(List.of(TACOCAT, BEARDCAT, NYAN_CAT, DEFUSE));
 
         CardReset cardReset = gameStateEntity.getCardReset();
         assertThat(cardReset.getValue()).hasSize(0);
@@ -71,8 +73,8 @@ public class GameStateEntityTest extends DatabaseTest
         entityManager.persist(player1);
         entityManager.persist(player2);
 
-        String[] cardDeckVal = {"BEARDCAT", "BEARDCAT", "BEARDCAT", "NYAN_CAT"};
-        String[] cardResetVal = {"TACOCAT", "TACOCAT", "BEARDCAT"};
+        CardName[] cardDeckVal = {BEARDCAT, BEARDCAT, BEARDCAT, NYAN_CAT};
+        CardName[] cardResetVal = {TACOCAT, TACOCAT, BEARDCAT};
 
         CardDeck cardDeck = entityManager.persist(new CardDeck(null, cardDeckVal));
         CardReset cardReset = entityManager.persist(new CardReset(null, cardResetVal));
