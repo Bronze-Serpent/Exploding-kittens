@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Player extends AbstractPlayer
 {
-    public Player(long id, List<Card> cards) {
+    public Player(Long id, List<Card> cards) {
         super(id, cards);
     }
 }

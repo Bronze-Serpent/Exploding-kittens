@@ -42,9 +42,9 @@ class StealOfPlayerChoiceTest
         gameState.getPlayerById(2).addCard(stealCard);
 
         doReturn("2")
-                .when(playerQuestioner).ask(new Player(1, null), WHICH_PLAYER);
+                .when(playerQuestioner).ask(new Player(1L, null), WHICH_PLAYER);
         doReturn(CATTERMELON.getWriting())
-                .when(playerQuestioner).ask(new Player(2, null), WHICH_CARD_TO_GIVE);
+                .when(playerQuestioner).ask(new Player(2L, null), WHICH_CARD_TO_GIVE);
 
         stealOfPlayerChoice.doAction(gameState);
 

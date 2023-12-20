@@ -50,7 +50,7 @@ class GameStateImplUtilsTest
                 ATTACK, new ArrayList<>(List.of(attack, attack)),
                 HAIRY_CATATO, new ArrayList<>(List.of(hairy_catato, hairy_catato, hairy_catato, hairy_catato, hairy_catato)),
                 DEFUSE, new ArrayList<>(List.of(defuse, defuse, defuse, defuse)),
-                EXPLODING_KITTEN, new ArrayList<>(List.of(explodingKitten, explodingKitten)));
+                EXPLODING_KITTEN, new ArrayList<>(List.of(explodingKitten, explodingKitten, explodingKitten, explodingKitten)));
         List<Card> allCards = new ArrayList<>();
         allCards.addAll(cards.get(GET_LOST));
         allCards.addAll(cards.get(ATTACK));
@@ -58,8 +58,8 @@ class GameStateImplUtilsTest
         allCards.addAll(cards.get(DEFUSE));
         allCards.addAll(cards.get(EXPLODING_KITTEN));
 
-        Player firstPlayer = new Player(3, new ArrayList<>());
-        List<AbstractPlayer> players = List.of(new Player(1, new ArrayList<>()), new Player(2, new ArrayList<>()), firstPlayer);
+        Player firstPlayer = new Player(3L, new ArrayList<>());
+        List<AbstractPlayer> players = List.of(new Player(1L, new ArrayList<>()), new Player(2L, new ArrayList<>()), firstPlayer);
         int numOfCards = 2;
 
         GameStateImpl generatedGameState = new GameStateImpl(null, null, null, null, 0);
@@ -78,7 +78,7 @@ class GameStateImplUtilsTest
 
         assertThat(generatedGameState.getCardDeck().stream()
                 .filter(card -> card.getName() == EXPLODING_KITTEN)
-                .toList()).hasSize(cards.get(EXPLODING_KITTEN).size());
+                .toList()).hasSize(players.size() - 1);
 
         assertThat(generatedGameState.getCardDeck().stream()
                 .filter(card -> card.getName() == DEFUSE)

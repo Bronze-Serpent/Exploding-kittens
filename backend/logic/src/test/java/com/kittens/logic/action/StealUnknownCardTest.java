@@ -42,9 +42,9 @@ class StealUnknownCardTest
         gameState.getPlayerById(2).addCard(stealCard);
 
         doReturn("2")
-                .when(playerQuestioner).ask(new Player(1, null), PlayerQuestioner.Question.WHICH_PLAYER);
+                .when(playerQuestioner).ask(new Player(1L, null), PlayerQuestioner.Question.WHICH_PLAYER);
         doReturn(Integer.toString(gameState.getPlayerById(2).getCards().size() - 1))
-                .when(playerQuestioner).ask(new Player(1, null), PlayerQuestioner.Question.WHICH_NUM_OF_CARD_TAKE);
+                .when(playerQuestioner).ask(new Player(1L, null), PlayerQuestioner.Question.WHICH_NUM_OF_CARD_TAKE);
 
         stealUnknownCard.doAction(gameState);
 
