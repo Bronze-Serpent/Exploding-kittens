@@ -1,28 +1,6 @@
 class BackConnect {
-    async registration(data) {
-        let response = await fetch("http://localhost:8080/api/register/", {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json' 
-            },
-            body: JSON.stringify(data)
-        });
-        
-
-        if (response.ok) {
-            //?
-            let result = await response.json();
-            console.log(result);
-            return result;
-        } else {
-            //&
-            console.log(response);
-            return false;
-        }
-    }
-
-    async autorization(data) {
-        let response = await fetch("http://localhost:8080/api/auth/login", {
+    async defaultRequest(url, data) {
+        let repsonse = await fetch(url, {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json' 
@@ -30,14 +8,10 @@ class BackConnect {
             body: JSON.stringify(data)
         });
 
-        // если HTTP-статус в диапазоне 200-299
-        // получаем тело ответа
-        if (response.ok) {
-            //? 
-            let result = await response.json();
+        if (repsonse.ok) {
+            let result = await repsonse.json(); // возвращать в любом случае? с последующей обработкой status code
             return result;
         } else {
-            //&
             return false;
         }
     }

@@ -19,7 +19,6 @@ app.get('/welcome', (req, res) => {
 });
 
 app.get('/index', auth, (req, res) => {
-    console.log("index req - ", req.body)
     res.sendFile(createPath('index'));
 });
 
@@ -52,15 +51,12 @@ app.post('/login', async (req, res) => {
             passwordEnterValueTime: eval(passwordEnterValueTime)
         }
 
-        const result = await back.autorization(user);
+        const result = await back.defaultRequest("http://localhost:8080/api/auth/login", user);
 
         if (result) {
-            //записать токены
-            //console.log(result);
-            
-            res.redirect("/index");
+            res.status(200).send(result);
         } else {
-            res.status(400).send("Invalid Credentials")
+            res.status(400).send();
         }
 
     } catch (err) {
@@ -93,12 +89,12 @@ app.post('/register', async (req, res) => {
             passwordConfirmationEnterValueTime: eval(passwordConfirmationEnterValueTime)
         }
 
-        const result = await back.registration(user);
+        const result = await back.defaultRequest("http://localhost:8080/api/register/", user);
 
         if (result) {
-            res.redirect("/login");
+            res.status(200).send(result);
         } else {
-            res.send("Invalid input");
+            res.status(400).send();
         }
     } catch (err) {
         console.log(err);

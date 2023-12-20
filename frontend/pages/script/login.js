@@ -5,6 +5,7 @@ let keys = [];
 
 function handle(e) {
     if (e.key == "Backspace") {
+        prevTime = Date.now();
         keys.pop();
     } else {
         if (prevTime == null) {
@@ -14,36 +15,41 @@ function handle(e) {
             prevTime = Date.now();
         }
     }
-    passwordEnterValueTime.value = JSON.stringify(keys);
 }
 
-sign.onclick = sendData();
-
-async function sendData() {
-    
+function sendData() {
     let data = {
         login: login.value,
         password: password.value,
         passwordEnterValueTime: keys
     };
 
-    fetch("http://localhost:3000/login")
-        .then((response) => response.json())
+    fetch("/login", {
+      method: 'POST',
+      headers: { 
+          "Accept": "application/json, text/plain, */*",
+                    "Content-type": "application/json; charset = UTF-8" 
+      },
+      body: JSON.stringify(data)
+    })
+        .then((response) => {
+        if (!response.ok) {
+            const container = document.getElementById('result-container');
+            const textNode = document.createTextNode("Invalid credintials!!!");
+            container.appendChild(textNode);
+            throw new Error("Invalid Credentials"); 
+        }                                          
+        return response.json();
+    })
         .then((data) => {
-          console.log(data);
-          // code here //
-          if (data.error) {
-            alert("Error Password or Username"); /*displays error message*/
-          } else {
-            window.open(
-              "/index.html"
-            ); /*opens the target page while Id & password matches*/
-          }
+          //console.log(data); // token
+          localStorage.setItem('type', data.type);
+          localStorage.setItem('accessToken', data.accessToken);
+          localStorage.setItem('refreshToken', data.refreshToken);
+          window.location.href = "/index.html";
         })
         .catch((err) => {
           console.log(err);
         });
-    
-    
 }
 

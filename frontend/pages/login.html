@@ -7,13 +7,13 @@
 </head>
 <body>
     <div>
-        <form method="post">
+        <div id="result-container"></div>
+        <form>
             <h3>Login</h3>
             <input type="text" id="login" name="login" placeholder="Username">
             <input type="password" id="password" name="password" placeholder="Password">
-            <input type="hidden" id="passwordEnterValueTime" name="passwordEnterValueTime">
-            <button type="submit">Log In</button>
         </form>
+        <button id="log" onclick="sendData()">Log In</button>
     </div>
     <script src="script/login.js"></script>
 </body>
