@@ -43,9 +43,9 @@ class StealKnownCardTest
         gameState.getPlayerById(2).addCard(stealCard);
 
         doReturn("2")
-                .when(playerQuestioner).ask(new Player(1, null), WHICH_PLAYER);
+                .when(playerQuestioner).ask(new Player(1L, null), WHICH_PLAYER);
         doReturn(TACOCAT.getWriting())
-                .when(playerQuestioner).ask(new Player(1, null), WHICH_CARD_TO_TAKE);
+                .when(playerQuestioner).ask(new Player(1L, null), WHICH_CARD_TO_TAKE);
 
         stealKnownCard.doAction(gameState);
 
@@ -69,9 +69,9 @@ class StealKnownCardTest
         var oldGameState = Utils.copy(gameState);
 
         doReturn("2")
-                .when(playerQuestioner).ask(new Player(1, null), WHICH_PLAYER);
+                .when(playerQuestioner).ask(new Player(1L, null), WHICH_PLAYER);
         doReturn("tacocat")
-                .when(playerQuestioner).ask(new Player(1, null), WHICH_CARD_TO_TAKE);
+                .when(playerQuestioner).ask(new Player(1L, null), WHICH_CARD_TO_TAKE);
 
         stealKnownCard.doAction(gameState);
 
