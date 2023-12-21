@@ -2,7 +2,6 @@ package com.kittens.server.contoller;
 
 import com.kittens.server.dto.PlayCardDto;
 import com.kittens.server.service.GameService;
-import com.kittens.server.service.NotificationService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
