@@ -54,7 +54,7 @@ public class AuthServiceImpl implements AuthService {
             final String refreshToken = jwtProvider.generateRefreshToken(user);
             userService.addDynamicPassword(user, authRequest.getPasswordEnterValueTime());
             refreshStorage.put(user.getLogin(), refreshToken);
-            return new JwtResponseDto(accessToken, refreshToken);
+            return new JwtResponseDto(accessToken, refreshToken, user.getId());
         } else {
             throw new AuthException("Неправильный пароль");
         }
@@ -69,10 +69,10 @@ public class AuthServiceImpl implements AuthService {
                 final User user = userService.getByLogin(login)
                         .orElseThrow(() -> new AuthException("Пользователь не найден"));
                 final String accessToken = jwtProvider.generateAccessToken(user);
-                return new JwtResponseDto(accessToken, null);
+                return new JwtResponseDto(accessToken, null, user.getId());
             }
         }
-        return new JwtResponseDto(null, null);
+        return new JwtResponseDto(null, null, null);
     }
 
     public JwtResponseDto refresh(@NotNull @Valid String refreshToken) {
@@ -86,7 +86,7 @@ public class AuthServiceImpl implements AuthService {
                 final String accessToken = jwtProvider.generateAccessToken(user);
                 final String newRefreshToken = jwtProvider.generateRefreshToken(user);
                 refreshStorage.put(user.getLogin(), newRefreshToken);
-                return new JwtResponseDto(accessToken, newRefreshToken);
+                return new JwtResponseDto(accessToken, newRefreshToken, user.getId());
             }
         }
         throw new AuthException("Невалидный JWT токен");

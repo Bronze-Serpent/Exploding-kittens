@@ -34,9 +34,8 @@ function sendData() {
     })
         .then((response) => {
         if (!response.ok) {
-            const container = document.getElementById('result-container');
-            const textNode = document.createTextNode("Invalid credintials!!!");
-            container.appendChild(textNode);
+            const container = document.getElementById('login-res');
+            container.classList.remove("d-none")
             throw new Error("Invalid Credentials"); 
         }                                          
         return response.json();
@@ -46,6 +45,7 @@ function sendData() {
           localStorage.setItem('type', data.type);
           localStorage.setItem('accessToken', data.accessToken);
           localStorage.setItem('refreshToken', data.refreshToken);
+          localStorage.setItem('userId', data.userId);
           window.location.href = "/index.html";
         })
         .catch((err) => {

@@ -12,4 +12,5 @@ public class JwtResponseDto {
     private final String type = "Bearer";
     String accessToken;
     String refreshToken;
+    Long userId;
 }

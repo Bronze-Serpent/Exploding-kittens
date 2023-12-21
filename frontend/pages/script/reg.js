@@ -55,9 +55,8 @@ function sendData() {
     })
         .then((response) => {
         if (!response.ok) {
-            const container = document.getElementById('result-container');
-            const textNode = document.createTextNode("User exist!!!");
-            container.appendChild(textNode);
+            const container = document.getElementById('register-res');
+            container.classList.remove("d-none")
             throw new Error("User exist!"); 
         }                                          
         return response.json();

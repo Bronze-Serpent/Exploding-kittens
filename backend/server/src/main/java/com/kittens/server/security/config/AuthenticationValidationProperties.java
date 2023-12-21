@@ -12,5 +12,5 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "authentication.validation")
 public class AuthenticationValidationProperties {
     Integer lastAuthTimes = 5;
-    Double possibleDelta = 2000.0;
+    Double possibleDelta = 1000.0;
 }
