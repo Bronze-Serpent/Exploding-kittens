@@ -19,15 +19,13 @@ public class GameStateEntity extends BaseEntity<Long>
 {
     private int stepQuantity;
 
-    @OneToOne(cascade = {CascadeType.MERGE})
+    @OneToOne
     private PlayerEntity nowTurn;
 
-    @OneToOne(cascade = {CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private CardReset cardReset;
 
-    // TODO: 16.12.2023 будет работать CascadeType.ALL т.к. порядок сохранения при нём другой. А при Persist будет проблема
-    //  т.к. gamestate сохранится раньше и у него поле card_deck_id будет null
-    @OneToOne(cascade = {CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private CardDeck cardDeck;
     
     @Builder.Default

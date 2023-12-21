@@ -10,4 +10,8 @@ public interface GameStateService
     Optional<RoomGameState> getGameStateByRoomId(Long roomId);
 
     void updateGameState(RoomGameState gameState);
+
+    void saveNewGameState(Long roomId, RoomGameState createdGameState);
+
+    Long createEmptyGameState();
 }

@@ -34,14 +34,30 @@ public class RoomGsToGsEntity implements Mapper<RoomGameState, GameStateEntity>
 
     public void copy(RoomGameState object, GameStateEntity entity)
     {
-        entity.setId(object.getId());
-        entity.getCardDeck().setValue(cardToCardName.map(object.getCardDeck()));
-        entity.getCardReset().setValue(cardToCardName.map(object.getCardReset()));
-        entity.setStepQuantity(object.getStepQuantity());
-        entity.setNowTurn(userRefPlayerToPlayer.map((UserRefPlayer) object.getNowTurn()));
+        rewriteExcludePointers(object, entity);
+        loopingListToPointers(entity.getPlayerQueuePointers(), object.getPlayersTurn());
+    }
 
-        List<PlayerQueuePointer> pointers = entity.getPlayerQueuePointers();
-        loopingListToPointers(pointers, object.getPlayersTurn());
+
+    public void fillEmptyEntity(RoomGameState object, GameStateEntity entity)
+    {
+        rewriteExcludePointers(object, entity);
+        fillEmptyPointersByLoopingList(entity.getPlayerQueuePointers(), object.getPlayersTurn());
+    }
+
+    private void fillEmptyPointersByLoopingList(List<PlayerQueuePointer> playerQueuePointers, LoopingList<AbstractPlayer> loopingList)
+    {
+        if (playerQueuePointers.size() != loopingList.size())
+            throw new RuntimeException("Невозможно записать пары из LoopingList, размером: " + loopingList.size()
+                    + " в pointers размером: " + playerQueuePointers.size());
+
+        int pointerCount = 0;
+        for (Map.Entry<AbstractPlayer, AbstractPlayer> pairs : loopingList.getPairs().entrySet())
+        {
+            PlayerQueuePointer pointer = playerQueuePointers.get(pointerCount++);
+            pointer.setPointingPlayer(userRefPlayerToPlayer.map((UserRefPlayer) pairs.getKey()));
+            pointer.setPointedAtPlayer(userRefPlayerToPlayer.map((UserRefPlayer) pairs.getValue()));
+        }
     }
 
 
@@ -84,5 +100,15 @@ public class RoomGsToGsEntity implements Mapper<RoomGameState, GameStateEntity>
                 return entry.getKey();
         }
         throw new RuntimeException("Не найдено ключа для такого id: " + id);
+    }
+
+
+    private void rewriteExcludePointers(RoomGameState object, GameStateEntity entity)
+    {
+        entity.setId(object.getId());
+        entity.getCardDeck().setValue(cardToCardName.map(object.getCardDeck()));
+        entity.getCardReset().setValue(cardToCardName.map(object.getCardReset()));
+        entity.setStepQuantity(object.getStepQuantity());
+        entity.setNowTurn(userRefPlayerToPlayer.map((UserRefPlayer) object.getNowTurn()));
     }
 }

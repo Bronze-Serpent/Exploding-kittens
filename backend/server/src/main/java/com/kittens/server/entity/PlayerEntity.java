@@ -6,10 +6,7 @@ import com.kittens.server.user.entity.User;
 import com.vladmihalcea.hibernate.type.array.EnumArrayType;
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Type;
 
 
@@ -30,13 +27,16 @@ public class PlayerEntity extends BaseEntity<Long>
     )
     private CardName[] cards;
 
-    // TODO: 13.12.2023 добавить связь в User мб
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    public PlayerEntity(User user, CardName[] cards, Long id)
+    @ManyToOne
+    private Room room;
+
+    public PlayerEntity(Room room, User user, CardName[] cards, Long id)
     {
         super(id);
+        this.room = room;
         this.user = user;
         this.cards = cards;
     }

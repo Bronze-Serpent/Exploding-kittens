@@ -42,6 +42,7 @@ public class UserQuestionerImpl implements UserQuestioner
         return completableFuture.get();
     }
 
+
     @Override
     public void responseToPlaySuddenCards(Long roomId, PlayCardDto dto) {
         roomIdToResponses.remove(roomId).complete(Optional.of(dto));

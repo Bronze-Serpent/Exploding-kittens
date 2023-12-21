@@ -23,4 +23,9 @@ public class Room extends BaseEntity<Long>
     @JoinTable(name = "user_in_room",
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
+
+    public void addUser(User user)
+    {
+        users.add(user);
+    }
 }

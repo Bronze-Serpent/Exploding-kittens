@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+/src/main/java/com/kittens/server/ImitationOfApplicationOperation.java
+/src/main/java/com/kittens/server/TestServerApplication.java

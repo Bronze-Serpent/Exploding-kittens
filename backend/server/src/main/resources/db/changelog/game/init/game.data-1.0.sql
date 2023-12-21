@@ -43,25 +43,3 @@ VALUES                  (1, 'steal_unknown_card',       9,           'TWO_IDENTI
                         (2, 'steal_known_card',         7,           'THREE_IDENTICAL',      true),
                         (3, 'steal_from_reset',         6,           'FIVE_DIFFERENT',       true);
 
-
---changeset barabanov:player_start_card
-INSERT INTO player_start_card (card_id, quantity)
-VALUES  (2, 1);
-
-
---changeset barabanov:game_card
-INSERT INTO game_card (card_id, quantity)
-VALUES                  (1,         4),
-                        (2,         6),
-                        (3,         4),
-                        (4,         4),
-                        (5,         5),
-                        (6,         4),
-                        (7,         4),
-                        (8,         5),
-                        (9,         4),
-                        (10,        4),
-                        (11,        4),
-                        (12,        4),
-                        (13,        4);
-

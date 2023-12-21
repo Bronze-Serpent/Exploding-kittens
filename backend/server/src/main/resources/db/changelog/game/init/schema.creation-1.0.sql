@@ -55,23 +55,3 @@ CREATE TABLE combination
     predicate       VARCHAR(60)	        NOT NULL        UNIQUE,
     is_enabled      BOOLEAN             NOT NULL
 );
-
-
---changeset barabanov:player_start_card
--- карты, которые раздаются каждому игроку в указанном количестве
-CREATE TABLE player_start_card
-(
-    id              SERIAL              PRIMARY KEY,
-    card_id         INT                 UNIQUE          REFERENCES card (id)  ON DELETE RESTRICT,
-    quantity        INT
-);
-
-
---changeset barabanov:game_card
--- карты, которые добавляются в игру в указанном количестве
-CREATE TABLE game_card
-(
-    id              SERIAL              PRIMARY KEY,
-    card_id         INT                 UNIQUE          REFERENCES card (id)  ON DELETE RESTRICT,
-    quantity        INT
-);
