@@ -2,9 +2,9 @@ spring:
   profiles:
     active: dev
   datasource:
-    url: jdbc:postgresql://localhost:5432/exploding-kittens
+    url: jdbc:postgresql://localhost:5433/exploding_kittens
     username: postgres
-    password: postgres
+    password: pass
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -21,3 +21,37 @@ logging:
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+
+game.property:
+  numOfCardsPlayersHave: 8
+  playerStartCards:
+    - name: DEFUSE
+      quantity: 1
+  cardsInGame:
+    - name: 'EXPLODING_KITTEN'
+      quantity: 4
+    - name: 'DEFUSE'
+      quantity: 6
+    - name: 'ATTACK'
+      quantity: 4
+    - name: 'FAVOR'
+      quantity: 4
+    - name: 'NO'
+      quantity: 5
+    - name: 'GET_LOST'
+      quantity: 4
+    - name: 'SHUFFLE'
+      quantity: 4
+    - name: 'SEE_THE_FUTURE'
+      quantity: 5
+    - name: 'HAIRY_CATATO'
+      quantity: 4
+    - name: 'TACOCAT'
+      quantity: 4
+    - name: 'BEARDCAT'
+      quantity: 4
+    - name: 'NYAN_CAT'
+      quantity: 4
+    - name: 'CATTERMELON'
+      quantity: 4

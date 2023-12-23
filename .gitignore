@@ -1,2 +1,3 @@
 /.idea/
 ./common/docker/postgresql
+/backend/logic/target/

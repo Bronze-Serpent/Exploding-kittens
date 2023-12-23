@@ -3,3 +3,11 @@ databaseChangeLog:
       file: db/changelog/table/user_account.sql
   - include:
       file: db/changelog/table/user_dynamic_password.sql
+  - include:
+      file: db/changelog/game/init/schema.creation-1.0.sql
+  - include:
+      file: db/changelog/game/init/game.data-1.0.sql
+  - include:
+      file: db/changelog/game/process/table/room.schema.creation-1.0.sql
+  - include:
+      file: db/changelog/game/process/table/game.schema.creation-1.0.sql

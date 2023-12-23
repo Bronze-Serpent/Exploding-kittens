@@ -28,5 +28,6 @@
 
     <modules>
         <module>server</module>
+        <module>logic</module>
     </modules>
 </project>
