@@ -24,32 +24,32 @@ function sendData() {
         passwordEnterValueTime: keys
     };
 
-    fetch("/login", {
-      method: 'POST',
-      headers: { 
-          "Accept": "application/json, text/plain, */*",
-                    "Content-type": "application/json; charset = UTF-8" 
-      },
-      body: JSON.stringify(data)
+    fetch("http://localhost:8080/api/auth/login", {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify(data)
     })
+        // проверяем ответ от backend сервера
         .then((response) => {
-        if (!response.ok) {
-            const container = document.getElementById('login-res');
-            container.classList.remove("d-none")
-            throw new Error("Invalid Credentials"); 
-        }                                          
-        return response.json();
-    })
+            if (!response.ok) {
+                const container = document.getElementById('login-res');
+                container.classList.remove("d-none")
+                throw new Error("Invalid Credentials"); // ???
+            }
+            return response.json();
+        })
+        // забираем данные
         .then((data) => {
-          //console.log(data); // token
-          localStorage.setItem('type', data.type);
-          localStorage.setItem('accessToken', data.accessToken);
-          localStorage.setItem('refreshToken', data.refreshToken);
-          localStorage.setItem('userId', data.userId);
-          window.location.href = "/index.html";
+            localStorage.setItem('type', data.type);
+            localStorage.setItem('accessToken', data.accessToken);
+            localStorage.setItem('refreshToken', data.refreshToken);
+            localStorage.setItem('userId', data.userId);
+            window.location.href = "/index.html";
         })
         .catch((err) => {
-          console.log(err);
+            console.log(err);
         });
 }
 

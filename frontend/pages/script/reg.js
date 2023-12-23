@@ -45,26 +45,22 @@ function sendData() {
         passwordConfirmationEnterValueTime: keysPasswordConfirmation
     };
 
-    fetch("/register", {
-      method: 'POST',
-      headers: { 
-          "Accept": "application/json, text/plain, */*",
-                    "Content-type": "application/json; charset = UTF-8" 
-      },
-      body: JSON.stringify(data)
+    fetch("http://localhost:8080/api/register/", {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify(data)
     })
         .then((response) => {
-        if (!response.ok) {
-            const container = document.getElementById('register-res');
-            container.classList.remove("d-none")
-            throw new Error("User exist!"); 
-        }                                          
-        return response.json();
-    })
-        .then((data) => {
-          window.location.href = "/login.html";
+            if (!response.ok) {
+                const container = document.getElementById('register-res');
+                container.classList.remove("d-none")
+                throw new Error("User exist!"); 
+            } 
+            window.location.href = "/login.html";  
         })
         .catch((err) => {
-          console.log(err);
+            console.log(err);
         });
 }
