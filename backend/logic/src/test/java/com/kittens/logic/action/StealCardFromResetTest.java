@@ -41,7 +41,7 @@ class StealCardFromResetTest
         gameState.addToCardReset(stealCard);
 
         doReturn(TACOCAT.getWriting())
-                .when(playerQuestioner).ask(new Player(1, null), PlayerQuestioner.Question.WHICH_CARD_TO_TAKE);
+                .when(playerQuestioner).ask(new Player(1L, null), PlayerQuestioner.Question.WHICH_CARD_TO_TAKE);
 
         stealCardFromReset.doAction(gameState);
 

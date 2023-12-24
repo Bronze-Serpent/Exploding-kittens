@@ -22,10 +22,9 @@ public class GameStateUtils
     private final CombinationHandler combinationHandler;
 
 
-    // TODO: 15.12.2023 сделать добавление карт котят в зависимости от количества игроков
     public void initGame(List<Card> cards,
                          List<AbstractPlayer> players,
-                         int numOfCards,
+                         int numOfCardsPlayersHave,
                          AbstractPlayer firstPlayer,
                          GameState emptyGameState,
                          LoopingList<AbstractPlayer> loopingList)
@@ -40,14 +39,16 @@ public class GameStateUtils
         // раздача по 1 обезвредь
         distributeDefuseCard(players, cardNameToCard.get(DEFUSE));
 
-        // раздача всем игрокам по numOfCards - 1 карт
+        // раздача всем игрокам по numOfCardsPlayersHave - 1 карт
         List<Card> gamingCards = extractAllGamingCards(cardNameToCard);
         Collections.shuffle(gamingCards);
-        distributeGamingCards(players, gamingCards, numOfCards - 1);
+        distributeGamingCards(players, gamingCards, numOfCardsPlayersHave - 1);
 
+        // добавляем все оставшиеся карты обезвредь и карты взрывных котят в колоду
         gamingCards.addAll(cardNameToCard.get(DEFUSE));
-        gamingCards.addAll(cardNameToCard.get(EXPLODING_KITTEN));
+        addExplodingKittens(gamingCards, cardNameToCard.get(EXPLODING_KITTEN), loopingList.size());
 
+        Collections.shuffle(gamingCards);
 
         emptyGameState.setNowTurn(firstPlayer);
         emptyGameState.setStepQuantity(1);
@@ -92,6 +93,19 @@ public class GameStateUtils
         for (Card combCard : combination)
             nowTurn.removeCard(combCard.getName());
     }
+
+
+    private void addExplodingKittens(List<Card> gamingCards, List<Card> explodingKittens, int playerQuantity)
+    {
+        // число игроков - 1 карт
+        if (explodingKittens.size() < playerQuantity - 1)
+            throw new RuntimeException("Недостаточное число карт взрывных котят. Карт: " + explodingKittens.size()
+                    + " .Игроков: " + playerQuantity);
+
+        else
+            gamingCards.addAll(explodingKittens.subList(0, playerQuantity - 1));
+    }
+
 
     private void distributeGamingCards(List<AbstractPlayer> players, List<Card> gamingCards, int numOfCards)
     {

@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public abstract class AbstractPlayer
 {
-    private final long id;
+    private final Long id;
     private final List<Card> cards;
 
     public AbstractPlayer(AbstractPlayer player)

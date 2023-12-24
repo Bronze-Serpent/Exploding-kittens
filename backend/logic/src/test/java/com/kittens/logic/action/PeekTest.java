@@ -21,7 +21,7 @@ class PeekTest
         PlayerInformer playerInformer = (playerId, informing, msg) ->
         {
             assertEquals(informing, PlayerInformer.Informing.SHOW_CARDS);
-            assertThat(playerId).isEqualTo(new Player(1, null));
+            assertThat(playerId).isEqualTo(new Player(1L, null));
             assertThat(msg).isEqualTo("no,no,no");
         };
         Peek peek = new Peek(playerInformer);

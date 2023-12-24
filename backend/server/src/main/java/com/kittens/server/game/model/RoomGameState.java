@@ -11,17 +11,17 @@ import java.util.List;
 
 
 @EqualsAndHashCode(of = "id", callSuper = false)
-public class DbRefGameState extends GameState
+@Getter
+public class RoomGameState extends GameState
 
 {
-    @Getter
     private final Long id;
 
-    public DbRefGameState(LoopingList<AbstractPlayer> playersTurn,
-                          List<Card> cardDeck, List<Card> cardReset,
-                          AbstractPlayer nowTurn,
-                          int stepQuantity,
-                          Long id)
+    public RoomGameState(LoopingList<AbstractPlayer> playersTurn,
+                         List<Card> cardDeck, List<Card> cardReset,
+                         AbstractPlayer nowTurn,
+                         int stepQuantity,
+                         Long id)
     {
         super(playersTurn, cardDeck, cardReset, nowTurn, stepQuantity);
         this.id = id;

@@ -4,9 +4,8 @@ import com.kittens.logic.model.AbstractPlayer;
 import com.kittens.logic.model.LoopingList;
 import com.kittens.server.entity.GameStateEntity;
 import com.kittens.server.entity.PlayerQueuePointer;
-import com.kittens.server.game.model.DbRefGameState;
+import com.kittens.server.game.model.RoomGameState;
 import com.kittens.server.game.model.UserRefPlayer;
-import com.kittens.server.repository.GameStateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,31 +13,51 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-// TODO: 16.12.2023 вообще не здорово что этот маппер занимается ещё и тем, что по сути сливает изменения в БД, это нарушение srp
+
 @Component
 @RequiredArgsConstructor
-public class DbRefGsToGsEntity implements Mapper<DbRefGameState, GameStateEntity>
+public class RoomGsToGsEntity implements Mapper<RoomGameState, GameStateEntity>
 {
     private final UserRefPlayerToPlayerEntity userRefPlayerToPlayer;
 
     private final CardToCardName cardToCardName;
 
-    private final GameStateRepository gameStateRepository;
-
 
     @Override
-    public GameStateEntity map(DbRefGameState object)
+    public GameStateEntity map(RoomGameState object)
     {
-        GameStateEntity gameStateEntity = gameStateRepository.findById(object.getId())
-                .orElseThrow(() -> new RuntimeException("GameState на который ссылается данный объект нет в БД"));
-        List<PlayerQueuePointer> pointers = gameStateEntity.getPlayerQueuePointers();
-        loopingListToPointers(pointers, object.getPlayersTurn());
-
-        gameStateEntity.getCardDeck().setValue(cardToCardName.map(object.getCardDeck()));
-        gameStateEntity.getCardReset().setValue(cardToCardName.map(object.getCardReset()));
-        gameStateEntity.setStepQuantity(object.getStepQuantity());
+        GameStateEntity gameStateEntity = new GameStateEntity();
+        copy(object, gameStateEntity);
 
         return gameStateEntity;
+    }
+
+    public void copy(RoomGameState object, GameStateEntity entity)
+    {
+        rewriteExcludePointers(object, entity);
+        loopingListToPointers(entity.getPlayerQueuePointers(), object.getPlayersTurn());
+    }
+
+
+    public void fillEmptyEntity(RoomGameState object, GameStateEntity entity)
+    {
+        rewriteExcludePointers(object, entity);
+        fillEmptyPointersByLoopingList(entity.getPlayerQueuePointers(), object.getPlayersTurn());
+    }
+
+    private void fillEmptyPointersByLoopingList(List<PlayerQueuePointer> playerQueuePointers, LoopingList<AbstractPlayer> loopingList)
+    {
+        if (playerQueuePointers.size() != loopingList.size())
+            throw new RuntimeException("Невозможно записать пары из LoopingList, размером: " + loopingList.size()
+                    + " в pointers размером: " + playerQueuePointers.size());
+
+        int pointerCount = 0;
+        for (Map.Entry<AbstractPlayer, AbstractPlayer> pairs : loopingList.getPairs().entrySet())
+        {
+            PlayerQueuePointer pointer = playerQueuePointers.get(pointerCount++);
+            pointer.setPointingPlayer(userRefPlayerToPlayer.map((UserRefPlayer) pairs.getKey()));
+            pointer.setPointedAtPlayer(userRefPlayerToPlayer.map((UserRefPlayer) pairs.getValue()));
+        }
     }
 
 
@@ -81,5 +100,15 @@ public class DbRefGsToGsEntity implements Mapper<DbRefGameState, GameStateEntity
                 return entry.getKey();
         }
         throw new RuntimeException("Не найдено ключа для такого id: " + id);
+    }
+
+
+    private void rewriteExcludePointers(RoomGameState object, GameStateEntity entity)
+    {
+        entity.setId(object.getId());
+        entity.getCardDeck().setValue(cardToCardName.map(object.getCardDeck()));
+        entity.getCardReset().setValue(cardToCardName.map(object.getCardReset()));
+        entity.setStepQuantity(object.getStepQuantity());
+        entity.setNowTurn(userRefPlayerToPlayer.map((UserRefPlayer) object.getNowTurn()));
     }
 }

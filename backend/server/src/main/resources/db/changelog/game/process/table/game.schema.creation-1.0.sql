@@ -5,8 +5,9 @@
 CREATE TABLE player
 (
     id              BIGSERIAL                 PRIMARY KEY,
+    cards           card_name_type [],
     user_id         BIGINT                                  REFERENCES user_account (id),
-    cards           VARCHAR []
+    room_id         BIGINT                                  REFERENCES room (id)
 );
 
 
@@ -14,7 +15,7 @@ CREATE TABLE player
 CREATE TABLE card_deck
 (
     id              BIGSERIAL        PRIMARY KEY,
-    value           VARCHAR []
+    value           card_name_type []
 );
 
 
@@ -22,7 +23,7 @@ CREATE TABLE card_deck
 CREATE TABLE card_reset
 (
     id              BIGSERIAL        PRIMARY KEY,
-    value           VARCHAR []
+    value           card_name_type []
 );
 
 
@@ -33,7 +34,8 @@ CREATE TABLE game_state
     step_quantity      INT,
     now_turn_id        BIGINT                                  REFERENCES player (id),
     card_deck_id       BIGINT                                  REFERENCES card_deck (id) ON DELETE RESTRICT,
-    card_reset_id      BIGINT                                  REFERENCES card_reset (id) ON DELETE RESTRICT
+    card_reset_id      BIGINT                                  REFERENCES card_reset (id) ON DELETE RESTRICT,
+    room_id            BIGINT                                  REFERENCES room (id) ON DELETE CASCADE
 );
 
 

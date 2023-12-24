@@ -30,7 +30,7 @@ class ShuffleTest
     public void shouldSkipMove()
     {
         doReturn(PlayerQuestioner.ShuffleAnswer.FIRST_CARD_TO_LAST.getAnswer())
-                .when(playerQuestioner).ask(new Player(1, null), PlayerQuestioner.Question.HOW_TO_SHUFFLE);
+                .when(playerQuestioner).ask(new Player(1L, null), PlayerQuestioner.Question.HOW_TO_SHUFFLE);
         var gameState = Utils.createGameState();
         Utils.set2PlayersWithCards(gameState);
         var oldGameState = Utils.copy(gameState);

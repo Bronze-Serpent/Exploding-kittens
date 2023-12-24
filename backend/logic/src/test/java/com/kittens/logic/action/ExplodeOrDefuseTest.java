@@ -52,7 +52,7 @@ class ExplodeOrDefuseTest
     public void shouldDefuseKitten()
     {
         doReturn(PlayerQuestioner.HideAnswer.FIRST.getAnswer())
-                .when(playerQuestioner).ask(new Player(1, null), WHERE_TO_HIDE);
+                .when(playerQuestioner).ask(new Player(1L, null), WHERE_TO_HIDE);
 
         var gameState = Utils.createGameState();
         Utils.set2PlayersWithCards(gameState);
@@ -82,7 +82,7 @@ class ExplodeOrDefuseTest
     public void shouldExplodePlayer()
     {
         doReturn(PlayerQuestioner.HideAnswer.LAST.getAnswer())
-                .when(playerQuestioner).ask(new Player(1, null), WHERE_TO_HIDE);
+                .when(playerQuestioner).ask(new Player(1L, null), WHERE_TO_HIDE);
 
         var gameState = Utils.createGameState();
         Utils.set2PlayersWithCards(gameState);

@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 
 @Component
-public class CardNameToCard implements Mapper<String[], List<Card>>
+public class CardNameToCard implements Mapper<CardName[], List<Card>>
 {
     private final Map<CardName, Card> cardNameToCardMap = new HashMap<>();
 
@@ -24,11 +24,15 @@ public class CardNameToCard implements Mapper<String[], List<Card>>
     }
 
     @Override
-    public List<Card> map(String[] object)
+    public List<Card> map(CardName[] object)
     {
         return Arrays.stream(object)
-                .map(CardName::fromString)
                 .map(cardNameToCardMap::get)
                 .collect(Collectors.toList());
+    }
+
+    public Card map(CardName object)
+    {
+        return cardNameToCardMap.get(object);
     }
 }

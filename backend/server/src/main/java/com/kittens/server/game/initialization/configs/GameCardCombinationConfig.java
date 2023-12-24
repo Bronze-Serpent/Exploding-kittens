@@ -11,6 +11,8 @@ import com.kittens.server.game.initialization.mapper.SudActionEntityToSudAction;
 import com.kittens.server.game.initialization.repository.CardRepository;
 import com.kittens.server.game.initialization.repository.CombinationRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
