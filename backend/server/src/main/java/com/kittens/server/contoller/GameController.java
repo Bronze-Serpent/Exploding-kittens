@@ -29,7 +29,7 @@ public class GameController
     @PostMapping("/{roomId}/init")
     public ResponseEntity<?> initGameStateInRoom(@PathVariable Long roomId)
     {
-        gameService.initGameStateInRoom(roomId);
+        gameService.initGameInRoom(roomId);
         return ResponseEntity.ok().build();
     }
 

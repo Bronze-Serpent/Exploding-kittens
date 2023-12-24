@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static com.kittens.logic.card.CardName.GET_LOST;
 import static com.kittens.logic.card.CardName.NO;
@@ -28,14 +29,14 @@ class CardHandlerImplTest
         var gameState = Utils.createGameState();
         Utils.set2PlayersWithCards(gameState);
         var oldGameState = Utils.copy(gameState);
-        AbstractPlayer nexPlayer = gameState.getPlayerById(2);
+        AbstractPlayer nexPlayer = gameState.getPlayerById(2L);
 
         var inaction = new Inaction();
         var suddenInaction = new SuddenInaction();
         var getLost = new SkippingMove();
         var card = new OrdinaryCard(GET_LOST, inaction, getLost, suddenInaction);
 
-        cardHandler.playCard(gameState, card, Collections.emptyList());
+        cardHandler.playCard(gameState, gameState.getNowTurn().getId(), card, Collections.emptyMap());
 
         assertEquals(gameState.getNowTurn(), nexPlayer);
         assertThat(gameState.getStepQuantity()).isEqualTo(1);
@@ -60,7 +61,7 @@ class CardHandlerImplTest
         var cancel = new Cancel();
         var no = new OrdinaryCard(NO, inaction, inaction, cancel);
 
-        cardHandler.playCard(gameState, card, List.of(no));
+        cardHandler.playCard(gameState, 1L, card, Map.of(2L, List.of(no)));
 
         assertEquals(gameState.getNowTurn(), oldGameState.getNowTurn());
         assertThat(gameState.getStepQuantity()).isEqualTo(1);
@@ -78,7 +79,7 @@ class CardHandlerImplTest
         var gameState = Utils.createGameState();
         Utils.set2PlayersWithCards(gameState);
         var oldGameState = Utils.copy(gameState);
-        AbstractPlayer nexPlayer = gameState.getPlayerById(2);
+        AbstractPlayer nextPlayer = gameState.getPlayerById(2L);
 
         var inaction = new Inaction();
         var suddenInaction = new SuddenInaction();
@@ -87,9 +88,11 @@ class CardHandlerImplTest
         var cancel = new Cancel();
         var no = new OrdinaryCard(NO, inaction, inaction, cancel);
 
-        cardHandler.playCard(gameState, card, List.of(no, no));
+        nextPlayer.addCard(no);
 
-        assertEquals(gameState.getNowTurn(), nexPlayer);
+        cardHandler.playCard(gameState, 1L, card, Map.of(2L, List.of(no, no)));
+
+        assertEquals(gameState.getNowTurn(), nextPlayer);
         assertThat(gameState.getStepQuantity()).isEqualTo(1);
         assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());

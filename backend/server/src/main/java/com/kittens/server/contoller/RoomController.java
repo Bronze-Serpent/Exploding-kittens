@@ -1,36 +1,45 @@
 package com.kittens.server.contoller;
 
 import com.kittens.server.dto.AddUserToRoomDto;
-import com.kittens.server.service.GameService;
-import lombok.AccessLevel;
+import com.kittens.server.dto.RoomDescriptionDto;
+import com.kittens.server.service.RoomService;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/api/room")
 @RestController
 public class RoomController
 {
-    GameService gameService;
+    private final RoomService roomService;
 
 
     @PostMapping("/create")
-    public ResponseEntity<?> createRoom(@RequestBody AddUserToRoomDto addUserToRoomDto)
+    public RoomDescriptionDto createRoom(@RequestBody AddUserToRoomDto addUserToRoomDto)
     {
-        gameService.createRoom(addUserToRoomDto.getUserId());
-        return ResponseEntity.ok().build();
+        Long createdRoomId = roomService.createRoom(addUserToRoomDto.getUserId());
+
+        return new RoomDescriptionDto(
+                createdRoomId,
+                roomService.getAllUsersId(createdRoomId)
+        );
     }
 
 
+    // TODO: 24.12.2023  тут мы должны добавляющемуся пользователю по вебсокету отправлять или же из запроса?
     @PostMapping("/{roomId}/join")
-    public ResponseEntity<?> addUserToRoom(@PathVariable Long roomId,
-                                           @RequestBody AddUserToRoomDto addUserToRoomDto)
+    public RoomDescriptionDto enterTheRoom(@PathVariable Long roomId,
+                                          @RequestBody AddUserToRoomDto addUserToRoomDto)
     {
-        gameService.addUserToRoom(roomId, addUserToRoomDto.getUserId());
-        return ResponseEntity.ok().build();
+        roomService.addUserToRoom(roomId, addUserToRoomDto.getUserId());
+
+        // TODO: 24.12.2023 если в roomService.addUserToRoom сделать человечески ошибки
+        //  то тут в зависимости от того выпадает ли ошибка или нет при добавлении формировать ответ пользователю
+
+        return new RoomDescriptionDto(
+                roomId,
+                roomService.getAllUsersId(roomId)
+        );
     }
 }

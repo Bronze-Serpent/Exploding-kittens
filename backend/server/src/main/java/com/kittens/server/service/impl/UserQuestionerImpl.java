@@ -42,7 +42,7 @@ public class UserQuestionerImpl implements UserQuestioner
         return completableFuture.get();
     }
 
-
+    // TODO: 24.12.2023 а на кой тут remove
     @Override
     public void responseToPlaySuddenCards(Long roomId, PlayCardDto dto) {
         roomIdToResponses.remove(roomId).complete(Optional.of(dto));

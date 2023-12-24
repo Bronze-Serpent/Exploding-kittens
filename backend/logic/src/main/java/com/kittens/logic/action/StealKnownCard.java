@@ -24,7 +24,7 @@ public class StealKnownCard implements Action
     {
         AbstractPlayer nowTurn = gameState.getNowTurn();
 
-        var playerIdWhoseCard = Integer.parseInt(playerQuestioner.ask(nowTurn, WHICH_PLAYER));
+        var playerIdWhoseCard = Long.parseLong(playerQuestioner.ask(nowTurn, WHICH_PLAYER));
         var playerWhoseCard = gameState.getPlayerById(playerIdWhoseCard);
 
         var stringTakenCardName = playerQuestioner.ask(nowTurn, WHICH_CARD_TO_TAKE);

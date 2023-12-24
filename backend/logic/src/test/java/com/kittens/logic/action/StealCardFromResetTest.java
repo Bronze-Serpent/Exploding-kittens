@@ -45,14 +45,14 @@ class StealCardFromResetTest
 
         stealCardFromReset.doAction(gameState);
 
-        assertThat(gameState.getPlayerById(1).hasACard(stealCard.getName())).isTrue();
+        assertThat(gameState.getPlayerById(1L).hasACard(stealCard.getName())).isTrue();
 
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
         assertThat(gameState.getNowTurn()).isEqualTo(oldGameState.getNowTurn());
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
 
-        gameState.getPlayerById(1).removeCard(TACOCAT);
+        gameState.getPlayerById(1L).removeCard(TACOCAT);
         assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
     }
 }

@@ -44,7 +44,7 @@ class ExplodeOrDefuseTest
         var gameState = Utils.createGameState();
         Utils.set2PlayersWithCards(gameState);
 
-        AssertionsForClassTypes.assertThat(gameState.getPlayerById(1).hasACard(EXPLODING_KITTEN)).isFalse();
+        AssertionsForClassTypes.assertThat(gameState.getPlayerById(1L).hasACard(EXPLODING_KITTEN)).isFalse();
         assertThrows(RuntimeException.class, () -> explodeOrDefuse.doAction(gameState));
     }
 
@@ -64,8 +64,8 @@ class ExplodeOrDefuseTest
         var defuse = new OrdinaryCard(DEFUSE, inaction, inaction, suddenInaction);
         var exploding_cat = new OrdinaryCard(EXPLODING_KITTEN, inaction, inaction, suddenInaction);
 
-        gameState.getPlayerById(1).addCard(defuse);
-        gameState.getPlayerById(1).addCard(exploding_cat);
+        gameState.getPlayerById(1L).addCard(defuse);
+        gameState.getPlayerById(1L).addCard(exploding_cat);
 
         explodeOrDefuse.doAction(gameState);
 
@@ -92,21 +92,21 @@ class ExplodeOrDefuseTest
         var suddenInaction = new SuddenInaction();
         var exploding_cat = new OrdinaryCard(EXPLODING_KITTEN, inaction, inaction, suddenInaction);
 
-        gameState.getPlayerById(1).addCard(exploding_cat);
+        gameState.getPlayerById(1L).addCard(exploding_cat);
         gameState.setStepQuantity(3);
 
-        Assertions.assertThat(gameState.getPlayerById(1).hasACard(DEFUSE)).isFalse();
+        Assertions.assertThat(gameState.getPlayerById(1L).hasACard(DEFUSE)).isFalse();
         explodeOrDefuse.doAction(gameState);
 
         Assertions.assertThat(gameState.getStepQuantity()).isEqualTo(1);
-        assertEquals(gameState.getNowTurn(), oldGameState.getNowTurn());
+        assertEquals(gameState.getNowTurn(), oldGameState.getPlayersTurn().next());
 
         oldGameState.getCardDeck().add(0, exploding_cat);
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
 
-        oldGameState.getCardReset().addAll(oldGameState.getPlayerById(1).getCards());
+        oldGameState.getCardReset().addAll(oldGameState.getPlayerById(1L).getCards());
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
 
-        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(List.of(oldGameState.getPlayerById(2)));
+        assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(List.of(oldGameState.getPlayerById(2L)));
     }
 }

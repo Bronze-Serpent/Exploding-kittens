@@ -20,7 +20,7 @@ class TransferringMoveTest
         var gameState = Utils.createGameState();
         Utils.set2PlayersWithCards(gameState);
         var oldGameState = Utils.copy(gameState);
-        AbstractPlayer nextPlayer = gameState.getPlayerById(2);
+        AbstractPlayer nextPlayer = gameState.getPlayerById(2L);
 
         transferringMove.doAction(gameState);
 

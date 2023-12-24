@@ -27,7 +27,6 @@ public class Utils
                 loopingList,
                 new LinkedList<>(),
                 new ArrayList<>(),
-                loopingList.next(),
                 1);
     }
 
@@ -70,7 +69,7 @@ public class Utils
 
         LoopingList<AbstractPlayer> loopingList = new LoopingListImpl<>(new ArrayList<>(List.of(pl1, pl2)));
         gameState.setPlayersTurn(loopingList);
-        gameState.setNowTurn(loopingList.getCurrent());
+        gameState.setNowTurn(pl1);
         gameState.setCardDeck(cardDeck);
         gameState.setCardReset(cardReset);
     }
@@ -83,13 +82,16 @@ public class Utils
             AbstractPlayer player = new Player(pl.getId(), new ArrayList<>(pl.getCards()));
             players.add(player);
         }
-        return new GameStateImpl(
+
+        GameStateImpl copied = new GameStateImpl(
                 new LoopingListImpl<>(players),
                 new ArrayList<>(gameState.getCardDeck()),
                 new ArrayList<>(gameState.getCardReset()),
-                new Player(gameState.getNowTurn().getId(), gameState.getNowTurn().getCards()),
                 gameState.getStepQuantity()
         );
+        copied.setNowTurn(gameState.getNowTurn());
+
+        return copied;
     }
 
 }

@@ -20,6 +20,7 @@ public class LoopingListImplTest
     @Test
     public void shouldSpinTheList()
     {
+        loopingList.assignAWalker(1);
         assertThat(loopingList.getCurrent()).isEqualTo(1);
         assertThat(loopingList.next()).isEqualTo(2);
         assertThat(loopingList.next()).isEqualTo(3);
@@ -29,6 +30,7 @@ public class LoopingListImplTest
     @Test
     public void shouldRemoveElem()
     {
+        loopingList.assignAWalker(1);
         assertThat(loopingList.getCurrent()).isEqualTo(1);
         assertThat(loopingList.next()).isEqualTo(2);
         loopingList.remove(2);
@@ -51,9 +53,9 @@ public class LoopingListImplTest
     @Test
     public void shouldWorkWith1Elem()
     {
+        loopingList.assignAWalker(1);
         loopingList.remove(2);
         loopingList.remove(1);
-
         assertThat(loopingList.next()).isEqualTo(3);
         assertThat(loopingList.next()).isEqualTo(3);
     }

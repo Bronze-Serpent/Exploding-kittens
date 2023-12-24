@@ -26,14 +26,16 @@ public class GsEntityToRoomGs implements Mapper<GameStateEntity, RoomGameState>
     @Override
     public RoomGameState map(GameStateEntity object)
     {
-        return new RoomGameState(
+        RoomGameState roomGameState = new RoomGameState(
                 playerPointersToLoopingList(object.getPlayerQueuePointers()),
                 cardNameMapper.map(object.getCardDeck().getValue()),
                 cardNameMapper.map(object.getCardReset().getValue()),
-                playerToUserRefPlayer.map(object.getNowTurn()),
                 object.getStepQuantity(),
                 object.getId()
         );
+        roomGameState.setNowTurn(playerToUserRefPlayer.map(object.getNowTurn()));
+
+        return roomGameState;
     }
 
 

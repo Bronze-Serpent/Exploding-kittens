@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface RoomService
 {
-    Long createEmptyRoom();
-
     void addUserToRoom(Long createdRoomId, Long userId);
 
     List<Long> getAllUsersId(Long roomId);
+
+    Long createRoom(Long userId);
 }

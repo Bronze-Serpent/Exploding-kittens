@@ -3,6 +3,7 @@ package com.kittens.logic.model;
 import com.kittens.logic.card.Card;
 import lombok.*;
 
+import java.util.Collection;
 import java.util.List;
 
 
@@ -10,21 +11,30 @@ import java.util.List;
 @EqualsAndHashCode
 @Setter
 @Getter
-@AllArgsConstructor
 public abstract class GameState
 {
     private LoopingList<AbstractPlayer> playersTurn;
     private List<Card> cardDeck;
     private List<Card> cardReset;
-    private AbstractPlayer nowTurn;
     private int stepQuantity;
+
+    public GameState(LoopingList<AbstractPlayer> playersTurn,
+                     List<Card> cardDeck,
+                     List<Card> cardReset,
+                     int stepQuantity)
+    {
+        this.playersTurn = playersTurn;
+        this.cardDeck = cardDeck;
+        this.cardReset = cardReset;
+        this.stepQuantity = stepQuantity;
+    }
 
     public void addToCardReset(Card card)
     {
         cardReset.add(card);
     }
 
-    public void addToCardReset(List<Card> cards)
+    public void addToCardReset(Collection<Card> cards)
     {
         for (Card card : cards)
             addToCardReset(card);
@@ -35,11 +45,21 @@ public abstract class GameState
         playersTurn.remove(player);
     }
 
-    public AbstractPlayer getPlayerById(int playerId)
+    public AbstractPlayer getPlayerById(Long playerId)
     {
         return playersTurn.getElements().stream()
-                .filter(player -> player.getId() == playerId)
+                .filter(player -> player.getId().equals(playerId))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public void setNowTurn(AbstractPlayer nowTurn)
+    {
+        playersTurn.assignAWalker(nowTurn);
+    }
+
+    public AbstractPlayer getNowTurn()
+    {
+        return playersTurn.getCurrent();
     }
 }

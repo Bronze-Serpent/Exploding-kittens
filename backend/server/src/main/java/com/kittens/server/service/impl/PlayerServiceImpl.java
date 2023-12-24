@@ -2,6 +2,7 @@ package com.kittens.server.service.impl;
 
 import com.kittens.server.entity.PlayerEntity;
 import com.kittens.server.game.model.UserRefPlayer;
+import com.kittens.server.mapper.PlayerEntityToUserRefPlayer;
 import com.kittens.server.mapper.UserRefPlayerToPlayerEntity;
 import com.kittens.server.repository.PlayerRepository;
 import com.kittens.server.repository.RoomRepository;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -24,6 +26,8 @@ public class PlayerServiceImpl implements PlayerService
     private final RoomRepository roomRepository;
 
     private final UserRefPlayerToPlayerEntity userRefPlayerToEntity;
+    private final PlayerEntityToUserRefPlayer entityToUserRefPlayer;
+
 
     @Override
     public Long createEmptyPlayer(Long roomId, Long userId)
@@ -50,6 +54,14 @@ public class PlayerServiceImpl implements PlayerService
             userRefPlayerToEntity.copy(player, playerEntity);
         }
         playerRepository.flush();
+    }
+
+
+    @Override
+    public Optional<UserRefPlayer> findById(Long id)
+    {
+        return playerRepository.findById(id)
+                .map(entityToUserRefPlayer::map);
     }
 
 }

@@ -5,6 +5,7 @@ import com.kittens.logic.model.GameState;
 import com.kittens.logic.model.LoopingList;
 import com.kittens.logic.card.Card;
 import com.kittens.logic.card.CardName;
+import com.kittens.logic.model.Player;
 import lombok.RequiredArgsConstructor;
 
 import java.util.*;
@@ -50,11 +51,11 @@ public class GameStateUtils
 
         Collections.shuffle(gamingCards);
 
+        emptyGameState.setPlayersTurn(loopingList);
         emptyGameState.setNowTurn(firstPlayer);
         emptyGameState.setStepQuantity(1);
         emptyGameState.setCardReset(new ArrayList<>());
         emptyGameState.setCardDeck(gamingCards);
-        emptyGameState.setPlayersTurn(loopingList);
     }
 
 
@@ -78,10 +79,9 @@ public class GameStateUtils
     }
 
 
-    public void playCard(GameState gameState, Card playerCard, List<Card> suddenCards)
+    public void playCard(GameState gameState, Long whoPlayed, Card playerCard, Map<Long, List<Card>> suddenCards)
     {
-        cardHandler.playCard(gameState, playerCard, suddenCards);
-        gameState.getNowTurn().removeCard(playerCard.getName());
+        cardHandler.playCard(gameState, whoPlayed, playerCard, suddenCards);
     }
 
 

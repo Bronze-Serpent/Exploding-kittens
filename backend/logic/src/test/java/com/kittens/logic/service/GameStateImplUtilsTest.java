@@ -62,7 +62,7 @@ class GameStateImplUtilsTest
         List<AbstractPlayer> players = List.of(new Player(1L, new ArrayList<>()), new Player(2L, new ArrayList<>()), firstPlayer);
         int numOfCards = 2;
 
-        GameStateImpl generatedGameState = new GameStateImpl(null, null, null, null, 0);
+        GameStateImpl generatedGameState = new GameStateImpl(null, null, null, 0);
         gameStateUtils.initGame(allCards,
                 players,
                 numOfCards,
@@ -106,7 +106,7 @@ class GameStateImplUtilsTest
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
 
-        gameState.getPlayerById(1).removeCard(TACOCAT);
+        gameState.getPlayerById(1L).removeCard(TACOCAT);
         assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
     }
 
@@ -116,7 +116,7 @@ class GameStateImplUtilsTest
         var gameState = Utils.createGameState();
         Utils.set2PlayersWithCards(gameState);
         var oldGameState = Utils.copy(gameState);
-        AbstractPlayer nextPlayer = gameState.getPlayerById(2);
+        AbstractPlayer nextPlayer = gameState.getPlayerById(2L);
 
         gameStateUtils.changeMove(gameState);
 
@@ -154,9 +154,9 @@ class GameStateImplUtilsTest
         var inaction = new Inaction();
         var suddenInaction = new SuddenInaction();
         var card = new OrdinaryCard(TACOCAT, inaction, inaction, suddenInaction);
-        gameState.getPlayerById(1).getCards().add(card);
+        gameState.getPlayerById(1L).getCards().add(card);
 
-        gameStateUtils.playCard(gameState, card, Collections.emptyList());
+        gameStateUtils.playCard(gameState, gameState.getNowTurn().getId(), card, Collections.emptyMap());
 
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
         assertEquals(gameState.getNowTurn(), oldGameState.getNowTurn());
@@ -177,8 +177,8 @@ class GameStateImplUtilsTest
         var suddenInaction = new SuddenInaction();
         var card = new OrdinaryCard(TACOCAT, inaction, inaction, suddenInaction);
         var card2 = new OrdinaryCard(TACOCAT, inaction, inaction, suddenInaction);
-        gameState.getPlayerById(1).getCards().add(card);
-        gameState.getPlayerById(1).getCards().add(card2);
+        gameState.getPlayerById(1L).getCards().add(card);
+        gameState.getPlayerById(1L).getCards().add(card2);
 
         assertThrows(RuntimeException.class, () -> gameStateUtils.playCombination(gameState, List.of(card, card2)));
     }

@@ -20,7 +20,6 @@ public class StealCardFromReset implements Action
     private final PlayerInformer playerInformer;
 
 
-    // todo у игроков постоянно должен быть доступ к сбросу, чтобы они могли посмотреть что в нём
     @Override
     public void doAction(GameState gameState)
     {

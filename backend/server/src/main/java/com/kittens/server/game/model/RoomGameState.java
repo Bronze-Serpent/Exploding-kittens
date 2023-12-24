@@ -19,11 +19,10 @@ public class RoomGameState extends GameState
 
     public RoomGameState(LoopingList<AbstractPlayer> playersTurn,
                          List<Card> cardDeck, List<Card> cardReset,
-                         AbstractPlayer nowTurn,
                          int stepQuantity,
                          Long id)
     {
-        super(playersTurn, cardDeck, cardReset, nowTurn, stepQuantity);
+        super(playersTurn, cardDeck, cardReset, stepQuantity);
         this.id = id;
     }
 }

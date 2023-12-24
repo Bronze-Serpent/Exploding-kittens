@@ -29,7 +29,6 @@ public class GameStateMappersTest extends IntegrationTest
 {
     private final GsEntityToRoomGs entityToGameState;
     private final RoomGsToGsEntity gameStateToEntity;
-    private final UserRefPlayerToPlayerEntity playerToPlayerEntity;
 
     private final GameStateRepository gameStateRepository;
 
@@ -74,13 +73,13 @@ public class GameStateMappersTest extends IntegrationTest
     public void shouldMapGameStateToGameStateEntity()
     {
         LoopingListImpl<AbstractPlayer> loopingList = new LoopingListImpl<>(CreationUtils.createPlayers());
+        loopingList.assignAWalker(new UserRefPlayer(2L, CreationUtils.createCards(), 1L));
         loopingList.remove(new UserRefPlayer(2L, null, null));
 
         RoomGameState modifiedGameState = new RoomGameState(
                 loopingList,
                 CreationUtils.createCards(),
                 Collections.emptyList(),
-                loopingList.getCurrent(),
                 2,
                 1L
         );
@@ -89,8 +88,8 @@ public class GameStateMappersTest extends IntegrationTest
 
         List<PlayerQueuePointer> oldPointers = gameState.getPlayerQueuePointers().stream()
                 .map(pointer -> new PlayerQueuePointer(pointer.getId(),
-                        new PlayerEntity(pointer.getPointingPlayer().getUser(), pointer.getPointingPlayer().getCards(), pointer.getPointingPlayer().getId()),
-                        new PlayerEntity(pointer.getPointedAtPlayer().getUser(), pointer.getPointedAtPlayer().getCards(), pointer.getPointedAtPlayer().getId()))
+                        new PlayerEntity(pointer.getPointedAtPlayer().getRoom(), pointer.getPointingPlayer().getUser(), pointer.getPointingPlayer().getCards(), pointer.getPointingPlayer().getId()),
+                        new PlayerEntity(pointer.getPointedAtPlayer().getRoom(), pointer.getPointedAtPlayer().getUser(), pointer.getPointedAtPlayer().getCards(), pointer.getPointedAtPlayer().getId()))
                 )
                 .toList();
         Set<Long> oldPointersId = oldPointers.stream()

@@ -54,7 +54,7 @@ public abstract class AbstractPlayer
             }
         }
 
-        throw new RuntimeException("Карты с именем '" + nameToDelete + "' нет");
+        throw new RuntimeException("У игрока с id: " + this.id + " Карты с именем '" + nameToDelete + "' нет");
     }
 
 

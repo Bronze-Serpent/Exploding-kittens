@@ -29,7 +29,7 @@ public class StealUnknownCard implements Action
 
         AbstractPlayer nowTurn = gameState.getNowTurn();
 
-        var playerIdWhoseCard = Integer.parseInt(playerQuestioner.ask(nowTurn, WHICH_PLAYER));
+        var playerIdWhoseCard = Long.parseLong(playerQuestioner.ask(nowTurn, WHICH_PLAYER));
         var playerWhoseCard = gameState.getPlayerById(playerIdWhoseCard);
 
         int numOfPlayerCards = playerWhoseCard.getCards().size();

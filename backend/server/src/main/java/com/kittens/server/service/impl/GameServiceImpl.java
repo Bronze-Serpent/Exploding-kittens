@@ -6,7 +6,6 @@ import com.kittens.logic.model.AbstractPlayer;
 import com.kittens.logic.model.LoopingList;
 import com.kittens.logic.model.LoopingListImpl;
 import com.kittens.logic.service.GameStateUtils;
-import com.kittens.server.dto.CreateEditRoomDto;
 import com.kittens.server.dto.PlayCardDto;
 import com.kittens.server.game.initialization.configs.GameSettingsProperties;
 import com.kittens.server.game.model.RoomGameState;
@@ -18,11 +17,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -46,28 +43,21 @@ public class GameServiceImpl implements GameService
 
 
     @Override
-    public void playCard(Long roomId, PlayCardDto dto)
+    public void playCard(Long roomId, PlayCardDto playCardDto)
     {
-        List<PlayCardDto> playSuddenCards = new ArrayList<>();
-        Optional<PlayCardDto> playSuddenCardDto = userQuestioner.askPlayersToPlaySuddenCards(roomId, dto);
-        while (playSuddenCardDto.isPresent())
-        {
-            playSuddenCards.add(playSuddenCardDto.get());
-            playSuddenCardDto = userQuestioner.askPlayersToPlaySuddenCards(roomId, dto);
-        }
-        // TODO: 19.12.2023 нам бы тут ошибку кидать, что такой комнаты нет
-        RoomGameState gameState = gameStateService.getGameStateByRoomId(roomId).get();
+        RoomGameState gameState = gameStateService.getGameStateByRoomId(roomId)
+                .orElseThrow(() -> new RuntimeException("Комнаты для GameState с id: " + roomId + " не найдено." ));
 
-        Card card = cardNameToCardMapper.map(dto.getCardName());
+        Long whoPlayedId = playCardDto.getPlayerId();
+        if (!gameState.getNowTurn().getId().equals(whoPlayedId))
+            throw new RuntimeException("Попытка сыграть карту игрока с id: " + whoPlayedId
+                    + ", но сейчас очередь игрока с id: " + gameState.getNowTurn().getId());
 
-        List<Card> suddenCards = cardNameToCardMapper.map(playSuddenCards
-                .stream()
-                .map(PlayCardDto::getCardName)
-                .toArray(CardName[]::new));
+        Map<Long, List<Card>> suddenCards = surveyOnSuddenCards(roomId, playCardDto);
+        Card card = cardNameToCardMapper.map(playCardDto.getCardName());
+        gameStateUtils.playCard(gameState, whoPlayedId, card, suddenCards);
 
-        gameStateUtils.playCard(gameState, card, suddenCards);
-
-        gameStateService.updateGameState(gameState);
+        updateGame(gameState);
 
         //TODO: Вместо геймстейта отправляем геймстейт + карты игрока
         notificationService.sendMessageToRoom(roomId, gameState);
@@ -75,29 +65,7 @@ public class GameServiceImpl implements GameService
 
 
     @Override
-    public void createRoom(Long userId)
-    {
-        Long createdRoomId = roomService.createEmptyRoom();
-        roomService.addUserToRoom(createdRoomId, userId);
-
-        // TODO: 21.12.2023 тут нужно что-то сообщать?
-        notificationService.sendMessageToUser(createdRoomId, userId,
-                new CreateEditRoomDto(createdRoomId, List.of(userId)));
-    }
-
-
-    @Override
-    public void addUserToRoom(Long roomId, Long userId)
-    {
-        roomService.addUserToRoom(roomId, userId);
-
-        List<Long> allUsersId = roomService.getAllUsersId(roomId);
-        notificationService.sendMessageToRoom(roomId, allUsersId);
-    }
-
-
-    @Override
-    public void initGameStateInRoom(Long roomId)
+    public void initGameInRoom(Long roomId)
     {
         List<Long> usersIds = roomService.getAllUsersId(roomId);
 
@@ -113,7 +81,7 @@ public class GameServiceImpl implements GameService
         List<Card> cards = multiplyCardBins();
         Long emptyGameStateId = gameStateService.createEmptyGameState();
 
-        RoomGameState createdGameState = new RoomGameState(null, null, null, null, 0, emptyGameStateId);
+        RoomGameState createdGameState = new RoomGameState(null, null, null, 0, emptyGameStateId);
         gameStateUtils.initGame(
                 cards,
                 players,
@@ -127,6 +95,43 @@ public class GameServiceImpl implements GameService
 
         // рассылка user'ам этого gameState
         notificationService.sendMessageToRoom(roomId, createdGameState);
+    }
+
+
+
+    private void updateGame(RoomGameState gameState)
+    {
+        gameStateService.updateGameState(gameState);
+        playerService.updatePlayers(gameState.getPlayersTurn().getElements()
+                .stream()
+                .map(abstractPlayer -> (UserRefPlayer) abstractPlayer).collect(Collectors.toSet())
+        );
+    }
+
+
+    private Map<Long, List<Card>> surveyOnSuddenCards(Long roomId, PlayCardDto playedCardDto)
+    {
+        List<PlayCardDto> playSuddenCards = new ArrayList<>();
+        Optional<PlayCardDto> playSuddenCardDto = userQuestioner.askPlayersToPlaySuddenCards(roomId, playedCardDto);
+        while (playSuddenCardDto.isPresent())
+        {
+            playSuddenCards.add(playSuddenCardDto.get());
+            playSuddenCardDto = userQuestioner.askPlayersToPlaySuddenCards(roomId, playedCardDto);
+        }
+        Map<Long, List<Card>> suddenCards = new HashMap<>();
+        for (PlayCardDto suddenCardDto : playSuddenCards)
+        {
+            Long playedBy = suddenCardDto.getPlayerId();
+            Card playedCard = cardNameToCardMapper.map(suddenCardDto.getCardName());
+            List<Card> playerCards = suddenCards.get(playedBy);
+            if (playerCards == null)
+                suddenCards.put(playedBy, new ArrayList<>(List.of(playedCard)));
+            else
+                playerCards.add(playedCard);
+
+        }
+
+        return suddenCards;
     }
 
 

@@ -11,9 +11,8 @@ public class GameStateImpl extends GameState
     public GameStateImpl(LoopingList<AbstractPlayer> playersTurn,
                          List<Card> cardDeck,
                          List<Card> cardReset,
-                         AbstractPlayer nowTurn,
                          int stepQuantity)
     {
-        super(playersTurn, cardDeck, cardReset, nowTurn, stepQuantity);
+        super(playersTurn, cardDeck, cardReset, stepQuantity);
     }
 }

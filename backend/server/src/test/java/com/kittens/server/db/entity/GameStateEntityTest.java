@@ -50,16 +50,6 @@ public class GameStateEntityTest extends DatabaseTest
     @Test
     void writeGameState()
     {
-        // TODO: 12.12.2023 коммент ниже
-        /*
-            т.е. мы должны иметь сохранённого user - логично.
-
-            но чтобы сохранить gameState нужно сохранить player сначала
-
-            и чтобы сохранить gameState нужно сначала сохранить деку и сброс.
-
-            Это нормально?
-         */
 
         GameStateEntity gameStateEntity = new GameStateEntity();
 

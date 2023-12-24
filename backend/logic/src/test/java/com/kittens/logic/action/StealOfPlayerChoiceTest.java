@@ -39,7 +39,7 @@ class StealOfPlayerChoiceTest
         var oldGameState = Utils.copy(gameState);
 
         var stealCard = new OrdinaryCard(CATTERMELON, new Inaction(), new Inaction(), new SuddenInaction());
-        gameState.getPlayerById(2).addCard(stealCard);
+        gameState.getPlayerById(2L).addCard(stealCard);
 
         doReturn("2")
                 .when(playerQuestioner).ask(new Player(1L, null), WHICH_PLAYER);
@@ -48,15 +48,15 @@ class StealOfPlayerChoiceTest
 
         stealOfPlayerChoice.doAction(gameState);
 
-        assertThat(gameState.getPlayerById(1).hasACard(stealCard.getName())).isTrue();
-        assertThat(gameState.getPlayerById(2).hasACard(stealCard.getName())).isFalse();
+        assertThat(gameState.getPlayerById(1L).hasACard(stealCard.getName())).isTrue();
+        assertThat(gameState.getPlayerById(2L).hasACard(stealCard.getName())).isFalse();
 
         assertThat(gameState.getCardDeck()).isEqualTo(oldGameState.getCardDeck());
         assertThat(gameState.getCardReset()).isEqualTo(oldGameState.getCardReset());
         assertThat(gameState.getNowTurn()).isEqualTo(oldGameState.getNowTurn());
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
 
-        gameState.getPlayerById(1).removeCard(CATTERMELON);
+        gameState.getPlayerById(1L).removeCard(CATTERMELON);
         assertThat(gameState.getPlayersTurn().getElements()).containsExactlyElementsOf(oldGameState.getPlayersTurn().getElements());
     }
 }

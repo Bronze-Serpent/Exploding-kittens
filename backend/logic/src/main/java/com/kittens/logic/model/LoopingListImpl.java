@@ -17,7 +17,6 @@ public class LoopingListImpl<T> implements LoopingList<T>
 
         tQueue = new HashMap<>();
         T t = sourceList.get(0);
-        current = t;
 
         if (sourceList.size() == 1)
         {
@@ -109,7 +108,7 @@ public class LoopingListImpl<T> implements LoopingList<T>
         if (!tQueue.containsKey(pLayer))
             throw new RuntimeException("Ходящий должен быть в списке игроков (sourceList)");
 
-        current = pLayer;
+        this.current = pLayer;
     }
 
 
