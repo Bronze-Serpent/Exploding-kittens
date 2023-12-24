@@ -1,5 +1,6 @@
 package com.kittens.server.security.service;
 
+import com.kittens.server.security.config.AuthenticationValidationProperties;
 import com.kittens.server.user.entity.User;
 import com.kittens.server.security.JwtAuthentication;
 import io.jsonwebtoken.*;
@@ -26,17 +27,23 @@ import java.util.Date;
 public class JwtProvider {
     SecretKey jwtAccessSecret;
     SecretKey jwtRefreshSecret;
+    AuthenticationValidationProperties authenticationValidationProperties;
     public JwtProvider(
             @Value("${jwt.secret.access}") String jwtAccessSecret,
-            @Value("${jwt.secret.refresh}") String jwtRefreshSecret
+            @Value("${jwt.secret.refresh}") String jwtRefreshSecret,
+            AuthenticationValidationProperties authenticationValidationProperties
     ) {
         this.jwtAccessSecret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtAccessSecret));
         this.jwtRefreshSecret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtRefreshSecret));
+        this.authenticationValidationProperties = authenticationValidationProperties;
     }
 
     public String generateAccessToken(@NotNull User user) {
         final LocalDateTime now = LocalDateTime.now();
-        final Instant accessExpirationInstant = now.plusMinutes(5).atZone(ZoneId.systemDefault()).toInstant();
+        final Instant accessExpirationInstant = now
+                .plusMinutes(authenticationValidationProperties.getTokenExpiration())
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
         final Date accessExpiration = Date.from(accessExpirationInstant);
         return Jwts.builder()
                 .setSubject(user.getLogin())
