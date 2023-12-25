@@ -75,7 +75,7 @@ public class GameServiceImpl implements GameService
 
 
     @Override
-    public void createRoom(Long userId)
+    public Long createRoom(Long userId)
     {
         Long createdRoomId = roomService.createEmptyRoom();
         roomService.addUserToRoom(createdRoomId, userId);
@@ -83,6 +83,8 @@ public class GameServiceImpl implements GameService
         // TODO: 21.12.2023 тут нужно что-то сообщать?
         notificationService.sendMessageToUser(createdRoomId, userId,
                 new CreateEditRoomDto(createdRoomId, List.of(userId)));
+
+        return createdRoomId;
     }
 
 

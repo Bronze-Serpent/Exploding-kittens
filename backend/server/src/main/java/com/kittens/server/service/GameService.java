@@ -7,7 +7,7 @@ public interface GameService
 {
     void playCard(Long roomId, PlayCardDto dto);
 
-    void createRoom(Long userId);
+    Long createRoom(Long userId);
 
     void addUserToRoom(Long roomId, Long userId);
 

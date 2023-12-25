@@ -21,8 +21,9 @@ public class RoomController
     @PostMapping("/create")
     public ResponseEntity<?> createRoom(@RequestBody AddUserToRoomDto addUserToRoomDto)
     {
-        gameService.createRoom(addUserToRoomDto.getUserId());
-        return ResponseEntity.ok().build();
+        Long roomId = gameService.createRoom(addUserToRoomDto.getUserId());
+        return ResponseEntity.ok()
+                .body(roomId);
     }
 
 
