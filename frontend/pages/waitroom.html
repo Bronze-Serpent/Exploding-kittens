@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wait room</title>
+    <style>
+        table {
+            border: 1px solid grey;
+        }
+        /* границы ячеек первого ряда таблицы */
+        th {
+            border: 1px solid grey;
+        }
+        /* границы ячеек тела таблицы */
+        td {
+            border: 1px solid grey;
+        }
+    </style>
+</head>
+<body>
+    <label>Комнаты</label>
+    <table id="Rooms">
+        <tr>
+            <th>Room ID</th>
+            <th>Players ID</th>
+        </tr>
+    </table>
+    <button onclick="create()">Create room</button>
+    <input type="text" id="room" name="room">
+    <button onclick="join()">Join room</button>
+    <script>
+        let user = {
+            userId: localStorage.getItem("userId")
+        }
+        console.log(JSON.stringify(user));
+        console.log(`${localStorage.getItem("type")} ${localStorage.getItem("accessToken")}`);
+        function create() {
+            if (!localStorage.getItem("userId")) {
+                alert( "Не авторизованный пользователь!!!" );
+                return
+            } 
+            
+            fetch("http://localhost:8080/api/room/create", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', 
+                    'Authorization': `${localStorage.getItem("type")} ${localStorage.getItem("accessToken")}`
+                },
+                body: JSON.stringify(user)
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Server error!!!");
+                    }
+                    //return response.json();
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+
+        function join() {
+            if (!localStorage.getItem("userId")) {
+                alert( "Не авторизованный пользователь!!!" );
+                return
+            }
+
+            fetch(`http://localhost:8080/api/${room.value}/join`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify(localStorage.getItem("userId"))
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Server error!!!");
+                    }
+                    window.location.href = "/room.html";
+                    //return response.json();
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    </script>
+</body>
+</html>
