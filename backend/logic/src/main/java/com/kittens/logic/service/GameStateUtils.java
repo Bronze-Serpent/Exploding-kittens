@@ -59,9 +59,9 @@ public class GameStateUtils
     }
 
 
-    public void addNewCardToPlayer(GameState gameState)
+    public void addNewCardToPlayer(GameState gameState, Long playerId)
     {
-        var movesPlayer = gameState.getNowTurn();
+        var movesPlayer = gameState.getPlayerById(playerId);
 
         var receivedCard = gameState.getCardDeck().remove(gameState.getCardDeck().size() - 1);
         movesPlayer.addCard(receivedCard);
@@ -85,13 +85,9 @@ public class GameStateUtils
     }
 
 
-    public void playCombination(GameState gameState, List<Card> combination)
+    public void playCombination(GameState gameState, Long whoPlayed, List<Card> combination)
     {
-        combinationHandler.playCombination(gameState, combination);
-
-        var nowTurn = gameState.getNowTurn();
-        for (Card combCard : combination)
-            nowTurn.removeCard(combCard.getName());
+        combinationHandler.playCombination(gameState, whoPlayed, combination);
     }
 
 

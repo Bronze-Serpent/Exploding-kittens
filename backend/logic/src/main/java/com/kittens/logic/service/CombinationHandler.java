@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface CombinationHandler
 {
-    void playCombination(GameState gameState, List<Card> cards);
+    void playCombination(GameState gameState, Long whoPlayed, List<Card> cards);
 }

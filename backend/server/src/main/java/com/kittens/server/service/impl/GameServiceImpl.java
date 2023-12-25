@@ -6,7 +6,9 @@ import com.kittens.logic.model.AbstractPlayer;
 import com.kittens.logic.model.LoopingList;
 import com.kittens.logic.model.LoopingListImpl;
 import com.kittens.logic.service.GameStateUtils;
+import com.kittens.server.dto.EndYouTurnDto;
 import com.kittens.server.dto.PlayCardDto;
+import com.kittens.server.dto.PlayCombinationDto;
 import com.kittens.server.game.initialization.configs.GameSettingsProperties;
 import com.kittens.server.game.model.RoomGameState;
 import com.kittens.server.game.model.UserRefPlayer;
@@ -40,6 +42,51 @@ public class GameServiceImpl implements GameService
 
     List<Card> cardBeans;
     GameSettingsProperties gameSettingsProperties;
+
+
+    @Override
+    public void endYourTurn(Long roomId, EndYouTurnDto endYouTurnDto)
+    {
+        RoomGameState gameState = gameStateService.getGameStateByRoomId(roomId)
+                .orElseThrow(() -> new RuntimeException("Комнаты для GameState с id: " + roomId + " не найдено." ));
+
+        Long whoPlayedId = endYouTurnDto.getPlayerId();
+        if (!gameState.getNowTurn().getId().equals(whoPlayedId))
+            throw new RuntimeException("Попытка сыграть карту игрока с id: " + whoPlayedId
+                    + ", но сейчас очередь игрока с id: " + gameState.getNowTurn().getId());
+
+        gameStateUtils.addNewCardToPlayer(gameState, whoPlayedId);
+
+        //TODO: Вместо геймстейта отправляем геймстейт + карты игрока
+        notificationService.sendMessageToRoom(roomId, gameState);
+    }
+
+
+    @Override
+    public void playCombination(Long roomId, PlayCombinationDto playCombinationDto)
+    {
+        RoomGameState gameState = gameStateService.getGameStateByRoomId(roomId)
+                .orElseThrow(() -> new RuntimeException("Комнаты для GameState с id: " + roomId + " не найдено." ));
+
+        Long whoPlayedId = playCombinationDto.getPlayerId();
+        if (!gameState.getNowTurn().getId().equals(whoPlayedId))
+            throw new RuntimeException("Попытка сыграть комбинацию игрока с id: " + whoPlayedId
+                    + ", но сейчас очередь игрока с id: " + gameState.getNowTurn().getId());
+
+        gameStateUtils.playCombination(
+                gameState,
+                whoPlayedId,
+                playCombinationDto.getCardNames()
+                        .stream()
+                        .map(cardNameToCardMapper::map)
+                        .collect(Collectors.toList())
+        );
+
+        updateGame(gameState);
+
+        //TODO: Вместо геймстейта отправляем геймстейт + карты игрока
+        notificationService.sendMessageToRoom(roomId, gameState);
+    }
 
 
     @Override
