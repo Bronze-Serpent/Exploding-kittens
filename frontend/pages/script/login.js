@@ -46,10 +46,9 @@ function sendData() {
             localStorage.setItem('accessToken', data.accessToken);
             localStorage.setItem('refreshToken', data.refreshToken);
             localStorage.setItem('userId', data.userId);
-            window.location.href = "/index.html";
+            window.location.href = "/waitroom.html";
         })
         .catch((err) => {
             console.log(err);
         });
 }
-

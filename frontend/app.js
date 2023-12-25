@@ -29,6 +29,14 @@ app.get('/register', (req, res) => {
     res.sendFile(createPath('register'));
 });
 
+app.get('/room', (req, res) => {
+    res.render(createPath('room'));
+});
+
+app.get('/waitroom', (req, res) => {
+    res.sendFile(createPath('waitroom'));
+});
+
 // Not found page
 app.use("*", (req, res) => {
     res.status(404).json({
