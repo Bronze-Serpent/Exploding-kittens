@@ -98,7 +98,7 @@ class GameStateImplUtilsTest
         var testCard = new OrdinaryCard(TACOCAT, new Inaction(), new Inaction(), new SuddenInaction());
         gameState.getCardDeck().add(testCard);
 
-        gameStateUtils.addNewCardToPlayer(gameState);
+        gameStateUtils.addNewCardToPlayer(gameState, gameState.getNowTurn().getId());
 
 
         assertThat(gameState.getStepQuantity()).isEqualTo(oldGameState.getStepQuantity());
@@ -180,6 +180,6 @@ class GameStateImplUtilsTest
         gameState.getPlayerById(1L).getCards().add(card);
         gameState.getPlayerById(1L).getCards().add(card2);
 
-        assertThrows(RuntimeException.class, () -> gameStateUtils.playCombination(gameState, List.of(card, card2)));
+        assertThrows(RuntimeException.class, () -> gameStateUtils.playCombination(gameState, gameState.getNowTurn().getId(), List.of(card, card2)));
     }
 }

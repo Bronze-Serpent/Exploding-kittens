@@ -12,15 +12,13 @@ import org.springframework.context.annotation.Configuration;
 
 
 // бины с Action вынесены в отдельный класс чтобы не было циклической зависимости GameConfig -> Mapper -> бины Action внутри GameConfig
-
 @RequiredArgsConstructor
 @Configuration
 public class GameActionsConfig
 {
 
-    // TODO: 16.12.2023 Создание этих бинов
-    private final PlayerQuestioner playerQuestioner = null;
-    private final PlayerInformer playerInformer = null;
+    private final PlayerQuestioner playerQuestioner;
+    private final PlayerInformer playerInformer;
 
 
     /*

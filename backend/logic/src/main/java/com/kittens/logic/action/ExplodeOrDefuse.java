@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static com.kittens.logic.action.GameStateUtils.getExplodingKittenFrom;
-import static com.kittens.logic.action.player.interaction.PlayerInformer.Informing.DEFUSED_KITTEN;
+import static com.kittens.logic.action.player.interaction.PlayerInformer.Informing.USED_DEFUSED_KITTEN;
 import static com.kittens.logic.action.player.interaction.PlayerInformer.Informing.EXPLODED;
 import static com.kittens.logic.action.player.interaction.PlayerQuestioner.*;
 import static com.kittens.logic.card.CardName.*;
@@ -36,7 +36,7 @@ public class ExplodeOrDefuse implements Action
             var defusedCard = player.removeCard(DEFUSE);
 
             gameState.addToCardReset(defusedCard);
-            playerInformer.inform(player, DEFUSED_KITTEN);
+            playerInformer.inform(player, USED_DEFUSED_KITTEN);
 
             player.removeCard(EXPLODING_KITTEN);
             hideTheKitten(explodingCatCard, gameState);

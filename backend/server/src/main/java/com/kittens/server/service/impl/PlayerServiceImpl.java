@@ -1,8 +1,10 @@
 package com.kittens.server.service.impl;
 
+import com.kittens.server.dto.RoomReadDto;
 import com.kittens.server.entity.PlayerEntity;
 import com.kittens.server.game.model.UserRefPlayer;
 import com.kittens.server.mapper.PlayerEntityToUserRefPlayer;
+import com.kittens.server.mapper.RoomToRoomReadDto;
 import com.kittens.server.mapper.UserRefPlayerToPlayerEntity;
 import com.kittens.server.repository.PlayerRepository;
 import com.kittens.server.repository.RoomRepository;
@@ -27,7 +29,6 @@ public class PlayerServiceImpl implements PlayerService
 
     private final UserRefPlayerToPlayerEntity userRefPlayerToEntity;
     private final PlayerEntityToUserRefPlayer entityToUserRefPlayer;
-
 
     @Override
     public Long createEmptyPlayer(Long roomId, Long userId)
@@ -63,5 +64,4 @@ public class PlayerServiceImpl implements PlayerService
         return playerRepository.findById(id)
                 .map(entityToUserRefPlayer::map);
     }
-
 }

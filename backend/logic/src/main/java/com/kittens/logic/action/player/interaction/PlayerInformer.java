@@ -20,12 +20,12 @@ public interface PlayerInformer
     enum Informing
     {
         SHOW_CARDS("show_cards"),
-
-        EXPLODED("exploded"),
-        DEFUSED_KITTEN("defused_kitten"),
-        NUM_OF_PLAYER_CARDS("num_of_player_cards"),
         CARD_RECEIVED("card_received"),
         CARD_STOLEN("card_stolen"),
+        NUM_OF_PLAYER_CARDS("num_of_player_cards"),
+
+        EXPLODED("exploded"),
+        USED_DEFUSED_KITTEN("defused_kitten"),
         NO_SUCH_CARD("no_such_card");
 
         @Getter

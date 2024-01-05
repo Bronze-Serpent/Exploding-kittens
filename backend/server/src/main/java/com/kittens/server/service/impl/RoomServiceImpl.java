@@ -1,7 +1,9 @@
 package com.kittens.server.service.impl;
 
 import com.kittens.server.dto.RoomDescriptionDto;
+import com.kittens.server.dto.RoomReadDto;
 import com.kittens.server.entity.Room;
+import com.kittens.server.mapper.RoomToRoomReadDto;
 import com.kittens.server.repository.RoomRepository;
 import com.kittens.server.service.NotificationService;
 import com.kittens.server.service.RoomService;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -25,6 +28,8 @@ public class RoomServiceImpl implements RoomService
     private final RoomRepository roomRepository;
     private final UserRepository userRepository;
 
+    private final RoomToRoomReadDto roomReadMapper;
+
 
     @Override
     public Long createRoom(Long userId)
@@ -34,6 +39,13 @@ public class RoomServiceImpl implements RoomService
         addUserToRoom(createdRoomId, userId);
 
         return createdRoomId;
+    }
+
+    @Override
+    public Optional<RoomReadDto> findRoomFor(Long userId)
+    {
+        return roomRepository.findRoomFor(userId)
+                .map(roomReadMapper::map);
     }
 
 
