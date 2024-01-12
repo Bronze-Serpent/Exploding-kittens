@@ -1,15 +1,18 @@
 package com.kittens.server.dto;
 
-import com.kittens.logic.card.CardName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.List;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PlaySuddenCardDto {
-    CardName cardName;
-    Long userId;
+public class GameStatePlayerDto
+{
+    Long playerId;
+    List<GameStateCardDto> cards;
 }

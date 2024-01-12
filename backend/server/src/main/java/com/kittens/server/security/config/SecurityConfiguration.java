@@ -20,7 +20,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true)
-public class SecurityConfiguration {
+public class SecurityConfiguration
+{
     JwtFilter jwtFilter;
 
     @Bean

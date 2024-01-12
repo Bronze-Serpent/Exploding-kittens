@@ -6,6 +6,7 @@ import com.kittens.logic.model.AbstractPlayer;
 import com.kittens.logic.model.LoopingList;
 import com.kittens.logic.model.LoopingListImpl;
 import com.kittens.logic.service.GameStateUtils;
+import com.kittens.server.dto.CreatedPlayerDto;
 import com.kittens.server.dto.EndYouTurnDto;
 import com.kittens.server.dto.PlayCardDto;
 import com.kittens.server.dto.PlayCombinationDto;
@@ -13,6 +14,7 @@ import com.kittens.server.game.initialization.configs.GameSettingsProperties;
 import com.kittens.server.game.model.RoomGameState;
 import com.kittens.server.game.model.UserRefPlayer;
 import com.kittens.server.mapper.CardNameToCard;
+import com.kittens.server.mapper.GameStateToDtoMapper;
 import com.kittens.server.service.*;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +41,7 @@ public class GameServiceImpl implements GameService
     GameStateUtils gameStateUtils;
 
     CardNameToCard cardNameToCardMapper;
+    GameStateToDtoMapper gameStateToDtoMapper;
 
     List<Card> cardBeans;
     GameSettingsProperties gameSettingsProperties;
@@ -58,7 +61,7 @@ public class GameServiceImpl implements GameService
         gameStateUtils.addNewCardToPlayer(gameState, whoPlayedId);
 
         //TODO: Вместо геймстейта отправляем геймстейт + карты игрока
-        notificationService.sendMessageToRoom(roomId, gameState);
+        notificationService.sendMessageToRoom(roomId, gameStateToDtoMapper.map(gameState));
     }
 
 
@@ -85,7 +88,7 @@ public class GameServiceImpl implements GameService
         updateGame(gameState);
 
         //TODO: Вместо геймстейта отправляем геймстейт + карты игрока
-        notificationService.sendMessageToRoom(roomId, gameState);
+        notificationService.sendMessageToRoom(roomId, gameStateToDtoMapper.map(gameState));
     }
 
 
@@ -107,7 +110,7 @@ public class GameServiceImpl implements GameService
         updateGame(gameState);
 
         //TODO: Вместо геймстейта отправляем геймстейт + карты игрока
-        notificationService.sendMessageToRoom(roomId, gameState);
+        notificationService.sendMessageToRoom(roomId, gameStateToDtoMapper.map(gameState));
     }
 
 
@@ -121,6 +124,7 @@ public class GameServiceImpl implements GameService
         {
             Long emptyPlayerId = playerService.createEmptyPlayer(roomId, userId);
             players.add(new UserRefPlayer(emptyPlayerId, new ArrayList<>(), userId));
+            notificationService.sendMessageToUser(roomId, userId, new CreatedPlayerDto(emptyPlayerId));
         }
 
         LoopingList<AbstractPlayer> loopingList = new LoopingListImpl<>(players);
@@ -141,7 +145,7 @@ public class GameServiceImpl implements GameService
         gameStateService.saveNewGameState(roomId, createdGameState);
 
         // рассылка user'ам этого gameState
-        notificationService.sendMessageToRoom(roomId, createdGameState);
+        notificationService.sendMessageToRoom(roomId, gameStateToDtoMapper.map(createdGameState));
     }
 
 
