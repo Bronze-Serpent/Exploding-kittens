@@ -1,5 +1,6 @@
 package com.kittens.server.user.service;
 
+import com.kittens.server.dto.UserNicknameDto;
 import com.kittens.server.user.entity.User;
 import com.kittens.server.security.dto.RegistrationUserDto;
 
@@ -15,4 +16,6 @@ public interface UserService {
     Boolean existsByLogin(String login);
 
     User addDynamicPassword(User user, List<Integer> dynamicPasswords);
+
+    Optional<UserNicknameDto> findById(Long id);
 }

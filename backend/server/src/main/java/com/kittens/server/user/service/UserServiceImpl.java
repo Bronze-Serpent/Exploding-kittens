@@ -1,5 +1,6 @@
 package com.kittens.server.user.service;
 
+import com.kittens.server.dto.UserNicknameDto;
 import com.kittens.server.user.entity.User;
 import com.kittens.server.security.dto.RegistrationUserDto;
 import com.kittens.server.user.entity.UserDynamicPassword;
@@ -7,7 +8,6 @@ import com.kittens.server.user.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.apache.tomcat.util.security.MD5Encoder;
 import org.postgresql.util.MD5Digest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +45,13 @@ public class UserServiceImpl implements UserService {
     public User addDynamicPassword(User user, List<Integer> dynamicPasswords) {
         this.addDynamicPasswordWithoutSave(user, dynamicPasswords);
         return userRepository.save(user);
+    }
+
+    @Override
+    public Optional<UserNicknameDto> findById(Long id)
+    {
+        return userRepository.findById(id)
+                .map(user -> new UserNicknameDto(user.getLogin()));
     }
 
     @Override

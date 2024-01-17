@@ -5,8 +5,10 @@ import com.kittens.logic.model.GameState;
 import com.kittens.server.dto.GameStateCardDto;
 import com.kittens.server.dto.GameStateDto;
 import com.kittens.server.dto.GameStatePlayerDto;
+import org.springframework.stereotype.Component;
 
 
+@Component
 public class GameStateToDtoMapper implements Mapper<GameState, GameStateDto>
 {
     @Override

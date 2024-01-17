@@ -27,7 +27,6 @@ public class RoomController
     }
 
 
-    // TODO: 24.12.2023  тут мы должны добавляющемуся пользователю по вебсокету отправлять или же из запроса?
     @PostMapping("/{roomId}/join")
     public RoomDescriptionDto enterTheRoom(@PathVariable Long roomId,
                                           @RequestBody AddUserToRoomDto addUserToRoomDto)
